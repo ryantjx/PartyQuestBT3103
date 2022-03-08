@@ -32,7 +32,7 @@
 import firebaseApp from '../firebase.js';
 import { getFirestore } from 'firebase/firestore';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 
 const db = getFirestore(firebaseApp);
 
@@ -46,13 +46,32 @@ export default {
         };
     },
     methods: {
-        register() {
+        async register() {
             console.log('Attempting to register');
             const auth = getAuth(firebaseApp);
 
             var username = document.getElementById('username').value;
             var email = document.getElementById('email').value;
             var password = document.getElementById('pw').value;
+
+            console.log('Trying to get username', username);
+
+            // var userRef = collection(db, 'Users')
+            //     .doc(username)
+            //     .get();
+
+            var snapUser = await getDoc(doc(db, 'Users', username));
+
+            if (snapUser.exists()) {
+                alert('Username Exists. Please use another Username');
+                return;
+            }
+
+            // console.log('Trying to get userref', userRef);
+
+            // if (userRef != null) {
+            //     alert('Username Exists. Please use another Username');
+            // }
 
             createUserWithEmailAndPassword(auth, email, password)
                 .then(() => {
