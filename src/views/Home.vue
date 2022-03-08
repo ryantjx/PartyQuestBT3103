@@ -1,14 +1,5 @@
 <template>
-    <Login />
+    <h1>This is the Home Page for PartyQuest</h1>
 </template>
 
-<script>
-import Login from '../components/Login.vue';
-
-export default {
-    name: 'Home',
-    components: {
-        Login,
-    },
-};
-</script>
+<script></script>

@@ -12,7 +12,7 @@
                 placeholder="password..."
                 v-model="password"
             />
-            <button type="submit">Login</button>
+            <button type="submit" v-on:click="login()">Login</button>
         </form>
     </div>
 </template>
@@ -35,8 +35,9 @@ export default {
             const auth = getAuth(firebaseApp);
             signInWithEmailAndPassword(auth, this.email, this.password)
                 .then(() => {
+                    //First Alert
                     alert('Successfully logged in');
-                    this.$router.push('/dashboard');
+                    this.$router.push('/dashboard').catch(() => {});
                 })
                 .catch(error => {
                     alert(error.message);

@@ -1,36 +1,21 @@
 <template>
-    <div id="app">
-        <div id="nav">
-            <router-link to="/">Home</router-link> |
-            <router-link to="/register">Register</router-link> |
-            <router-link to="/dashboard">Dashboard</router-link> |
-            <button @click="logout">Logout</button>
-        </div>
-        <router-view />
+    <div>
+        <navbar></navbar>
+        <main class="py-4">
+            <router-view></router-view>
+        </main>
     </div>
 </template>
 
 <script>
-import { getAuth, signOut } from 'firebase/auth';
-
+import navbar from './components/Navbar';
 export default {
-    methods: {
-        logout() {
-            const auth = getAuth();
-
-            signOut(auth)
-                .then(() => {
-                    alert('Successfully logged out');
-                    this.$router.push('/');
-                })
-                .catch(error => {
-                    alert(error.message);
-                    this.$router.push('/');
-                });
-        },
+    components: {
+        navbar,
     },
 };
 </script>
+
 <style>
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;

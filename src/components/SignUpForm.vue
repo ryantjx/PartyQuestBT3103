@@ -47,6 +47,7 @@ export default {
     },
     methods: {
         register() {
+            console.log('Attempting to register');
             const auth = getAuth(firebaseApp);
 
             var username = document.getElementById('username').value;
@@ -61,7 +62,7 @@ export default {
                         password: password,
                     });
                     alert('Successfully registered! Please login.');
-                    this.$router.push('/dashboard');
+                    this.$router.push('/dashboard').catch(() => {});
                 })
                 .catch(error => {
                     alert(error.message);
