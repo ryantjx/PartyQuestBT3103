@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
-import firebase from 'firebase';
+import { getAuth } from 'firebase/auth';
 
 Vue.use(VueRouter);
 
@@ -15,7 +15,7 @@ const routes = [
         path: '/register',
         name: 'Register',
         component: () =>
-            import(/* webpackChunkName: "about" */ '../views/About.vue'),
+            import(/* webpackChunkName: "about" */ '../views/Register.vue'),
     },
     {
         path: '/dashboard',
@@ -37,8 +37,9 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+    const auth = getAuth();
     if (to.matched.some(record => record.meta.authRequired)) {
-        if (firebase.auth().currentUser) {
+        if (auth.currentUser) {
             next();
         } else {
             alert('You must be logged in to see this page');

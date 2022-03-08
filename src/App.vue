@@ -11,14 +11,14 @@
 </template>
 
 <script>
-import firebase from 'firebase';
+import { getAuth, signOut } from 'firebase/auth';
 
 export default {
     methods: {
         logout() {
-            firebase
-                .auth()
-                .signOut()
+            const auth = getAuth();
+
+            signOut(auth)
                 .then(() => {
                     alert('Successfully logged out');
                     this.$router.push('/');
