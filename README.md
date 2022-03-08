@@ -15,6 +15,9 @@ Run npm install and npm install firebase to get dependencies
 4. Create pull request from **local repository -> main repository**. Any developer can approve of the change.
 5. Conduct testing and **ensure that web application is stable** and free of bugs. If needed, revert changes to the most recent stable version.
 
+## Level Of Completion
+1. Login/Sign Up Completed
+
 ## Developers
 - Ryan Tan Jun Xiong, NUS Business Analytics(https://github.com/ryantjx)
 - Ryan Ng Zheng Rong, NUS Business Analytics(https://github.com/ryanng-zr)
