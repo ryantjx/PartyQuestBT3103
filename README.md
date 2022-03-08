@@ -21,6 +21,6 @@ Run npm install and npm install firebase to get dependencies
 ## Developers
 - Ryan Tan Jun Xiong, NUS Business Analytics(https://github.com/ryantjx)
 - Ryan Ng Zheng Rong, NUS Business Analytics(https://github.com/ryanng-zr)
-- Koh Tze Kang, NUS Business Analytics(https://github.com/ryantjx)
+- Koh Tze Kang, NUS Business Analytics(https://github.com/kang118)
 - Ashwin Kalaichelvan, NUS Business Analytics(https://github.com/ashwinkc-29)
 - Jacky Seah Zuo Jun, NUS Business Analytics(https://github.com/ReverseHaremJutsu)
