@@ -5,6 +5,9 @@ This repository documents our BT3103 Project, PartyQuest, a web-based applicatio
 ## Note 
 PartyQuest is still in the initial design phase, and we have not **officially deployed** our application.
 
+## Initial Phase
+Run npm install and npm install firebase to get dependencies
+
 ## Development Process
 1. Pull most updated code from **main** repository
 2. Create branch on Local Repository(If Required)
