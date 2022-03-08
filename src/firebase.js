@@ -15,3 +15,7 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 
 export default firebaseApp;
+
+//So the reason why we dont want to use import firebase is because the object is already initialised at the App.vue level -
+//and if you constantly import firebase from 'firebase', it will slow down the web alot as we expand,
+// because you are importing the whole firebase object at every page. you want to import only what is required.

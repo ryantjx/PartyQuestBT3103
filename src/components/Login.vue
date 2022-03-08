@@ -18,6 +18,7 @@
 </template>
 
 <script>
+// Import only getAuth and signInWithEmailAndPassword as they are the only ones used
 import firebaseApp from '../firebase.js';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
