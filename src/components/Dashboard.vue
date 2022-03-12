@@ -29,6 +29,7 @@ export default {
             user: 'user',
         }),
     },
+    components: {},
 };
 </script>
 
