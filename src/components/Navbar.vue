@@ -1,6 +1,11 @@
 <template>
     <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-        <div class="container">
+        <ul class="navbar-nav ml-auto">
+            <template v-if="user.loggedIn">
+                <Sidebar />
+            </template>
+        </ul>
+        <div class="container" id="topbar">
             <router-link to="/" class="navbar-brand">PartyQuest</router-link>
             <button
                 class="navbar-toggler"
@@ -42,6 +47,7 @@
     </nav>
 </template>
 <script>
+import Sidebar from './Sidebar.vue';
 import { mapGetters } from 'vuex';
 import firebaseApp from '../firebase.js';
 import { getAuth, signOut } from 'firebase/auth';
@@ -54,6 +60,9 @@ export default {
             // map `this.user` to `this.$store.getters.user`
             user: 'user',
         }),
+    },
+    components: {
+        Sidebar,
     },
     methods: {
         signOut() {
@@ -68,3 +77,9 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+#topbar {
+    align-items: flex-start;
+}
+</style>

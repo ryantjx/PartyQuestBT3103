@@ -8,10 +8,12 @@
 </template>
 
 <script>
+// import sidebar from './components/Sidebar.vue';
 import navbar from './components/Navbar';
 export default {
     components: {
         navbar,
+        // sidebar,
     },
 };
 </script>
@@ -23,6 +25,10 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
+}
+
+#menuitem {
+    color: green;
 }
 
 #nav {
@@ -40,5 +46,9 @@ export default {
 
 input {
     margin-right: 20px;
+}
+
+button {
+    color: #2c3e50;
 }
 </style>
