@@ -11,7 +11,7 @@
                             class="alert alert-success"
                             role="alert"
                         >
-                            You are logged in!
+                            You are Not logged in!
                         </div>
                     </div>
                 </div>
