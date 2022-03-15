@@ -12,6 +12,11 @@ const auth = getAuth(firebaseApp);
 
 onAuthStateChanged(auth, user => {
     store.dispatch('fetchUser', user);
+    console.log('Auth senses state change');
+    console.log('user information is passed :', user);
+    if (user != null) {
+        console.log('user name is passed :', user.displayName);
+    }
 });
 
 new Vue({
