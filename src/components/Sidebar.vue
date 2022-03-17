@@ -14,26 +14,27 @@
                     </h4>
                     <nav class="mb-3">
                         <b-nav vertical>
-                            <b-nav-item id="menuitem" active @click="hide"
+                            <b-nav-item id="menuitem" href="home" @click="hide"
                                 >Home</b-nav-item
                             >
                             <b-nav-item
                                 id="menuitem"
-                                href="#link-1"
+                                href="profile"
                                 @click="hide"
                                 >My Profile</b-nav-item
                             >
-                            <b-nav-item
-                                id="menuitem"
-                                href="#link-2"
-                                @click="hide"
+                            <b-nav-item id="menuitem" href="pq" @click="hide"
                                 >My PartyQuests</b-nav-item
+                            >
+                            <b-nav-item id="menuitem" href="chats" @click="hide"
+                                >My Chats</b-nav-item
                             >
                             <b-nav-item
                                 id="menuitem"
-                                href="#link-2"
+                                href="searchresults"
                                 @click="hide"
-                                >My Chats</b-nav-item
+                                >JUST FOR TESTING: Link to Search Result
+                                Page</b-nav-item
                             >
                         </b-nav>
                     </nav>
