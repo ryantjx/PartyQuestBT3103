@@ -1,6 +1,7 @@
 <template>
     <div>
         <navbar></navbar>
+        <infiniteScroll></infiniteScroll>
         <main class="py-4">
             <router-view></router-view>
         </main>
@@ -9,9 +10,12 @@
 
 <script>
 import navbar from './components/Navbar';
+import infiniteScroll from './components/InfiniteScroll';
+
 export default {
     components: {
         navbar,
+        infiniteScroll,
     },
 };
 </script>
