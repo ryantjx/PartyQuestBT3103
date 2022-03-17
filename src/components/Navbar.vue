@@ -56,6 +56,7 @@ const auth = getAuth(firebaseApp);
 
 export default {
     computed: {
+        //The mapGetters helper simply maps store getters to local computed properties:
         ...mapGetters({
             // map `this.user` to `this.$store.getters.user`
             user: 'user',
@@ -67,10 +68,13 @@ export default {
     methods: {
         signOut() {
             console.log('Attempting to sign out');
+            var username = this.$store.getters.user.loggedIn;
+
+            console.log(username);
 
             signOut(auth).then(() => {
                 this.$router.replace({
-                    name: 'home',
+                    name: 'Home',
                 });
             });
         },
