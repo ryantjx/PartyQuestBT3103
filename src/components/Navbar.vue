@@ -1,6 +1,11 @@
 <template>
     <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-        <div class="container">
+        <ul class="navbar-nav ml-auto">
+            <template v-if="user.loggedIn">
+                <Sidebar />
+            </template>
+        </ul>
+        <div class="container" id="topbar">
             <router-link to="/" class="navbar-brand">PartyQuest</router-link>
             <button
                 class="navbar-toggler"
@@ -42,6 +47,7 @@
     </nav>
 </template>
 <script>
+import Sidebar from './Sidebar.vue';
 import { mapGetters } from 'vuex';
 import firebaseApp from '../firebase.js';
 import { getAuth, signOut } from 'firebase/auth';
@@ -50,21 +56,34 @@ const auth = getAuth(firebaseApp);
 
 export default {
     computed: {
+        //The mapGetters helper simply maps store getters to local computed properties:
         ...mapGetters({
             // map `this.user` to `this.$store.getters.user`
             user: 'user',
         }),
     },
+    components: {
+        Sidebar,
+    },
     methods: {
         signOut() {
             console.log('Attempting to sign out');
+            var username = this.$store.getters.user.loggedIn;
+
+            console.log(username);
 
             signOut(auth).then(() => {
                 this.$router.replace({
-                    name: 'home',
+                    name: 'Home',
                 });
             });
         },
     },
 };
 </script>
+
+<style scoped>
+#topbar {
+    align-items: flex-start;
+}
+</style>

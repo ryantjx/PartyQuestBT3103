@@ -9,6 +9,7 @@
 </template>
 
 <script>
+// import sidebar from './components/Sidebar.vue';
 import navbar from './components/Navbar';
 import infiniteScroll from './components/InfiniteScroll';
 
@@ -29,6 +30,10 @@ export default {
     color: #2c3e50;
 }
 
+#menuitem {
+    color: green;
+}
+
 #nav {
     padding: 30px;
 }
@@ -44,5 +49,9 @@ export default {
 
 input {
     margin-right: 20px;
+}
+
+button {
+    color: #2c3e50;
 }
 </style>

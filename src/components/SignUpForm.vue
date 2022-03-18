@@ -31,7 +31,11 @@
 <script>
 import firebaseApp from '../firebase.js';
 import { getFirestore } from 'firebase/firestore';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    updateProfile,
+} from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 
 const db = getFirestore(firebaseApp);
@@ -54,12 +58,6 @@ export default {
             var email = document.getElementById('email').value;
             var password = document.getElementById('pw').value;
 
-            console.log('Trying to get username', username);
-
-            // var userRef = collection(db, 'Users')
-            //     .doc(username)
-            //     .get();
-
             var snapUser = await getDoc(doc(db, 'Users', username));
 
             if (snapUser.exists()) {
@@ -67,18 +65,19 @@ export default {
                 return;
             }
 
-            // console.log('Trying to get userref', userRef);
-
-            // if (userRef != null) {
-            //     alert('Username Exists. Please use another Username');
-            // }
-
             createUserWithEmailAndPassword(auth, email, password)
                 .then(() => {
                     setDoc(doc(db, 'Users', username), {
                         username: username,
                         email: email,
                         password: password,
+                    });
+                    //Sets the state user displayName
+                    // userCredential.user.updateProfile({
+                    //     displayName: username,
+                    // });
+                    updateProfile(auth.currentUser, {
+                        displayName: username,
                     });
                     alert('Successfully registered! Please login.');
                     this.$router.push('/dashboard').catch(() => {});
