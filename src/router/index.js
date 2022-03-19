@@ -5,6 +5,16 @@ import Login from '../components/Login.vue';
 import Dashboard from '../components/Dashboard.vue';
 import Register from '../views/Register.vue';
 import Home from '../views/Home.vue';
+import CreatePQ from '../views/CreatePQ';
+import ProfilePage from '../views/ProfilePage';
+import MyPQPage from '../views/MyPQPage';
+import ChatsPage from '../views/ChatsPage';
+import SavedPQ from '../components/SavedPQ';
+import CreatedPQ from '../components/CreatedPQ';
+import JoinedPQ from '../components/JoinedPQ';
+import SearchResultsPage from '../views/SearchResultsPage';
+import SearchResultPQ from '../components/SearchResultPQ';
+import SearchResultUser from '../components/SearchResultUser';
 
 Vue.use(VueRouter);
 
@@ -38,6 +48,61 @@ const routes = [
         path: '/home',
         name: 'Home',
         component: Home,
+    },
+    {
+        path: '/create',
+        name: 'CreatePQ',
+        component: CreatePQ,
+    },
+    {
+        path: '/profile',
+        name: 'ProfilePage',
+        component: ProfilePage,
+    },
+    {
+        path: '/pq',
+        name: 'PartyQuest',
+        component: MyPQPage,
+    },
+    {
+        path: '/chats',
+        name: 'ChatsPage',
+        component: ChatsPage,
+    },
+    {
+        path: '/mypq',
+        name: 'MyPQPage',
+        component: MyPQPage,
+    },
+    {
+        path: '/mypq/saved',
+        name: 'SavedPQ',
+        component: SavedPQ,
+    },
+    {
+        path: '/mypq/joined',
+        name: 'JoinedPQ',
+        component: JoinedPQ,
+    },
+    {
+        path: '/mypq/created',
+        name: 'CreatedPQ',
+        component: CreatedPQ,
+    },
+    {
+        path: '/searchresults',
+        name: 'SearchResults',
+        component: SearchResultsPage,
+    },
+    {
+        path: '/searchresults/pq',
+        name: 'SearchResultPQ',
+        component: SearchResultPQ,
+    },
+    {
+        path: '/searchresults/user',
+        name: 'SearchResultUser',
+        component: SearchResultUser,
     },
 ];
 
