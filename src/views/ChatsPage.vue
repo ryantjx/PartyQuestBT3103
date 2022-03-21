@@ -1,9 +1,9 @@
 <template>
-    <h1>This is the Profile Page</h1>
+    <h1>This is the Chats Page</h1>
 </template>
 
 <script>
 export default {
-    name: 'Profile',
+    name: 'ChatsPage',
 };
 </script>

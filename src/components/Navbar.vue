@@ -6,7 +6,9 @@
             </template>
         </ul>
         <div class="container" id="topbar">
-            <router-link to="/" class="navbar-brand">PartyQuest</router-link>
+            <router-link to="/home" class="navbar-brand"
+                >PartyQuest</router-link
+            >
             <button
                 class="navbar-toggler"
                 type="button"
@@ -24,9 +26,7 @@
                     <template v-if="user.loggedIn">
                         <div class="nav-item">{{ user.data.displayName }}</div>
                         <li class="nav-item">
-                            <a class="nav-link" @click.prevent="signOut"
-                                >Sign out</a
-                            >
+                            <CreatePQButton />
                         </li>
                     </template>
                     <template v-else>
@@ -48,6 +48,7 @@
 </template>
 <script>
 import Sidebar from './Sidebar.vue';
+import CreatePQButton from '../components/Buttons/CreatePQButton.vue';
 import { mapGetters } from 'vuex';
 import firebaseApp from '../firebase.js';
 import { getAuth, signOut } from 'firebase/auth';
@@ -64,6 +65,7 @@ export default {
     },
     components: {
         Sidebar,
+        CreatePQButton,
     },
     methods: {
         signOut() {
