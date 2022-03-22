@@ -107,6 +107,7 @@ export default {
     name: 'CreatePQ',
     data() {
         return {
+            id: '',
             title: '',
             brand: '',
             link: '',
@@ -161,7 +162,12 @@ export default {
             //console.log('Checking User');
             //console.log(user.uid);
             //console.log(typeof user);
-
+            this.id =
+                '_' +
+                Math.random()
+                    .toString(36)
+                    .substr(2, 9);
+            console.log(this.id);
             var title = document.getElementById('title').value;
             var brand = document.getElementById('brand').value;
             var link = document.getElementById('link').value;
@@ -188,7 +194,7 @@ export default {
                 picture &&
                 this.booleanCheck
             ) {
-                const docRef = await setDoc(doc(db, 'PQs', title), {
+                const docRef = await setDoc(doc(db, 'PQs', this.id), {
                     Title: title,
                     Brand: brand,
                     Link: link,
