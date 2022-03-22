@@ -83,8 +83,10 @@
                 Create
             </button>
         </form>
-        <!--image element to be added where you want picture to be displayed -->
-        <img id="profilePic" />
+
+        <!-------------------- IMAGE Display Div--------------------------->
+        <!--image element to be added where you want picture to be displayed
+        <img id="profilePic" />-->
     </div>
 </template>
 
@@ -93,12 +95,8 @@ import { mapGetters } from 'vuex';
 import firebaseApp from '../firebase.js';
 import { getFirestore } from 'firebase/firestore';
 import { doc, setDoc } from 'firebase/firestore';
-import {
-    getStorage,
-    ref,
-    uploadString,
-    getDownloadURL,
-} from 'firebase/storage';
+import { getStorage, ref, uploadString } from 'firebase/storage';
+//import getDownloadURL from 'firebase/storage';
 //import { getAuth } from 'firebase/auth'; //need to use when getting logged in data
 
 const db = getFirestore(firebaseApp);
@@ -220,22 +218,25 @@ export default {
                 uploadString(storageRef, msg2, 'base64');
                 console.log('uploaded');
 
+                //-------------------------------------Download/Display Image code for other pages--------------------------------------------
                 //code used to dislay image from firebase storage (change storageref line to path that image is stored within firebase storage)
-                console.log('attempting download');
-                getDownloadURL(storageRef)
-                    // eslint-disable-next-line prettier/prettier
-                    .then((url) => {
-                        console.log('trying url');
-                        console.log(url);
+                //take note need to import getDownloadUrl from firebase/storage for this code to work
+                //console.log('attempting download');
+                //getDownloadURL(storageRef)
+                // eslint-disable-next-line prettier/prettier
+                    //.then((url) => {
+                //console.log('trying url');
+                //console.log(url);
 
-                        //used to display pic -> need to add in a image element at the area u want to display on the html
-                        const img = document.getElementById('profilePic');
-                        img.setAttribute('src', url);
-                    })
-                    // eslint-disable-next-line prettier/prettier
-                    .catch((error) => { // eslint-disable-line no-unused-vars
-                        // Handle any errors
-                    });
+                //used to display pic -> need to add in a image element at the area u want to display on the html
+                //const img = document.getElementById('profilePic');
+                //img.setAttribute('src', url);
+                //})
+                // eslint-disable-next-line prettier/prettier
+                    //.catch((error) => { // eslint-disable-line no-unused-vars
+                // Handle any errors
+                //});
+                //-----------------------------------------------------------------------------------------------------------------------------
 
                 //need to push this to a PQ details page or refresh form fields
                 this.$router.push('/register').catch(() => {});

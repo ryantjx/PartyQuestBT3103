@@ -1,18 +1,24 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Login from '../components/Login.vue';
-import Home from '../views/Home.vue';
+// import LandingPage from '../views/LandingPage.vue';
 import Dashboard from '../components/Dashboard.vue';
 import Register from '../views/Register.vue';
+import Home from '../views/Home.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
     {
         path: '/',
-        name: '',
+        name: 'Home',
         component: Home,
     },
+    // {
+    //     path: '/landingpage',
+    //     name: 'Landing',
+    //     component: LandingPage,
+    // },
     {
         path: '/login',
         name: 'Login',
@@ -27,6 +33,11 @@ const routes = [
         path: '/dashboard',
         name: 'Dashboard',
         component: Dashboard,
+    },
+    {
+        path: '/home',
+        name: 'Home',
+        component: Home,
     },
 ];
 
