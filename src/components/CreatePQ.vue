@@ -97,7 +97,7 @@ import { addDoc, getFirestore } from 'firebase/firestore';
 import { collection } from 'firebase/firestore';
 import { getStorage, ref, uploadString } from 'firebase/storage';
 //import getDownloadURL from 'firebase/storage';
-//import { getAuth } from 'firebase/auth'; //need to use when getting logged in data
+import { getAuth } from 'firebase/auth'; //need to use when getting logged in data
 
 const db = getFirestore(firebaseApp);
 
@@ -154,11 +154,11 @@ export default {
             console.log('Attempting to Create PQ');
 
             //used for info retrieval from logged in user data
-            //const auth = getAuth(firebaseApp);
-            //const user = auth.currentUser;
-            //console.log('Checking User');
-            //console.log(user.uid);
-            //console.log(typeof user);
+            const auth = getAuth(firebaseApp);
+            const user = auth.currentUser;
+            console.log('Checking User');
+            console.log(user.uid);
+            console.log(typeof user);
 
             var title = document.getElementById('title').value;
             var brand = document.getElementById('brand').value;
@@ -169,8 +169,9 @@ export default {
             var enddate = document.getElementById('enddate').value;
             var description = document.getElementById('description').value;
             var requirements = document.getElementById('requirements').value;
-            //this.username = user.displayName;
-            //print(user);
+            this.username = user.displayName;
+            console.log(user);
+            console.log(this.username);
             var picture = document.getElementById('picture').value;
 
             if (
@@ -188,6 +189,7 @@ export default {
             ) {
                 const docRef = await addDoc(collection(db, 'PQs'), {
                     Title: title,
+                    Creator: this.username,
                     Brand: brand,
                     Link: link,
                     Total: total,
@@ -235,7 +237,7 @@ export default {
                 //-----------------------------------------------------------------------------------------------------------------------------
 
                 //need to push this to a PQ details page or refresh form fields
-                this.$router.push('/register').catch(() => {});
+                this.$router.push('/mypq').catch(() => {});
             } else {
                 console.error('Error adding PQ: ');
                 alert('Please fill in Valid Details');
