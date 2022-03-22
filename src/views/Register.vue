@@ -1,5 +1,5 @@
 <template>
-    <CreatePQ />
+    <SignUpForm />
     <!--<div>
         <form @submit.prevent="register">
             <h2>Register</h2>
@@ -19,12 +19,12 @@
 </template>
 
 <script>
-import CreatePQ from '../components/CreatePQ.vue';
+import SignUpForm from '../components/SignUpForm.vue';
 
 export default {
     name: 'Registration',
     components: {
-        CreatePQ,
+        SignUpForm,
     },
 };
 </script>
