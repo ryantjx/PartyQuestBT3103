@@ -1,7 +1,7 @@
 <template>
     <div>
         <form @submit.prevent="create">
-            <h2>Create a PQ</h2>
+            <h2>Create a PartyQuest</h2>
             <input
                 id="title"
                 type="text"
@@ -102,7 +102,7 @@ import { getAuth } from 'firebase/auth'; //need to use when getting logged in da
 const db = getFirestore(firebaseApp);
 
 export default {
-    name: 'CreatePQ',
+    name: 'CreatePartyQuest',
     data() {
         return {
             title: '',
@@ -187,7 +187,7 @@ export default {
                 picture &&
                 this.booleanCheck
             ) {
-                const docRef = await addDoc(collection(db, 'PQs'), {
+                const docRef = await addDoc(collection(db, 'PartyQuests'), {
                     Title: title,
                     Creator: this.username,
                     Brand: brand,
@@ -208,7 +208,7 @@ export default {
                 //to get file type of image
                 let fileType2 = this.fileType.split('/')[1];
                 console.log(fileType2);
-                let string = '/PQ/' + docRef.id + '.' + fileType2;
+                let string = '/PartyQuests/' + docRef.id + '.' + fileType2;
                 console.log(string);
                 const storageRef = ref(storage, string);
                 console.log(storageRef);

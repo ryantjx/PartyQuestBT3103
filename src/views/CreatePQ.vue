@@ -1,9 +1,15 @@
 <template>
-    <h1>This is the CreatePQ Page for PartyQuest</h1>
+    <CreatePartyQuest />
 </template>
 
 <script>
+import CreatePartyQuest from '../components/CreatePartyQuest.vue';
+
 export default {
     name: 'CreatePQ',
+
+    components: {
+        CreatePartyQuest,
+    },
 };
 </script>
