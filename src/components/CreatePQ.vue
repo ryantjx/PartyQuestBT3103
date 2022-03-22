@@ -93,8 +93,8 @@
 <script>
 import { mapGetters } from 'vuex';
 import firebaseApp from '../firebase.js';
-import { getFirestore } from 'firebase/firestore';
-import { doc, setDoc } from 'firebase/firestore';
+import { addDoc, getFirestore } from 'firebase/firestore';
+import { collection } from 'firebase/firestore';
 import { getStorage, ref, uploadString } from 'firebase/storage';
 //import getDownloadURL from 'firebase/storage';
 //import { getAuth } from 'firebase/auth'; //need to use when getting logged in data
@@ -186,7 +186,7 @@ export default {
                 picture &&
                 this.booleanCheck
             ) {
-                const docRef = await setDoc(doc(db, 'PQs', title), {
+                const docRef = await addDoc(collection(db, 'PQs'), {
                     Title: title,
                     Brand: brand,
                     Link: link,
@@ -197,7 +197,8 @@ export default {
                     Description: description,
                     Requirements: requirements,
                 });
-                console.log(docRef);
+                console.log('Generating random String');
+                console.log(docRef.id);
                 this.$emit('Created');
                 alert('Saving new PQ : ' + title);
 
@@ -205,9 +206,10 @@ export default {
                 //to get file type of image
                 let fileType2 = this.fileType.split('/')[1];
                 console.log(fileType2);
-                let string = '/PQ/' + title + '.' + fileType2;
+                let string = '/PQ/' + docRef.id + '.' + fileType2;
                 console.log(string);
                 const storageRef = ref(storage, string);
+                console.log(storageRef);
                 const msg2 = this.file.split(',')[1];
                 uploadString(storageRef, msg2, 'base64');
                 console.log('uploaded');
