@@ -1,7 +1,7 @@
 <template>
     <div>
         <form @submit.prevent="create">
-            <h2>Create a PQ</h2>
+            <h2>Create a PartyQuest</h2>
             <input
                 id="title"
                 type="text"
@@ -93,16 +93,16 @@
 <script>
 import { mapGetters } from 'vuex';
 import firebaseApp from '../firebase.js';
-import { getFirestore } from 'firebase/firestore';
-import { doc, setDoc } from 'firebase/firestore';
+import { addDoc, getFirestore } from 'firebase/firestore';
+import { collection } from 'firebase/firestore';
 import { getStorage, ref, uploadString } from 'firebase/storage';
 //import getDownloadURL from 'firebase/storage';
-//import { getAuth } from 'firebase/auth'; //need to use when getting logged in data
+import { getAuth } from 'firebase/auth'; //need to use when getting logged in data
 
 const db = getFirestore(firebaseApp);
 
 export default {
-    name: 'CreatePQ',
+    name: 'CreatePartyQuest',
     data() {
         return {
             title: '',
@@ -154,11 +154,11 @@ export default {
             console.log('Attempting to Create PQ');
 
             //used for info retrieval from logged in user data
-            //const auth = getAuth(firebaseApp);
-            //const user = auth.currentUser;
-            //console.log('Checking User');
-            //console.log(user.uid);
-            //console.log(typeof user);
+            const auth = getAuth(firebaseApp);
+            const user = auth.currentUser;
+            console.log('Checking User');
+            console.log(user.uid);
+            console.log(typeof user);
 
             var title = document.getElementById('title').value;
             var brand = document.getElementById('brand').value;
@@ -169,8 +169,9 @@ export default {
             var enddate = document.getElementById('enddate').value;
             var description = document.getElementById('description').value;
             var requirements = document.getElementById('requirements').value;
-            //this.username = user.displayName;
-            //print(user);
+            this.username = user.displayName;
+            console.log(user);
+            console.log(this.username);
             var picture = document.getElementById('picture').value;
 
             if (
@@ -186,8 +187,9 @@ export default {
                 picture &&
                 this.booleanCheck
             ) {
-                const docRef = await setDoc(doc(db, 'PQs', title), {
+                const docRef = await addDoc(collection(db, 'PartyQuests'), {
                     Title: title,
+                    Creator: this.username,
                     Brand: brand,
                     Link: link,
                     Total: total,
@@ -197,7 +199,8 @@ export default {
                     Description: description,
                     Requirements: requirements,
                 });
-                console.log(docRef);
+                console.log('Generating random String');
+                console.log(docRef.id);
                 this.$emit('Created');
                 alert('Saving new PQ : ' + title);
 
@@ -205,9 +208,10 @@ export default {
                 //to get file type of image
                 let fileType2 = this.fileType.split('/')[1];
                 console.log(fileType2);
-                let string = '/PQ/' + title + '.' + fileType2;
+                let string = '/PartyQuests/' + docRef.id + '.' + fileType2;
                 console.log(string);
                 const storageRef = ref(storage, string);
+                console.log(storageRef);
                 const msg2 = this.file.split(',')[1];
                 uploadString(storageRef, msg2, 'base64');
                 console.log('uploaded');
@@ -233,7 +237,7 @@ export default {
                 //-----------------------------------------------------------------------------------------------------------------------------
 
                 //need to push this to a PQ details page or refresh form fields
-                this.$router.push('/register').catch(() => {});
+                this.$router.push('/mypq').catch(() => {});
             } else {
                 console.error('Error adding PQ: ');
                 alert('Please fill in Valid Details');
