@@ -202,7 +202,6 @@ export default {
                     participants: [this.username],
                 });
                 console.log('Generating random String');
-                console.log(docRef.id);
                 this.$emit('Created');
                 alert('Saving new PQ : ' + title);
 
@@ -213,7 +212,6 @@ export default {
                 let string = '/PartyQuests/' + docRef.id + '.' + fileType2;
                 console.log(string);
                 const storageRef = ref(storage, string);
-                console.log(storageRef);
                 const msg2 = this.file.split(',')[1];
                 uploadString(storageRef, msg2, 'base64');
                 console.log('uploaded');
@@ -226,7 +224,6 @@ export default {
                 console.log('Updating id and photo');
                 console.log(docRef2);
                 this.$emit('Updated');
-                alert('Test');
 
                 //-------------------------------------Download/Display Image code for other pages--------------------------------------------
                 //code used to dislay image from firebase storage (change storageref line to path that image is stored within firebase storage)
