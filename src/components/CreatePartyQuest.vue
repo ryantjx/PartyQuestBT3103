@@ -93,7 +93,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import firebaseApp from '../firebase.js';
-import { addDoc, getFirestore } from 'firebase/firestore';
+import { addDoc, getFirestore, updateDoc, doc } from 'firebase/firestore';
 import { collection } from 'firebase/firestore';
 import { getStorage, ref, uploadString } from 'firebase/storage';
 //import getDownloadURL from 'firebase/storage';
@@ -188,16 +188,18 @@ export default {
                 this.booleanCheck
             ) {
                 const docRef = await addDoc(collection(db, 'PartyQuests'), {
-                    Title: title,
-                    Creator: this.username,
-                    Brand: brand,
-                    Link: link,
-                    Total: total,
-                    Location: location,
-                    Participants: participants,
-                    Enddate: enddate,
-                    Description: description,
-                    Requirements: requirements,
+                    title: title,
+                    groupCreatorid: this.username,
+                    brand: brand,
+                    itemLink: link,
+                    totalAmount: total,
+                    collectionLocation: location,
+                    numOfPeople: participants,
+                    endDate: enddate,
+                    description: description,
+                    requirements: [requirements],
+                    status: 'Not Started',
+                    participants: [this.username],
                 });
                 console.log('Generating random String');
                 console.log(docRef.id);
@@ -215,6 +217,16 @@ export default {
                 const msg2 = this.file.split(',')[1];
                 uploadString(storageRef, msg2, 'base64');
                 console.log('uploaded');
+                console.log('Trying Update');
+                const ref1 = doc(db, 'PartyQuests', docRef.id);
+                const docRef2 = await updateDoc(ref1, {
+                    partyQuestid: docRef.id,
+                    photoId: string,
+                });
+                console.log('Updating id and photo');
+                console.log(docRef2);
+                this.$emit('Updated');
+                alert('Test');
 
                 //-------------------------------------Download/Display Image code for other pages--------------------------------------------
                 //code used to dislay image from firebase storage (change storageref line to path that image is stored within firebase storage)
