@@ -19,11 +19,6 @@ import SearchResultUser from '../components/SearchResultUser';
 Vue.use(VueRouter);
 
 const routes = [
-    {
-        path: '/',
-        name: 'Home',
-        component: Home,
-    },
     // {
     //     path: '/landingpage',
     //     name: 'Landing',
