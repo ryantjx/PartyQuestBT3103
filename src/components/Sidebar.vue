@@ -36,6 +36,13 @@
                                 >JUST FOR TESTING: Link to Search Result
                                 Page</b-nav-item
                             >
+                            <b-nav-item
+                                id="menuitem"
+                                href="pq/listing"
+                                @click="hide"
+                                >JUST FOR TESTING: Link to Product listing
+                                page</b-nav-item
+                            >
                         </b-nav>
                     </nav>
                     <br /><br />
