@@ -1,6 +1,6 @@
 <template>
     <SignUpForm />
-    <!-- <div>
+    <!--<div>
         <form @submit.prevent="register">
             <h2>Register</h2>
             <input
@@ -15,7 +15,7 @@
             />
             <button type="submit">Register</button>
         </form>
-    </div> -->
+    </div>-->
 </template>
 
 <script>

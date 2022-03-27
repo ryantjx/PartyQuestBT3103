@@ -10,10 +10,10 @@
 <script>
 // import sidebar from './components/Sidebar.vue';
 import navbar from './components/Navbar';
+
 export default {
     components: {
         navbar,
-        // sidebar,
     },
 };
 </script>
