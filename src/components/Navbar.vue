@@ -24,6 +24,7 @@
                 <ul class="navbar-nav mr-auto"></ul>
                 <ul class="navbar-nav ml-auto">
                     <template v-if="user.loggedIn">
+                        <SearchBar />
                         <div class="nav-item">{{ user.data.displayName }}</div>
                         <li class="nav-item">
                             <CreatePQButton />
@@ -49,6 +50,7 @@
 <script>
 import Sidebar from './Sidebar.vue';
 import CreatePQButton from '../components/Buttons/CreatePQButton.vue';
+import SearchBar from '../components/SearchBar.vue';
 import { mapGetters } from 'vuex';
 import firebaseApp from '../firebase.js';
 import { getAuth, signOut } from 'firebase/auth';
@@ -66,6 +68,7 @@ export default {
     components: {
         Sidebar,
         CreatePQButton,
+        SearchBar,
     },
     methods: {
         signOut() {
