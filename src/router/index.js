@@ -15,6 +15,7 @@ import JoinedPQ from '../components/JoinedPQ';
 import SearchResultsPage from '../views/SearchResultsPage';
 import SearchResultPQ from '../components/SearchResultPQ';
 import SearchResultUser from '../components/SearchResultUser';
+import EditProfilePage from '../views/EditProfilePage';
 
 Vue.use(VueRouter);
 
@@ -58,6 +59,11 @@ const routes = [
         path: '/profile',
         name: 'ProfilePage',
         component: ProfilePage,
+    },
+    {
+        path: '/profile/editprofile',
+        name: 'EditProfilePage',
+        component: EditProfilePage,
     },
     {
         path: '/pq',
