@@ -351,7 +351,7 @@ export default {
                 //     });
                 console.log(docRef);
                 document.getElementById('editprofileform').reset();
-                this.$emit('Personal Information Updated!');
+                alert('Personal Information Updated!');
                 this.goBack();
             } catch (error) {
                 console.error('Error updating profile: ', error);
