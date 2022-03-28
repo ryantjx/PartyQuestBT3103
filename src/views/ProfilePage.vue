@@ -36,11 +36,8 @@
             </div>
             <div class="col-lg-8">
                 <div class="padding-top-2x mt-2 hidden-lg-up"></div>
-                <!-- Wishlist Table-->
                 <div class="my-listings margin-bottom-none">
                     <h1>My Listings</h1>
-                    <!-- <PartyQuestList :listdata="items" /> -->
-                    <!-- only display if isCreated=true -->
                     <div v-if="isEmptyList()">
                         <h1>There are no partyquest data</h1>
                     </div>
