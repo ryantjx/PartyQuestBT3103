@@ -9,6 +9,7 @@ export default new Vuex.Store({
             loggedIn: false,
             data: null,
         },
+        searchText: '',
     },
     //get information from state to display
     getters: {
