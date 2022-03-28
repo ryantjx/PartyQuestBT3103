@@ -5,7 +5,7 @@ import Login from '../components/Login.vue';
 import Dashboard from '../components/Dashboard.vue';
 import Register from '../views/Register.vue';
 import Home from '../views/Home.vue';
-import CreatePQ from '../views/CreatePQ';
+import CreatePQ from '../views/CreatePQ.vue';
 import ProfilePage from '../views/ProfilePage';
 import MyPQPage from '../views/MyPQPage';
 import ChatsPage from '../views/ChatsPage';
