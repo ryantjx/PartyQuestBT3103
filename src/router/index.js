@@ -12,6 +12,7 @@ import ChatsPage from '../views/ChatsPage';
 import SavedPQ from '../components/SavedPQ';
 import CreatedPQ from '../components/CreatedPQ';
 import JoinedPQ from '../components/JoinedPQ';
+import PqDetails from '../views/PqListingPage';
 import SearchResultsPage from '../views/SearchResultsPage';
 import SearchResultPQ from '../components/SearchResultPQ';
 import SearchResultUser from '../components/SearchResultUser';
@@ -104,6 +105,17 @@ const routes = [
         name: 'SearchResultUser',
         component: SearchResultUser,
     },
+    {
+        path: '/pq/listing',
+        name: 'Pq Details',
+        component: PqDetails,
+    },
+    // {
+    //     path: '/pq/:pqId',
+    //     name: 'PQ Details',
+    //     component: PQDetails,
+    //     props: true,
+    // },
 ];
 
 const router = new VueRouter({
