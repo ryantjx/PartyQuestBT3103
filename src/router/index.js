@@ -11,7 +11,7 @@ import MyPQPage from '../views/MyPQPage';
 import ChatsPage from '../views/ChatsPage';
 import SavedPQ from '../components/SavedPQ';
 import CreatedPQ from '../components/CreatedPQ';
-import JoinedPQ from '../components/JoinedPQ';
+import JoinedPQPage from '../views/JoinedPQPage';
 import SearchResultsPage from '../views/SearchResultsPage';
 import SearchResultPQ from '../components/SearchResultPQ';
 import SearchResultUser from '../components/SearchResultUser';
@@ -86,9 +86,9 @@ const routes = [
         component: SavedPQ,
     },
     {
-        path: '/mypq/joined',
-        name: 'JoinedPQ',
-        component: JoinedPQ,
+        path: '/mypq/JoinedPQPage',
+        name: 'JoinedPQPage',
+        component: JoinedPQPage,
     },
     {
         path: '/mypq/created',
