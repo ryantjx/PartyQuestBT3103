@@ -329,7 +329,10 @@ export default {
                     })
                     .catch(error => {
                         console.log('Error Updating Email: ', error);
-                        this.$alert('Something went wrong with updating emai');
+                        alert(
+                            'Something went wrong with updating email: ',
+                            error
+                        );
                     });
 
                 await setDoc(addressRef, {
