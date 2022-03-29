@@ -11,6 +11,7 @@ import MyPQPage from '../views/MyPQPage';
 import ChatsPage from '../views/ChatsPage';
 import SavedPQ from '../components/SavedPQ';
 import CreatedPQ from '../components/CreatedPQ';
+import PqDetails from '../views/PqDetailsPage';
 import JoinedPQPage from '../views/JoinedPQPage';
 import SearchResultsPage from '../views/SearchResultsPage';
 import SearchResultPQ from '../components/SearchResultPQ';
@@ -109,6 +110,17 @@ const routes = [
         path: '/searchresults/user',
         name: 'SearchResultUser',
         component: SearchResultUser,
+    },
+    {
+        path: '/pq/listing',
+        name: 'Pq Details',
+        component: PqDetails,
+    },
+    {
+        path: '/pq/:id',
+        name: 'PQDetails',
+        component: PqDetails,
+        // props: true,
     },
 ];
 

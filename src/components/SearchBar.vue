@@ -40,7 +40,7 @@ export default {
     background-color: white;
     border-color: black;
     padding: 15px 32px;
-    text-align: center;
+    text-align: left;
     display: inline-block;
     font-size: 16px;
 }

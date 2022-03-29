@@ -23,7 +23,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto"></ul>
                 <ul class="navbar-nav ml-auto">
-                    <template v-if="user.loggedIn">
+                    <template v-if="loading || user.loggedIn">
                         <SearchBar />
                         <div class="nav-item">{{ user.data.displayName }}</div>
                         <li class="nav-item">
@@ -53,11 +53,24 @@ import CreatePQButton from '../components/Buttons/CreatePQButton.vue';
 import SearchBar from '../components/SearchBar.vue';
 import { mapGetters } from 'vuex';
 import firebaseApp from '../firebase.js';
-import { getAuth, signOut } from 'firebase/auth';
+import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth';
 
 const auth = getAuth(firebaseApp);
 
 export default {
+    data() {
+        return {
+            loading: true,
+        };
+    },
+    mounted() {
+        const auth = getAuth();
+        onAuthStateChanged(auth, loading => {
+            if (loading) {
+                this.loading = !loading;
+            }
+        });
+    },
     computed: {
         //The mapGetters helper simply maps store getters to local computed properties:
         ...mapGetters({
