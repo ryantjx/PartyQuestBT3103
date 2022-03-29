@@ -8,17 +8,17 @@
                         <br />
                         <label class="fieldName"> <h3>Brand:</h3></label>
                         <br />
-                        <label class="field"><h5>MP</h5></label>
+                        <label class="field" id="brand"><h5></h5></label>
 
                         <br /><br />
                         <label class="fieldName"><h3>Total Amount:</h3></label>
                         <br />
-                        <label class="field"><h5>250</h5></label>
+                        <label class="field" id="amt"><h5></h5></label>
 
                         <br /><br />
                         <label class="fieldName"><h3>End Date:</h3></label>
                         <br />
-                        <label class="field"><h5>26/02/2022</h5></label>
+                        <label class="field" id="date"><h5></h5></label>
 
                         <br /><br />
 
@@ -26,30 +26,30 @@
                             ><h3>Collection Location:</h3></label
                         >
                         <br />
-                        <label class="field"><h5>Pasir Ris</h5></label>
+                        <label class="field" id="location"><h5></h5></label>
                     </div>
                     <div class="pqdetailslist2">
                         <br />
                         <label class="fieldName"><h3>Creator:</h3></label>
                         <br />
-                        <label class="field"><h5>ryanng</h5></label>
+                        <label class="field" id="creator"><h5></h5></label>
 
                         <br /><br />
 
                         <label class="fieldName"><h3>Website:</h3></label>
                         <br />
-                        <label class="field"><h5>google.com</h5></label>
+                        <label class="field" id="url"><h5></h5></label>
 
                         <br /><br />
                         <label class="fieldName"><h3>Description:</h3></label>
                         <br />
-                        <label class="field"><h5>5kg protein</h5></label>
+                        <label class="field" id="description"><h5></h5></label>
 
                         <br /><br />
 
-                        <label class="fieldName"><h3>Misc:</h3></label>
+                        <label class="fieldName"><h3>Requirements :</h3></label>
                         <br />
-                        <label class="field"><h5>5kg protein</h5></label>
+                        <label class="field" id="misc"><h5></h5></label>
                     </div>
                 </div>
             </form>
@@ -58,8 +58,71 @@
 </template>
 
 <script>
+import firebaseApp from '../../firebase.js';
+import { getFirestore } from 'firebase/firestore';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+
 export default {
     name: 'Details',
+
+    mounted() {
+        async function display() {
+            const db = getFirestore(firebaseApp);
+            // create query
+            let filterQuery = query(
+                collection(db, 'PartyQuests'),
+                where('partyQuestid', '==', '8wk4OhSGyzzbovEv4DlU')
+            );
+            // use query to filter the documents in the PQ collection
+            let querySnapshot = await getDocs(filterQuery);
+            // iterate over the filtered documents
+            querySnapshot.forEach(docs => {
+                // get documents
+                let pqDoc = docs.data();
+
+                let brand = document.getElementById('brand');
+                document.getElementById('brand').innerHTML = pqDoc.brand;
+                console.log(brand.innerHTML);
+
+                let amt = document.getElementById('amt');
+                console.log(amt.innerHTML);
+                console.log('Changing');
+                document.getElementById('amt').innerHTML =
+                    '$ ' + pqDoc.totalAmount;
+                console.log(amt.innerHTML);
+
+                let date = document.getElementById('date');
+                document.getElementById('date').innerHTML = pqDoc.endDate;
+                console.log(date.innerHTML);
+
+                let location = document.getElementById('location');
+                document.getElementById('location').innerHTML =
+                    pqDoc.collectionLocation;
+                console.log(location.innerHTML);
+
+                let creator = document.getElementById('creator');
+                document.getElementById('creator').innerHTML =
+                    pqDoc.groupCreatorid;
+                console.log(creator.innerHTML);
+
+                let url = document.getElementById('url');
+                document.getElementById('url').innerHTML = pqDoc.itemLink;
+                console.log(url.innerHTML);
+
+                let description = document.getElementById('description');
+                document.getElementById('description').innerHTML =
+                    pqDoc.description;
+                console.log(description.innerHTML);
+
+                let misc = document.getElementById('misc');
+                let c = pqDoc.requirements.join(', ');
+                console.log(c);
+                document.getElementById('misc').innerHTML = c;
+                console.log(misc.innerHTML);
+            });
+        }
+        display();
+    },
 };
 </script>
 
