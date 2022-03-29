@@ -49,7 +49,9 @@
 
                         <label class="fieldName"><h3>Misc:</h3></label>
                         <br />
-                        <label class="field"><h5>5kg protein</h5></label>
+                        <label class="field"
+                            ><h5>{{ id }}</h5></label
+                        >
                     </div>
                 </div>
             </form>
@@ -60,6 +62,11 @@
 <script>
 export default {
     name: 'Details',
+    data() {
+        return {
+            id: this.$route.params.id,
+        };
+    },
 };
 </script>
 

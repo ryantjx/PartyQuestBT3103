@@ -45,6 +45,7 @@ export default {
 
                 cell1.innerHTML = name;
                 cell2.innerHTML = status;
+                cell3.className = 'view-manage-buttons';
 
                 var viewButton = document.createElement('button');
                 viewButton.className = 'bwt';
@@ -175,9 +176,7 @@ td {
 
 .view-manage-buttons {
     display: flex;
-    justify-content: space-between;
-    padding-inline-start: 15%;
-    padding-inline-end: 15%;
+    justify-content: space-around;
 }
 
 .buttons {
