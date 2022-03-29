@@ -1,14 +1,19 @@
 <template>
     <div id="topbar">
-        <h1>This is the Search Results Page</h1>
         <br />
-        <router-link to="/searchresults/pq">PQs</router-link> |
-        <router-link to="/searchresults/user">Users</router-link>
+        <!-- <router-link to="/searchresults/pq">PQs</router-link> |
+        <router-link to="/searchresults/user">Users</router-link> -->
+        <SearchResultsTable />
     </div>
 </template>
 
 <script>
+import SearchResultsTable from '../components/SearchResultsTable.vue';
+
 export default {
-    name: 'SearchResultsPage',
+    name: 'SearchTable',
+    components: {
+        SearchResultsTable,
+    },
 };
 </script>

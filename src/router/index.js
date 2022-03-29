@@ -11,11 +11,12 @@ import MyPQPage from '../views/MyPQPage';
 import ChatsPage from '../views/ChatsPage';
 import SavedPQ from '../components/SavedPQ';
 import CreatedPQ from '../components/CreatedPQ';
-import JoinedPQ from '../components/JoinedPQ';
 import PqDetails from '../views/PqListingPage';
+import JoinedPQPage from '../views/JoinedPQPage';
 import SearchResultsPage from '../views/SearchResultsPage';
 import SearchResultPQ from '../components/SearchResultPQ';
 import SearchResultUser from '../components/SearchResultUser';
+import EditProfilePage from '../views/EditProfilePage';
 
 Vue.use(VueRouter);
 
@@ -61,6 +62,11 @@ const routes = [
         component: ProfilePage,
     },
     {
+        path: '/profile/editprofile',
+        name: 'EditProfilePage',
+        component: EditProfilePage,
+    },
+    {
         path: '/pq',
         name: 'PartyQuest',
         component: MyPQPage,
@@ -81,9 +87,9 @@ const routes = [
         component: SavedPQ,
     },
     {
-        path: '/mypq/joined',
-        name: 'JoinedPQ',
-        component: JoinedPQ,
+        path: '/mypq/JoinedPQPage',
+        name: 'JoinedPQPage',
+        component: JoinedPQPage,
     },
     {
         path: '/mypq/created',

@@ -16,8 +16,11 @@
                                     {{ this.user.displayName }}
                                 </h5>
                                 <h6 class="user-email" v-if="user">
-                                    {{ user.email }}
+                                    {{ this.user.email }}
                                 </h6>
+                                <router-link to="/profile/editprofile"
+                                    >Edit profile</router-link
+                                >
                             </div>
                             <div class="about">
                                 <h5>About</h5>
@@ -33,15 +36,15 @@
             </div>
             <div class="col-lg-8">
                 <div class="padding-top-2x mt-2 hidden-lg-up"></div>
-                <!-- Wishlist Table-->
                 <div class="my-listings margin-bottom-none">
                     <h1>My Listings</h1>
-                    <!-- <PartyQuestList :listdata="items" /> -->
-                    <!-- only display if isCreated=true -->
-                    <PartyQuestList :partyQuestData="items" v-if="items" />
-                    <div v-else>
+                    <div v-if="isEmptyList()">
                         <h1>There are no partyquest data</h1>
                     </div>
+                    <div v-else>
+                        <PartyQuestList :partyQuestData="items" v-if="items" />
+                    </div>
+                    <!-- need to test if there are no partyquest data for the user what will happen -->
                 </div>
             </div>
         </div>
@@ -62,6 +65,7 @@ const db = getFirestore(firebaseApp);
 // Vue.forceUpdate();
 
 export default {
+    name: 'ProfilePage',
     data() {
         console.log('creattion of data');
         return {
@@ -74,6 +78,9 @@ export default {
         PartyQuestList,
     },
     methods: {
+        isEmptyList() {
+            return this.items == null || this.items.length == 0;
+        },
         async passListasData(newItem) {
             // Reassign items to the loaded list
             // Ensure that this.items is not a promise
@@ -128,6 +135,8 @@ export default {
                 var completedList = [];
                 completedList = this.getData(this.user);
                 console.log('completed list ', completedList);
+                console.log('User Name that is passed : ', this.user);
+                console.log('User email that is passed : ', this.user.email);
                 this.passListasData(completedList);
             }
         });
