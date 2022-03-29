@@ -35,7 +35,7 @@
 </template>
 
 <script>
-console.log('passing data into partyquestlist');
+// console.log('passing data into partyquestlist');
 export default {
     props: {
         partyQuestData: {

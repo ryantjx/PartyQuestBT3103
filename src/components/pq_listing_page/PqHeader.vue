@@ -21,9 +21,17 @@ import { getFirestore } from 'firebase/firestore';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 //import { getStorage, ref } from 'firebase/storage';
 //import getDownloadURL from 'firebase/storage';
+var uuid;
 
 export default {
     name: 'PqHeader',
+
+    data() {
+        uuid = this.$route.params.id;
+        return {
+            id: this.$route.params.id,
+        };
+    },
 
     mounted() {
         async function display() {
@@ -31,7 +39,7 @@ export default {
             // create query
             let filterQuery = query(
                 collection(db, 'PartyQuests'),
-                where('partyQuestid', '==', '8wk4OhSGyzzbovEv4DlU')
+                where('partyQuestid', '==', uuid)
             );
             // use query to filter the documents in the PQ collection
             let querySnapshot = await getDocs(filterQuery);

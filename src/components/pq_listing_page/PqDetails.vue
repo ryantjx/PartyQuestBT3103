@@ -61,17 +61,27 @@
 import firebaseApp from '../../firebase.js';
 import { getFirestore } from 'firebase/firestore';
 import { collection, getDocs, query, where } from 'firebase/firestore';
+var uuid;
 
 export default {
     name: 'Details',
 
+    data() {
+        uuid = this.$route.params.id;
+        return {
+            id: this.$route.params.id,
+        };
+    },
+
     mounted() {
         async function display() {
             const db = getFirestore(firebaseApp);
+            console.log('ID');
+            console.log(uuid);
             // create query
             let filterQuery = query(
                 collection(db, 'PartyQuests'),
-                where('partyQuestid', '==', '8wk4OhSGyzzbovEv4DlU')
+                where('partyQuestid', '==', uuid)
             );
             // use query to filter the documents in the PQ collection
             let querySnapshot = await getDocs(filterQuery);

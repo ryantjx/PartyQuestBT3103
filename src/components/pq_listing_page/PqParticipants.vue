@@ -22,14 +22,23 @@ import firebaseApp from '../../firebase.js';
 import { getFirestore } from 'firebase/firestore';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+var uuid;
 
 export default {
     name: 'Participants',
+
+    data() {
+        uuid = this.$route.params.id;
+        return {
+            id: this.$route.params.id,
+        };
+    },
+
     mounted() {
         const db = getFirestore(firebaseApp);
         let filterQuery = query(
             collection(db, 'PartyQuests'),
-            where('partyQuestid', '==', '8wk4OhSGyzzbovEv4DlU')
+            where('partyQuestid', '==', uuid)
         );
         console.log('filterquery');
         console.log(filterQuery);
@@ -100,6 +109,7 @@ export default {
 
                 cell1.innerHTML = name;
                 cell2.innerHTML = status;
+                cell3.className = 'view-manage-buttons';
 
                 var viewButton = document.createElement('button');
                 viewButton.className = 'bwt';
@@ -289,9 +299,7 @@ td {
 
 .view-manage-buttons {
     display: flex;
-    justify-content: space-between;
-    padding-inline-start: 15%;
-    padding-inline-end: 15%;
+    justify-content: space-around;
 }
 
 .buttons {
