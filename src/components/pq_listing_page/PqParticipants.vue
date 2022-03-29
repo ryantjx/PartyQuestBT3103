@@ -91,37 +91,6 @@ export default {
             });
         }
 
-        //Code to display (Hardcode)
-        /*
-            let docs = await getDocs(collection(db, 'Users'));
-
-            docs.forEach(doc => {
-                var data = doc.data();
-                var table = document.getElementById('table');
-                var row = table.insertRow(index);
-
-                var name = data.username;
-                var status = 'Confirmed';
-
-                var cell1 = row.insertCell(0);
-                var cell2 = row.insertCell(1);
-                var cell3 = row.insertCell(2);
-
-                cell1.innerHTML = name;
-                cell2.innerHTML = status;
-                cell3.className = 'view-manage-buttons';
-
-                var viewButton = document.createElement('button');
-                viewButton.className = 'bwt';
-                viewButton.id = String(name);
-                viewButton.innerHTML = 'View';
-                viewButton.onclick = function() {
-                    //open user profile
-                };
-                cell3.appendChild(viewButton);
-                index++;
-            });
-        }*/
         async function ownerDisplay() {
             let querySnapshot = await getDocs(filterQuery);
             let index = 1;
@@ -181,44 +150,7 @@ export default {
                 }
             });
         }
-        /*let docs = await getDocs(collection(db, 'Users'));
-            let index = 1;
 
-            docs.forEach(doc => {
-                var data = doc.data();
-                var table = document.getElementById('table');
-                var row = table.insertRow(index);
-
-                var name = data.username;
-                var status = 'Confirmed';
-
-                var cell1 = row.insertCell(0);
-                var cell2 = row.insertCell(1);
-                var cell3 = row.insertCell(2);
-
-                cell1.innerHTML = name;
-                cell2.innerHTML = status;
-                cell3.className = 'view-manage-buttons';
-
-                var viewButton = document.createElement('button');
-                var manageButton = document.createElement('button');
-                viewButton.className = 'bwt';
-                viewButton.id = String(name);
-                viewButton.innerHTML = 'View';
-                viewButton.onclick = function() {
-                    //open user profile
-                };
-                manageButton.className = 'bwt';
-                manageButton.id = String(name);
-                manageButton.innerHTML = 'Manage';
-                manageButton.onclick = function() {
-                    //open user profile
-                };
-                cell3.appendChild(viewButton);
-                cell3.appendChild(manageButton);
-                index++;
-            });
-        }*/
         const auth = getAuth();
         onAuthStateChanged(auth, user => {
             if (user) {
