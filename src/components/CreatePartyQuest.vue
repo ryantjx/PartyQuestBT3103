@@ -200,6 +200,7 @@ export default {
                     requirements: [requirements],
                     status: 'Not Started',
                     participants: [this.username],
+                    participantStatus: ['Not confirmed'],
                 });
                 console.log('Generating random String');
                 this.$emit('Created');

@@ -26,6 +26,7 @@
                     <th>Creator</th>
                     <th>Participants</th>
                     <th>Status</th>
+                    <th>Action</th>
                 </tr>
             </thead>
         </table>
@@ -67,7 +68,7 @@ export default {
                 var row = table.insertRow(idx);
 
                 // get specified data from documents
-                var creator = pqDoc.groupCreatorId;
+                var creator = pqDoc.groupCreatorid;
                 var brand = pqDoc.brand;
                 var status = pqDoc.status;
                 var participants = pqDoc.participants.length;
@@ -78,6 +79,7 @@ export default {
                 var cell2 = row.insertCell(2);
                 var cell3 = row.insertCell(3);
                 var cell4 = row.insertCell(4);
+                var cell5 = row.insertCell(5);
 
                 // populate the empty cells
                 cell0.innerHTML = idx;
@@ -85,7 +87,16 @@ export default {
                 cell2.innerHTML = creator;
                 cell3.innerHTML = participants;
                 cell4.innerHTML = status;
+                cell5.className = 'view-button';
 
+                var viewButton = document.createElement('button');
+                viewButton.className = 'bwt';
+                viewButton.id = String(docs.id);
+                viewButton.innerHTML = 'View';
+                viewButton.onclick = function() {
+                    window.location.replace('/pq/' + docs.id);
+                };
+                cell5.appendChild(viewButton);
                 // increase counter (s/no.)
                 idx += 1;
                 console.log(pqDoc);
@@ -98,6 +109,17 @@ export default {
 </script>
 
 <style>
+.bwt {
+    color: black;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 8px 8px;
+    /* color: rgb(243, 236, 236); */
+    /* background-color: rgb(255, 94, 0); */
+}
+
 #table {
     border-collapse: collapse;
     margin: 25px 0;

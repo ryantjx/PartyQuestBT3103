@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 Vue.use(Vuex);
+
 export default new Vuex.Store({
     //state contains information.
     state: {
@@ -16,6 +17,8 @@ export default new Vuex.Store({
         user(state) {
             return state.user;
         },
+        getMyUuid: state => state.me.uuid,
+        getHistoryMsgs: state => state.history,
     },
     // To make changes to state.
     //The only way to actually change state in a Vuex store is by committing a mutation.
@@ -25,6 +28,14 @@ export default new Vuex.Store({
         },
         SET_USER(state, data) {
             state.user.data = data;
+        },
+        setMe(state, { me }) {
+            state.me = me;
+        },
+        addHistory(state, { history }) {
+            history.forEach(element => {
+                state.history.push(element.entry);
+            });
         },
     },
     //Actions commit to mutations
