@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 id="Participants">Participants -> 0/100</h1>
+        <h1 id="Participants"></h1>
         <table id="table" class="auto-index">
             <tr>
                 <th>Name</th>
@@ -20,89 +20,144 @@
 <script>
 import firebaseApp from '../../firebase.js';
 import { getFirestore } from 'firebase/firestore';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+var uuid;
 
 export default {
     name: 'Participants',
+
+    data() {
+        uuid = this.$route.params.id;
+        return {
+            id: this.$route.params.id,
+        };
+    },
+
     mounted() {
+        const db = getFirestore(firebaseApp);
+        let filterQuery = query(
+            collection(db, 'PartyQuests'),
+            where('partyQuestid', '==', uuid)
+        );
+        console.log('filterquery');
+        console.log(filterQuery);
         async function participantDisplay() {
-            const db = getFirestore(firebaseApp);
-            let docs = await getDocs(collection(db, 'Users'));
+            let querySnapshot = await getDocs(filterQuery);
             let index = 1;
+            querySnapshot.forEach(docs => {
+                //get documents
+                let pqDoc = docs.data();
+                //let participants = pqDoc.participants;
+                console.log(pqDoc);
+                console.log(pqDoc.participants.length);
+                for (let x = 0; x < pqDoc.participants.length; x++) {
+                    console.log(x);
+                    console.log(pqDoc.participants[x]);
+                    console.log(pqDoc.participantStatus[x]);
 
-            docs.forEach(doc => {
-                var data = doc.data();
-                var table = document.getElementById('table');
-                var row = table.insertRow(index);
+                    let ppl = document.getElementById('Participants');
+                    let a =
+                        'Participants: ' +
+                        pqDoc.participants.length +
+                        '/' +
+                        pqDoc.numOfPeople;
+                    document.getElementById('Participants').innerHTML = a;
+                    console.log(ppl.innerHTML);
 
-                var name = data.username;
-                var status = 'Confirmed';
+                    var table = document.getElementById('table');
+                    var row = table.insertRow(index);
 
-                var cell1 = row.insertCell(0);
-                var cell2 = row.insertCell(1);
-                var cell3 = row.insertCell(2);
+                    var name = pqDoc.participants[x];
+                    var status = pqDoc.participantStatus[x];
 
-                cell1.innerHTML = name;
-                cell2.innerHTML = status;
-                cell3.className = 'view-manage-buttons';
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    var cell3 = row.insertCell(2);
 
-                var viewButton = document.createElement('button');
-                viewButton.className = 'bwt';
-                viewButton.id = String(name);
-                viewButton.innerHTML = 'View';
-                viewButton.onclick = function() {
-                    //open user profile
-                };
-                cell3.appendChild(viewButton);
-                index++;
+                    cell1.innerHTML = name;
+                    cell2.innerHTML = status;
+
+                    var viewButton = document.createElement('button');
+                    viewButton.className = 'bwt';
+                    viewButton.id = String(name);
+                    viewButton.innerHTML = 'View';
+                    viewButton.onclick = function() {
+                        //open user profile
+                    };
+                    cell3.appendChild(viewButton);
+                    index++;
+                }
             });
         }
+
         async function ownerDisplay() {
-            const db = getFirestore(firebaseApp);
-            let docs = await getDocs(collection(db, 'Users'));
+            let querySnapshot = await getDocs(filterQuery);
             let index = 1;
+            querySnapshot.forEach(docs => {
+                console.log('querysnapshot');
+                console.log(querySnapshot);
+                //get documents
+                let pqDoc = docs.data();
+                //let participants = pqDoc.participants;
+                console.log(pqDoc);
+                console.log(pqDoc.participants.length);
+                for (let x = 0; x < pqDoc.participants.length; x++) {
+                    console.log(x);
+                    console.log(pqDoc.participants[x]);
+                    console.log(pqDoc.participantStatus[x]);
 
-            docs.forEach(doc => {
-                var data = doc.data();
-                var table = document.getElementById('table');
-                var row = table.insertRow(index);
+                    let ppl = document.getElementById('Participants');
+                    let a =
+                        'Participants: ' +
+                        pqDoc.participants.length +
+                        '/' +
+                        pqDoc.numOfPeople;
+                    document.getElementById('Participants').innerHTML = a;
+                    console.log(ppl.innerHTML);
 
-                var name = data.username;
-                var status = 'Confirmed';
+                    var table = document.getElementById('table');
+                    var row = table.insertRow(index);
 
-                var cell1 = row.insertCell(0);
-                var cell2 = row.insertCell(1);
-                var cell3 = row.insertCell(2);
+                    var name = pqDoc.participants[x];
+                    var status = pqDoc.participantStatus[x];
 
-                cell1.innerHTML = name;
-                cell2.innerHTML = status;
-                cell3.className = 'view-manage-buttons';
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    var cell3 = row.insertCell(2);
 
-                var viewButton = document.createElement('button');
-                var manageButton = document.createElement('button');
-                viewButton.className = 'bwt';
-                viewButton.id = String(name);
-                viewButton.innerHTML = 'View';
-                viewButton.onclick = function() {
-                    //open user profile
-                };
-                manageButton.className = 'bwt';
-                manageButton.id = String(name);
-                manageButton.innerHTML = 'Manage';
-                manageButton.onclick = function() {
-                    //open user profile
-                };
-                cell3.appendChild(viewButton);
-                cell3.appendChild(manageButton);
-                index++;
+                    cell1.innerHTML = name;
+                    cell2.innerHTML = status;
+                    cell3.className = 'view-manage-buttons';
+
+                    var viewButton = document.createElement('button');
+                    var manageButton = document.createElement('button');
+                    viewButton.className = 'bwt';
+                    viewButton.id = String(name);
+                    viewButton.innerHTML = 'View';
+                    viewButton.onclick = function() {
+                        //open user profile
+                    };
+                    manageButton.className = 'bwt';
+                    manageButton.id = String(name);
+                    manageButton.innerHTML = 'Manage';
+                    manageButton.onclick = function() {
+                        //open user profile
+                    };
+                    cell3.appendChild(viewButton);
+                    cell3.appendChild(manageButton);
+                    index++;
+                }
             });
         }
+
         const auth = getAuth();
         onAuthStateChanged(auth, user => {
             if (user) {
+                console.log('In Owner Display');
                 ownerDisplay(user.email);
             } else {
+                console.log('In participant display');
                 participantDisplay(user.email);
             }
         });

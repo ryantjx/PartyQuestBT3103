@@ -68,7 +68,7 @@ export default {
                 var row = table.insertRow(idx);
 
                 // get specified data from documents
-                var creator = pqDoc.groupCreatorId;
+                var creator = pqDoc.groupCreatorid;
                 var brand = pqDoc.brand;
                 var status = pqDoc.status;
                 var participants = pqDoc.participants.length;

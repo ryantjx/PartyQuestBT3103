@@ -13,6 +13,7 @@
     "chat-engine": "^0.9.21",
     "core-js": "^3.6.5",
     "firebase": "^9.6.10",
+    "pubnub-vue": "^1.0.1",
     "vue": "^2.6.11",
     "vue-carousel": "^0.18.0",
     "vue-chat-engine": "0.0.7",
