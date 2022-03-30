@@ -23,7 +23,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto"></ul>
                 <ul class="navbar-nav ml-auto">
-                    <template v-if="loading || user.loggedIn">
+                    <template v-if="!loading || user.loggedIn">
                         <SearchBar />
                         <div class="nav-item">{{ user.data.displayName }}</div>
                         <li class="nav-item">

@@ -21,7 +21,7 @@
                             Amount: {{ value.totalAmount }}
                         </p>
                         <p class="card-text-status">
-                            Status {{ value.status }}
+                            Status: {{ value.status }}
                         </p>
                         <a v-bind:href="value.itemLink" class="card-link"
                             >Item Link</a
