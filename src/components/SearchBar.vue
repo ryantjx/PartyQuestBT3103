@@ -1,12 +1,19 @@
 <template>
     <div class="container">
-        <input
-            id="search"
-            type="text"
-            placeholder="Type here..."
-            v-model="message"
-            v-on:keydown.enter="pushToSearchResultsPage()"
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
         />
+        <div class="searchbar">
+            <i class="fa fa-search"></i>
+            <input
+                id="search"
+                type="text"
+                placeholder="Type here..."
+                v-model="message"
+                v-on:keydown.enter="pushToSearchResultsPage()"
+            />
+        </div>
     </div>
 </template>
 
@@ -36,12 +43,18 @@ export default {
 </script>
 
 <style scoped>
+.searchbar {
+}
+
 #search {
     background-color: white;
     border-color: black;
-    padding: 15px 32px;
+    padding: 12px 28px;
     text-align: left;
     display: inline-block;
     font-size: 16px;
+    margin-inline-start: 16px;
+    width: 30vw;
+    border-radius: 4px 4px;
 }
 </style>
