@@ -1,14 +1,16 @@
 <template>
     <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-        <ul class="navbar-nav ml-auto">
+        <ul class="sidebar">
             <template v-if="user.loggedIn">
-                <Sidebar />
+                <div class="top-left-side">
+                    <Sidebar />
+                    <router-link to="/home" class="navbar-brand"
+                        ><span>PartyQuest</span></router-link
+                    >
+                </div>
             </template>
         </ul>
         <div class="container" id="topbar">
-            <router-link to="/home" class="navbar-brand"
-                >PartyQuest</router-link
-            >
             <button
                 class="navbar-toggler"
                 type="button"
@@ -21,12 +23,16 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto"></ul>
-                <ul class="navbar-nav ml-auto">
-                    <template v-if="loading || user.loggedIn">
+                <!-- <ul class="navbar-nav ms-auto">
+                    <template
+                        class="top-right-side"
+                        v-if="loading || user.loggedIn"
+                    >
                         <SearchBar />
-                        <div class="nav-item">{{ user.data.displayName }}</div>
-                        <li class="nav-item">
+                        <div class="nav-item-username">
+                            Welcome, {{ user.data.displayName }}!
+                        </div>
+                        <li class="nav-item-btn">
                             <CreatePQButton />
                         </li>
                     </template>
@@ -42,7 +48,31 @@
                             >
                         </li>
                     </template>
-                </ul>
+                </ul> -->
+                <template
+                    class="top-right-side"
+                    v-if="loading || user.loggedIn"
+                >
+                    <div class="loggedin">
+                        <SearchBar />
+                        <div class="nav-item-username">
+                            Welcome, {{ user.data.displayName }}!
+                        </div>
+                        <CreatePQButton />
+                    </div>
+                </template>
+                <template v-else>
+                    <div class="nav-item">
+                        <router-link to="login" class="nav-link"
+                            >Login</router-link
+                        >
+                    </div>
+                    <div class="nav-item">
+                        <router-link to="register" class="nav-link"
+                            >Register</router-link
+                        >
+                    </div>
+                </template>
             </div>
         </div>
     </nav>
@@ -101,6 +131,32 @@ export default {
 </script>
 
 <style scoped>
+.loggedin {
+    display: flex;
+    align-items: center;
+}
+
+.nav-item-username {
+    width: 10vw;
+}
+
+.nav-item-btn {
+    display: flex;
+    align-items: flex-end;
+}
+
+.navbar-brand {
+    margin-inline-start: 32px;
+}
+
+.top-left-side {
+    display: flex;
+    align-items: center;
+}
+
+.top-right-side {
+}
+
 #topbar {
     align-items: flex-start;
 }

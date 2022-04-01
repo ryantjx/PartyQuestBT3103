@@ -6,6 +6,7 @@ import firebaseApp from './firebase.js';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import store from './store';
 import PubNubVue from 'pubnub-vue';
+import VueConfirmDialog from 'vue-confirm-dialog';
 
 Vue.config.productionTip = false;
 
@@ -28,6 +29,7 @@ try {
 
 // ChatEngine injected into every component instance
 Vue.use(
+    VueConfirmDialog,
     PubNubVue,
     {
         subscribeKey: subscribe_Key,
@@ -36,7 +38,7 @@ Vue.use(
     },
     store
 );
-
+Vue.component('vue-confirm-dialog', VueConfirmDialog.default);
 function created() {
     this.$store.commit('setMe', { me });
 }

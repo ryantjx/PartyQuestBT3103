@@ -21,6 +21,7 @@ export default {
     border: none;
     color: white;
     padding: 15px 32px;
+    border-radius: 12px 12px;
     text-align: center;
     text-decoration: none;
     display: inline-block;

@@ -12,7 +12,7 @@
         <br /><br />
         <div class="buttons">
             <button class="confirm">Confirm</button>
-            <button class="leave">Leave PQ</button>
+            <button v-on:click="handleClick()" class="leave">Leave PQ</button>
         </div>
     </div>
 </template>
@@ -23,6 +23,7 @@ import { getFirestore } from 'firebase/firestore';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 var uuid;
+var groupCreatorid;
 
 export default {
     name: 'Participants',
@@ -33,7 +34,50 @@ export default {
             id: this.$route.params.id,
         };
     },
-
+    methods: {
+        handleClick() {
+            this.$confirm({
+                message: 'Confirm to leave PQ?',
+                button: {
+                    no: 'Stay',
+                    yes: 'Leave',
+                },
+                /**
+                 * Callback Function
+                 * @param {Boolean} confirm
+                 */
+                callback: async confirm => {
+                    if (confirm) {
+                        const db = getFirestore(firebaseApp);
+                        let filterQuery = query(
+                            collection(db, 'PartyQuests'),
+                            where('partyQuestid', '==', uuid)
+                        );
+                        let querySnapshot = await getDocs(filterQuery);
+                        querySnapshot.forEach(docs => {
+                            //get documents
+                            let pqDoc = docs.data();
+                            for (
+                                let x = 0;
+                                x < pqDoc.participants.length;
+                                x++
+                            ) {
+                                if (pqDoc.participants[x] == 'ryanng') {
+                                    pqDoc.participants.splice(1, 1);
+                                    pqDoc.participantStatus.splice(1, 1);
+                                } else {
+                                    //donothing;
+                                }
+                            }
+                        });
+                        window.location.replace('/home');
+                    } else {
+                        //donothing
+                    }
+                },
+            });
+        },
+    },
     mounted() {
         const db = getFirestore(firebaseApp);
         let filterQuery = query(
@@ -55,7 +99,7 @@ export default {
                     console.log(x);
                     console.log(pqDoc.participants[x]);
                     console.log(pqDoc.participantStatus[x]);
-
+                    groupCreatorid = pqDoc.groupCreatorid;
                     let ppl = document.getElementById('Participants');
                     let a =
                         'Participants: ' +
@@ -83,15 +127,40 @@ export default {
                     viewButton.id = String(name);
                     viewButton.innerHTML = 'View';
                     viewButton.onclick = function() {
-                        //open user profile
+                        window.location.replace(
+                            '/profile/' + pqDoc.participants[x]
+                        );
+                    };
+                    var reportButton = document.createElement('button');
+                    reportButton.className = 'bwt';
+                    reportButton.id = String(name);
+                    reportButton.innerHTML = 'Report';
+                    reportButton.onclick = function() {
+                        //report func
                     };
                     cell3.appendChild(viewButton);
+                    cell3.appendChild(reportButton);
                     index++;
                 }
             });
         }
 
         async function ownerDisplay() {
+            function updateFields(id, participants, participantStatus, x) {
+                db.collection('PartyQuests')
+                    .doc(id)
+                    .update({
+                        participants: participants.splice(x, 1),
+                        participantStatus: participantStatus.splice(x, 1),
+                    })
+                    .then(ref => {
+                        console.log(ref);
+                        window.location.reload();
+                    })
+                    .catch(err => {
+                        console.error(err);
+                    });
+            }
             let querySnapshot = await getDocs(filterQuery);
             let index = 1;
             querySnapshot.forEach(docs => {
@@ -131,34 +200,55 @@ export default {
                     cell3.className = 'view-manage-buttons';
 
                     var viewButton = document.createElement('button');
-                    var manageButton = document.createElement('button');
+                    var kickButton = document.createElement('button');
                     viewButton.className = 'bwt';
                     viewButton.id = String(name);
                     viewButton.innerHTML = 'View';
                     viewButton.onclick = function() {
-                        //open user profile
+                        window.location.replace(
+                            '/profile/' + pqDoc.participants[x]
+                        );
                     };
-                    manageButton.className = 'bwt';
-                    manageButton.id = String(name);
-                    manageButton.innerHTML = 'Manage';
-                    manageButton.onclick = function() {
-                        //open user profile
+                    var reportButton = document.createElement('button');
+                    reportButton.className = 'bwt';
+                    reportButton.id = String(name);
+                    reportButton.innerHTML = 'Report';
+                    reportButton.onclick = function() {
+                        //report func
                     };
-                    cell3.appendChild(viewButton);
-                    cell3.appendChild(manageButton);
-                    index++;
+                    if (pqDoc.participants[x] == pqDoc.groupCreatorid) {
+                        cell3.appendChild(viewButton);
+                        cell3.appendChild(reportButton);
+                        index++;
+                    } else {
+                        kickButton.className = 'bwt';
+                        kickButton.id = String(name);
+                        kickButton.innerHTML = 'Kick';
+                        kickButton.onclick = function() {
+                            updateFields(
+                                docs.id,
+                                pqDoc.participants,
+                                pqDoc.participantStatus,
+                                x
+                            );
+                        };
+                        cell3.appendChild(viewButton);
+                        cell3.appendChild(kickButton);
+                        cell3.appendChild(reportButton);
+                        index++;
+                    }
                 }
             });
         }
 
         const auth = getAuth();
         onAuthStateChanged(auth, user => {
-            if (user) {
+            if (user.data.displayName == groupCreatorid) {
                 console.log('In Owner Display');
-                ownerDisplay(user.email);
+                ownerDisplay();
             } else {
                 console.log('In participant display');
-                participantDisplay(user.email);
+                participantDisplay();
             }
         });
         // async function viewUser(name) {
@@ -219,7 +309,7 @@ td {
 }
 
 .bwt {
-    color: black;
+    /* color: black; */
     text-align: center;
     display: inline-block;
     text-decoration: none;
