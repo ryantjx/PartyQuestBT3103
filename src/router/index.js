@@ -63,12 +63,12 @@ const routes = [
         component: ProfilePage,
     },
     {
-        path: '/profile/:id',
+        path: '/profile/user/:id',
         name: 'OtherUserProfile',
         component: OtherUserProfile,
     },
     {
-        path: '/profile/editprofile',
+        path: '/profile/editProfile',
         name: 'EditProfilePage',
         component: EditProfilePage,
     },
