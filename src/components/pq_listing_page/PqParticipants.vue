@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="detailpage">
         <h1 id="Participants"></h1>
         <table id="table" class="auto-index" v-onload="test()">
             <tr>
@@ -31,12 +31,50 @@
                 </div>
             </template>
         </div>
+        <div>
+            <ClientOnly>
+                <Modal v-model="showSecondModal" title="Report User">
+                    <form novalidate>
+                        <div class="form-group">
+                            <label for="formField1">Reason for report: </label>
+                            <input
+                                id="formField1"
+                                type="textarea"
+                                class="form-control"
+                                placeholder=""
+                                rows="4"
+                            />
+                        </div>
+                        <div class="row modal-footer">
+                            <div class="col-sm-12">
+                                <div class="float-right">
+                                    <button
+                                        class="btn btn-primary"
+                                        type="button"
+                                        @click="submit()"
+                                    >
+                                        Submit
+                                    </button>
+                                    <button
+                                        class="btn btn-secondary ml-2"
+                                        type="button"
+                                        @click="cancel()"
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </Modal>
+            </ClientOnly>
+        </div>
     </div>
 </template>
 
 <script>
 import firebaseApp from '../../firebase.js';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore, addDoc } from 'firebase/firestore';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 var uuid;
@@ -51,9 +89,32 @@ export default {
             id: this.$route.params.id,
             grpId: '',
             userName: '',
+            showSecondModal: false,
         };
     },
     methods: {
+        async submit() {
+            var reason = document.getElementById('formField1').value;
+            try {
+                const db = getFirestore(firebaseApp);
+                const docRef = await addDoc(collection(db, 'Report'), {
+                    Reporter: this.userName,
+                    ReportedUser: 'test',
+                    Reason: reason,
+                });
+                console.log(docRef);
+                window.location.reload();
+            } catch (err) {
+                alert(err);
+            }
+            this.showSecondModal = false;
+        },
+        cancel() {
+            this.showSecondModal = false;
+        },
+        reportUser() {
+            this.showSecondModal = true;
+        },
         async test() {
             const db = getFirestore(firebaseApp);
             let filterQuery = query(
@@ -122,6 +183,7 @@ export default {
         },
     },
     mounted() {
+        const page = this;
         const db = getFirestore(firebaseApp);
         let filterQuery = query(
             collection(db, 'PartyQuests'),
@@ -184,7 +246,7 @@ export default {
                         reportButton.id = String(name);
                         reportButton.innerHTML = 'Test2';
                         reportButton.onclick = function() {
-                            //report func
+                            page.reportUser();
                         };
 
                         var kickButton = document.createElement('button');
@@ -220,7 +282,7 @@ export default {
                         reportButton2.id = String(name);
                         reportButton2.innerHTML = 'Report';
                         reportButton2.onclick = function() {
-                            //report func
+                            page.reportUser();
                         };
                         cell3.appendChild(viewButton2);
                         cell3.appendChild(reportButton2);
@@ -299,7 +361,7 @@ export default {
                     reportButton.id = String(name);
                     reportButton.innerHTML = 'Report';
                     reportButton.onclick = function() {
-                        //report func
+                        page.reportUser();
                     };
                     if (pqDoc.participants[x] == pqDoc.groupCreatorid) {
                         cell3.appendChild(viewButton);

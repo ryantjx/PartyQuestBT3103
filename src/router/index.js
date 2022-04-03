@@ -18,7 +18,6 @@ import SearchResultPQ from '../components/SearchResultPQ';
 import SearchResultUser from '../components/SearchResultUser';
 import EditProfilePage from '../views/EditProfilePage';
 import OtherUserProfile from '../views/OtherUserProfilePage';
-import test from '../components/test';
 
 Vue.use(VueRouter);
 
@@ -128,11 +127,6 @@ const routes = [
         name: 'PQDetails',
         component: PqDetails,
         // props: true,
-    },
-    {
-        path: '/test',
-        name: 'test',
-        component: test,
     },
 ];
 
