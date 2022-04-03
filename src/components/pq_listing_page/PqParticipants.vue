@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1 id="Participants"></h1>
-        <table id="table" class="auto-index">
+        <table id="table" class="auto-index" v-onload="test()">
             <tr>
                 <th>Name</th>
                 <th>Status</th>
@@ -10,9 +10,26 @@
         </table>
 
         <br /><br />
-        <div class="buttons">
-            <button class="confirm">Confirm</button>
-            <button v-on:click="handleClick()" class="leave">Leave PQ</button>
+        <div class="container" id="buttons">
+            <!-- need to change check to check if user is a participant-->
+            <template v-if="userName == grpId">
+                <!--For Owner View-->
+                <div class="buttons">
+                    <button class="confirm">Complete/Confirm</button>
+                    <button v-on:click="handleClick()" class="leave">
+                        Leave PQ
+                    </button>
+                </div>
+            </template>
+            <template v-else>
+                <!--For Participant View-->
+                <div class="buttons">
+                    <button v-on:click="handleJoin()" class="join">Join</button>
+                    <button v-on:click="handleSave()" class="save">
+                        Save PQ
+                    </button>
+                </div>
+            </template>
         </div>
     </div>
 </template>
@@ -32,9 +49,35 @@ export default {
         uuid = this.$route.params.id;
         return {
             id: this.$route.params.id,
+            grpId: '',
+            userName: '',
         };
     },
     methods: {
+        async test() {
+            const db = getFirestore(firebaseApp);
+            let filterQuery = query(
+                collection(db, 'PartyQuests'),
+                where('partyQuestid', '==', uuid)
+            );
+            console.log('filterquery');
+            console.log(filterQuery);
+
+            const auth = getAuth(firebaseApp);
+            const user = auth.currentUser;
+            let querySnapshot = await getDocs(filterQuery);
+            querySnapshot.forEach(docs => {
+                //get documents
+                let pqDoc = docs.data();
+                this.grpId = pqDoc.groupCreatorid;
+                this.userName = user.displayName;
+            });
+        },
+        // add handleSave handleJoin functions
+        //handleSave -> bookmark within Participant database,
+        //save PQ title (handle error for already saved -> Alert already saved)
+        //handleJoin -> add user id to pq list of participants -> check for max
+
         handleClick() {
             this.$confirm({
                 message: 'Confirm to leave PQ?',
@@ -87,14 +130,14 @@ export default {
         console.log('filterquery');
         console.log(filterQuery);
         async function participantDisplay() {
+            const auth = getAuth(firebaseApp);
+            const user = auth.currentUser;
             let querySnapshot = await getDocs(filterQuery);
             let index = 1;
             querySnapshot.forEach(docs => {
                 //get documents
                 let pqDoc = docs.data();
                 //let participants = pqDoc.participants;
-                console.log(pqDoc);
-                console.log(pqDoc.participants.length);
                 for (let x = 0; x < pqDoc.participants.length; x++) {
                     console.log(x);
                     console.log(pqDoc.participants[x]);
@@ -122,25 +165,67 @@ export default {
                     cell1.innerHTML = name;
                     cell2.innerHTML = status;
 
-                    var viewButton = document.createElement('button');
-                    viewButton.className = 'bwt';
-                    viewButton.id = String(name);
-                    viewButton.innerHTML = 'View';
-                    viewButton.onclick = function() {
-                        window.location.replace(
-                            '/profile/' + pqDoc.participants[x]
-                        );
-                    };
-                    var reportButton = document.createElement('button');
-                    reportButton.className = 'bwt';
-                    reportButton.id = String(name);
-                    reportButton.innerHTML = 'Report';
-                    reportButton.onclick = function() {
-                        //report func
-                    };
-                    cell3.appendChild(viewButton);
-                    cell3.appendChild(reportButton);
-                    index++;
+                    //Check for Owner or Participant
+                    if (pqDoc.groupCreatorid == user.displayName) {
+                        console.log('Owner Table Functions');
+
+                        var viewButton = document.createElement('button');
+                        viewButton.className = 'bwt';
+                        viewButton.id = String(name);
+                        viewButton.innerHTML = 'Test';
+                        viewButton.onclick = function() {
+                            window.location.replace(
+                                '/profile/' + pqDoc.participants[x]
+                            );
+                        };
+
+                        var reportButton = document.createElement('button');
+                        reportButton.className = 'bwt';
+                        reportButton.id = String(name);
+                        reportButton.innerHTML = 'Test2';
+                        reportButton.onclick = function() {
+                            //report func
+                        };
+
+                        var kickButton = document.createElement('button');
+                        kickButton.className = 'bwt';
+                        kickButton.id = String(name);
+                        kickButton.innerHTML = 'Kick';
+                        kickButton.onclick = function() {
+                            //kick function
+                        };
+
+                        cell3.appendChild(viewButton);
+                        cell3.appendChild(reportButton);
+                        cell3.appendChild(kickButton);
+                        index++;
+                    } else {
+                        console.log('Participant Table Functions');
+                        var viewButton2 = document.createElement('button');
+                        viewButton2.className = 'bwt';
+                        viewButton2.id = String(name);
+                        viewButton2.innerHTML = 'View';
+                        viewButton2.onclick = function() {
+                            window.location.replace(
+                                '/profile/' + pqDoc.participants[x]
+                            );
+                        };
+
+                        //add check for whether user is participant already
+                        //if (user.displayName in pqDoc.participants){
+                        //add report button
+                        //}
+                        var reportButton2 = document.createElement('button');
+                        reportButton2.className = 'bwt';
+                        reportButton2.id = String(name);
+                        reportButton2.innerHTML = 'Report';
+                        reportButton2.onclick = function() {
+                            //report func
+                        };
+                        cell3.appendChild(viewButton2);
+                        cell3.appendChild(reportButton2);
+                        index++;
+                    }
                 }
             });
         }
@@ -243,10 +328,14 @@ export default {
 
         const auth = getAuth();
         onAuthStateChanged(auth, user => {
-            if (user.data.displayName == groupCreatorid) {
+            if (user.displayName == groupCreatorid) {
+                console.log(groupCreatorid);
+                console.log(user.displayName);
                 console.log('In Owner Display');
                 ownerDisplay();
             } else {
+                console.log(groupCreatorid);
+                console.log(user.displayName);
                 console.log('In participant display');
                 participantDisplay();
             }
@@ -346,6 +435,29 @@ td {
 
 .leave {
     background-color: red;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 8px 8px;
+}
+.join {
+    background-color: lightsalmon;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 8px 8px;
+}
+
+.save {
+    background-color: lightblue;
     border: none;
     color: white;
     padding: 15px 32px;
