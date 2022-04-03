@@ -1,39 +1,43 @@
 <template>
     <div class="navbar">
-        <div class="sidebar">
-            <template v-if="user.loggedIn">
-                <div class="top-left-side">
-                    <Sidebar />
-                    <router-link to="/home" class="navbar-brand"
-                        ><h2>PartyQuest</h2></router-link
-                    >
-                </div>
-            </template>
-        </div>
-        <div class="container" id="topbar">
-            <div v-if="loading || user.loggedIn" class="work">
-                <div class="top-right-side">
-                    <div class="nav-bar-search">
-                        <SearchBar />
+        <div class="wrapper">
+            <div class="sidebar">
+                <template v-if="user.loggedIn">
+                    <div class="top-left-side">
+                        <Sidebar />
+                        <router-link to="/home" class="navbar-brand"
+                            ><h2>PartyQuest</h2></router-link
+                        >
                     </div>
-                    <div class="username-btn">
-                        <div class="nav-item-username">
-                            Welcome, {{ user.data.displayName }}!
-                        </div>
-                        <div class="create-pq-btn">
-                            <CreatePQButton />
-                        </div>
-                    </div>
-                </div>
+                </template>
             </div>
-            <div v-else>
-                <div class="nav-item">
-                    <router-link to="login" class="nav-link">Login</router-link>
+            <div class="container" id="topbar">
+                <div v-if="loading || user.loggedIn" class="work">
+                    <div class="top-right-side">
+                        <div class="nav-bar-search">
+                            <SearchBar />
+                        </div>
+                        <div class="username-btn">
+                            <div class="nav-item-username">
+                                Welcome, {{ user.data.displayName }}!
+                            </div>
+                            <div class="create-pq-btn">
+                                <CreatePQButton />
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="nav-item">
-                    <router-link to="register" class="nav-link"
-                        >Register</router-link
-                    >
+                <div v-else>
+                    <div class="nav-item">
+                        <router-link to="login" class="nav-link"
+                            >Login</router-link
+                        >
+                    </div>
+                    <div class="nav-item">
+                        <router-link to="register" class="nav-link"
+                            >Register</router-link
+                        >
+                    </div>
                 </div>
             </div>
         </div>
@@ -94,23 +98,28 @@ export default {
 
 <style scoped>
 .navbar {
-    display: flex;
     overflow: hidden;
     position: absolute; /* Set the navbar to fixed position */
     top: 0.5vw; /* Position the navbar at the top of the page */
     width: 100%; /* Full width */
 }
 
+.wrapper {
+    display: flex;
+}
+
 .container {
-    /* background-color: black; */
+    /* background-color: green; */
 }
 
 .work {
-    width: 100%;
+    width: 70vw;
     justify-content: space-between;
 }
 
 .sidebar {
+    width: 30vw;
+    /* background: orange; */
 }
 
 .top-right-side {
