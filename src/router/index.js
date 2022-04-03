@@ -18,6 +18,7 @@ import SearchResultPQ from '../components/SearchResultPQ';
 import SearchResultUser from '../components/SearchResultUser';
 import EditProfilePage from '../views/EditProfilePage';
 import OtherUserProfile from '../views/OtherUserProfilePage';
+import test from '../components/test';
 
 Vue.use(VueRouter);
 
@@ -68,7 +69,7 @@ const routes = [
         component: OtherUserProfile,
     },
     {
-        path: '/profile/editProfile',
+        path: '/editProfile',
         name: 'EditProfilePage',
         component: EditProfilePage,
     },
@@ -127,6 +128,11 @@ const routes = [
         name: 'PQDetails',
         component: PqDetails,
         // props: true,
+    },
+    {
+        path: '/test',
+        name: 'test',
+        component: test,
     },
 ];
 

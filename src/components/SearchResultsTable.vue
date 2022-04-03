@@ -2,14 +2,14 @@
     <div>
         <h3>PartyQuest Search Results</h3>
         <br />
-        <form>
+        <form class="search-res-table">
             <input
                 id="search"
                 type="search"
                 placeholder="Search by Brand ..."
                 v-model="message"
             />
-            <button type="button" v-on:click="searchByBrand()">
+            <button type="search-button" v-on:click="searchByBrand()">
                 Search
             </button>
         </form>
@@ -260,7 +260,7 @@ export default {
 h3 {
     text-align: center;
 }
-form {
+.search-res-table {
     color: #555;
     display: flex;
     padding: 2px;
@@ -278,11 +278,12 @@ input[type='search'] {
     color: inherit;
     border: 1px solid transparent;
     border-radius: inherit;
+    width: 27vw;
 }
 input[type='search']::placeholder {
     color: #bbb;
 }
-button[type='button'] {
+button[type='search-button'] {
     text-indent: -999px;
     overflow: hidden;
     width: 40px;

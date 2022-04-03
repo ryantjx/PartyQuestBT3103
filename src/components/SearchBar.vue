@@ -4,7 +4,7 @@
             <input
                 id="search"
                 type="search"
-                placeholder="Type here..."
+                placeholder="Search"
                 v-model="message"
                 v-on:keydown.enter="pushToSearchResultsPage()"
             />
@@ -41,21 +41,24 @@ export default {
 <style scoped>
 form {
     color: #555;
-    display: flex;
+    text-align: left;
+    display: inline-block;
     padding: 2px;
     border: 1px solid currentColor;
-    border-radius: 5px;
-    width: 100%;
+    margin-inline-start: 16px;
+    border-radius: 4px 4px;
+    width: 30vw;
 }
 input[type='search'] {
     border: none;
     background: transparent;
     margin: 0;
-    padding: 7px 8px;
+    padding: 7px 7px;
     font-size: 14px;
     color: inherit;
     border: 1px solid transparent;
     border-radius: inherit;
+    width: 27vw;
 }
 input[type='search']::placeholder {
     color: #bbb;
