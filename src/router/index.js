@@ -10,7 +10,7 @@ import ProfilePage from '../views/ProfilePage';
 import MyPQPage from '../views/MyPQPage';
 import ChatsPage from '../views/ChatsPage';
 import SavedPQ from '../components/SavedPQ';
-import CreatedPQ from '../components/CreatedPQ';
+import CreatedPQPage from '../views/CreatedPQPage';
 import PqDetails from '../views/PqDetailsPage';
 import JoinedPQPage from '../views/JoinedPQPage';
 import SearchResultsPage from '../views/SearchResultsPage';
@@ -63,12 +63,12 @@ const routes = [
         component: ProfilePage,
     },
     {
-        path: '/profile/:id',
+        path: '/profile/user/:id',
         name: 'OtherUserProfile',
         component: OtherUserProfile,
     },
     {
-        path: '/profile/editprofile',
+        path: '/profile/editProfile',
         name: 'EditProfilePage',
         component: EditProfilePage,
     },
@@ -98,9 +98,9 @@ const routes = [
         component: JoinedPQPage,
     },
     {
-        path: '/mypq/created',
-        name: 'CreatedPQ',
-        component: CreatedPQ,
+        path: '/mypq/CreatedPQPage',
+        name: 'CreatedPQPage',
+        component: CreatedPQPage,
     },
     {
         path: '/searchresults',

@@ -15,7 +15,7 @@
                 <div class="top-right-side">
                     <SearchBar />
                     <div class="nav-item-username">
-                        Welcome, {{ user.data.displayName }}!
+                        Welcome, {{ user.displayName }}!
                     </div>
                     <CreatePQButton />
                 </div>
