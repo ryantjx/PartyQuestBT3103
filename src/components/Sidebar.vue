@@ -48,6 +48,14 @@
                                     ></router-link
                                 >
                             </div>
+                            <div class="row">
+                                <router-link to="/test" class="sidebar-rows">
+                                    <i class="fa fa-comments"></i
+                                    ><span class="text"
+                                        >testing</span
+                                    ></router-link
+                                >
+                            </div>
                             <!-- <b-nav-item id="menuitem" href="home" @click="hide"
                                 >Home</b-nav-item
                             >
