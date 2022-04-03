@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3>PartyQuest Search Results</h3>
+        <h3 class="pq-search-header">PartyQuest Search Results</h3>
         <br />
         <form class="search-res-table">
             <input
@@ -257,7 +257,7 @@ export default {
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
 }
-h3 {
+.pq-search-header {
     text-align: center;
 }
 .search-res-table {

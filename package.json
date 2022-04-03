@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@kouts/vue-modal": "^2.1.4",
     "axios": "^0.26.1",
     "bootstrap-vue": "^2.1.0",
     "chat-engine": "^0.9.21",

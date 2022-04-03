@@ -7,6 +7,8 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import store from './store';
 import PubNubVue from 'pubnub-vue';
 import VueConfirmDialog from 'vue-confirm-dialog';
+import VueModal from '@kouts/vue-modal';
+import '@kouts/vue-modal/dist/vue-modal.css';
 
 Vue.config.productionTip = false;
 
@@ -38,6 +40,7 @@ Vue.use(
     },
     store
 );
+Vue.component('Modal', VueModal);
 Vue.component('vue-confirm-dialog', VueConfirmDialog.default);
 function created() {
     this.$store.commit('setMe', { me });
