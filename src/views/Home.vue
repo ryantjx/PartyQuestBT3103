@@ -24,7 +24,6 @@
 import firebaseApp from '../firebase.js';
 import { getFirestore } from 'firebase/firestore';
 import { collection, getDocs, query, where } from 'firebase/firestore';
-import { getStorage, ref, getDownloadURL } from 'firebase/storage';
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import store from '../store.js';
@@ -32,7 +31,6 @@ import store from '../store.js';
 import PQBox from '../components/home_page/PQBox.vue';
 
 const db = getFirestore(firebaseApp);
-const storage = getStorage(firebaseApp);
 
 export default {
     name: 'Home',
@@ -98,35 +96,15 @@ export default {
                     pqMap['participants'] = pq['participants'];
                     pqMap['photoId'] = pq['photoId'];
 
-                    //obtain photo and pass it as a variable
-                    var photoReference = ref(storage, pqMap['photoId']);
-                    getDownloadURL(photoReference).then(value => {
-                        pqMap['imageUrl'] = value;
-                    });
-                    // this.getAndPushImage(photoReference).then(value => {
-                    //     imageUrl = value;
-                    //     console.log(
-                    //         'this is the image URL after this.getAndPushimage has ran: ',
-                    //         imageUrl
-                    //     );
-                    // });
-                    // );
-                    // console.log(
-                    //     'this is the image URL after this.getAndPushimage has ran: ',
-                    //     imageUrl
-                    // );
-                    // pqMap['imageUrl'] = imageUrl;
-
                     //Push map into array
                     itemsList.push(pqMap);
-                    // console.log(
-                    //     'this is the imageUrl being passed',
-                    //     pqMap['imageUrl']
-                    // );
                 }
             });
             // console.log('this is the items list passed', itemsList);
-            return itemsList;
+            console.log('type of existing pqs at get data: ', itemsList);
+            console.log('Json Stringify :', JSON.stringify(itemsList));
+            this.existingPQs = itemsList;
+            // return itemsList;
         },
     },
     mounted() {
@@ -145,11 +123,12 @@ export default {
                     user.displayName
                 );
                 this.user = user;
-                this.getData(this.user).then(value => {
-                    console.log('this is the completed list in mounted', value);
-                    console.log('type of mounted value : ', typeof value);
-                    this.passListasData(value);
-                });
+                this.getData(this.user);
+                // .then(value => {
+                //     console.log('this is the completed list in mounted', value);
+                //     console.log('type of mounted value : ', typeof value);
+                //     this.passListasData(value);
+                // });
             }
         });
     },
