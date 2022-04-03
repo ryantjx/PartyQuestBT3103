@@ -38,7 +38,7 @@ export default {
     border-radius: 16px 16px;
     padding-block-start: 16px;
     padding-block-end: 32px;
-    box-shadow: 10px 10px 10px 10px;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.15);
     /* /background: rgb(200, 201, 200); */
 }
 </style>

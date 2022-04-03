@@ -1,7 +1,7 @@
 <template>
     <div class="detailpage">
         <h1 id="Participants"></h1>
-        <table id="table" class="auto-index" v-onload="test()">
+        <table id="table-participants" class="auto-index" v-onload="test()">
             <tr>
                 <th>Name</th>
                 <th>Status</th>
@@ -214,7 +214,7 @@ export default {
                     document.getElementById('Participants').innerHTML = a;
                     console.log(ppl.innerHTML);
 
-                    var table = document.getElementById('table');
+                    var table = document.getElementById('table-participants');
                     var row = table.insertRow(index);
 
                     var name = pqDoc.participants[x];
@@ -332,7 +332,7 @@ export default {
                     document.getElementById('Participants').innerHTML = a;
                     console.log(ppl.innerHTML);
 
-                    var table = document.getElementById('table');
+                    var table = document.getElementById('table-participants');
                     var row = table.insertRow(index);
 
                     var name = pqDoc.participants[x];
@@ -439,13 +439,14 @@ h2 {
     font-weight: bold; */
 }
 
-table {
+#table-participants {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 30%;
     margin-left: auto;
     margin-right: auto;
     font-family: 'PT Serif', serif;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.15);
 }
 
 tr:nth-child(even) {

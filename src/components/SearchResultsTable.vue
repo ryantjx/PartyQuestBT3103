@@ -2,14 +2,18 @@
     <div>
         <h3 class="pq-search-header">PartyQuest Search Results</h3>
         <br />
-        <form class="search-res-table">
+        <form class="search-res-form">
             <input
                 id="search"
                 type="search"
                 placeholder="Search by Brand ..."
                 v-model="message"
             />
-            <button type="search-button" v-on:click="searchByBrand()">
+            <button
+                type="button"
+                class="search-button"
+                v-on:click="searchByBrand()"
+            >
                 Search
             </button>
         </form>
@@ -26,7 +30,7 @@
                 Search
             </button>
         </form> -->
-        <table id="table" class="auto-index">
+        <table id="search-result-table" class="auto-index">
             <thead>
                 <th></th>
                 <th>Title</th>
@@ -80,7 +84,7 @@ export default {
             querySnapshot.forEach(docs => {
                 // get documents
                 let pqDoc = docs.data();
-                var table = document.getElementById('table');
+                var table = document.getElementById('search-result-table');
                 var row = table.insertRow(idx);
 
                 // get specified data from documents
@@ -131,7 +135,7 @@ export default {
     methods: {
         clearTable() {
             console.warn('tryna clear the table');
-            var table = document.getElementById('table');
+            var table = document.getElementById('search-result-table');
             var rowCount = table.rows.length;
             while (--rowCount) {
                 table.deleteRow(rowCount);
@@ -156,7 +160,7 @@ export default {
             querySnapshot.forEach(docs => {
                 // get documents
                 let pqDoc = docs.data();
-                var table = document.getElementById('table');
+                var table = document.getElementById('search-result-table');
                 var row = table.insertRow(idx);
 
                 // get specified data from documents
@@ -206,7 +210,7 @@ export default {
 </script>
 
 <style>
-#table {
+#search-result-table {
     border-collapse: collapse;
     margin: 25px 0;
     font-size: 0.9em;
@@ -218,34 +222,34 @@ export default {
     margin-right: auto;
 }
 
-#table thead tr {
+#search-result-table thead tr {
     background-color: #89d5df;
     color: #422f06;
     text-align: left;
 }
 
-#table th,
-#table td {
+#search-result-table th,
+#search-result-table td {
     padding: 12px 15px;
 }
 
-#table tr {
+#search-result-table tr {
     border-bottom: 1px solid #dddddd;
 }
 
-#table tr:first-of-type {
+#search-result-table tr:first-of-type {
     background-color: #f3f3f3;
 }
 
-#table tr:nth-of-type(even) {
+#search-result-table tr:nth-of-type(even) {
     background-color: #fdfcfce7;
 }
 
-#table tr:nth-of-type(odd) {
+#search-result-table tr:nth-of-type(odd) {
     background-color: #f3f3f3;
 }
 
-#table tr:last-of-type {
+#search-result-table tr:last-of-type {
     border-bottom: 2px solid #89d5df;
 }
 .action_btns {
@@ -260,7 +264,7 @@ export default {
 .pq-search-header {
     text-align: center;
 }
-.search-res-table {
+.search-res-form {
     color: #555;
     display: flex;
     padding: 2px;
@@ -283,7 +287,7 @@ input[type='search'] {
 input[type='search']::placeholder {
     color: #bbb;
 }
-button[type='search-button'] {
+.search-button {
     text-indent: -999px;
     overflow: hidden;
     width: 40px;
@@ -297,7 +301,7 @@ button[type='search-button'] {
     cursor: pointer;
     opacity: 0.7;
 }
-button[type='button']:hover {
+.search-button:hover {
     opacity: 1;
 }
 </style>
