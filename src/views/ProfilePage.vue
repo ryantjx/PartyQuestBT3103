@@ -18,7 +18,7 @@
                                 <h6 class="user-email" v-if="user">
                                     {{ this.user.email }}
                                 </h6>
-                                <router-link to="/profile/editprofile"
+                                <router-link to="/editProfile"
                                     >Edit profile</router-link
                                 >
                             </div>

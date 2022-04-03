@@ -1,51 +1,47 @@
 <template>
-    <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-        <ul class="navbar-nav ml-auto">
-            <template v-if="user.loggedIn">
-                <Sidebar />
-            </template>
-        </ul>
-        <div class="container" id="topbar">
-            <router-link to="/home" class="navbar-brand"
-                >PartyQuest</router-link
-            >
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label
-            >
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto"></ul>
-                <ul class="navbar-nav ml-auto">
-                    <template v-if="!loading || user.loggedIn">
-                        <SearchBar />
-                        <div class="nav-item">{{ user.data.displayName }}</div>
-                        <li class="nav-item">
-                            <CreatePQButton />
-                        </li>
-                    </template>
-                    <template v-else>
-                        <li class="nav-item">
-                            <router-link to="login" class="nav-link"
-                                >Login</router-link
-                            >
-                        </li>
-                        <li class="nav-item">
-                            <router-link to="register" class="nav-link"
-                                >Register</router-link
-                            >
-                        </li>
-                    </template>
-                </ul>
+    <div class="navbar">
+        <div class="wrapper">
+            <div class="sidebar">
+                <template v-if="user.loggedIn">
+                    <div class="top-left-side">
+                        <Sidebar />
+                        <router-link to="/home" class="navbar-brand"
+                            ><h2>PartyQuest</h2></router-link
+                        >
+                    </div>
+                </template>
+            </div>
+            <div class="container" id="topbar">
+                <div v-if="loading || user.loggedIn" class="work">
+                    <div class="top-right-side">
+                        <div class="nav-bar-search">
+                            <SearchBar />
+                        </div>
+                        <div class="username-btn">
+                            <div class="nav-item-username">
+                                Welcome, {{ user.data.displayName }}!
+                            </div>
+                            <div class="create-pq-btn">
+                                <CreatePQButton />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div v-else>
+                    <div class="nav-item">
+                        <router-link to="login" class="nav-link"
+                            >Login</router-link
+                        >
+                    </div>
+                    <div class="nav-item">
+                        <router-link to="register" class="nav-link"
+                            >Register</router-link
+                        >
+                    </div>
+                </div>
             </div>
         </div>
-    </nav>
+    </div>
 </template>
 <script>
 import Sidebar from './Sidebar.vue';
@@ -101,7 +97,53 @@ export default {
 </script>
 
 <style scoped>
-#topbar {
-    align-items: flex-start;
+.navbar {
+    overflow: hidden;
+    position: absolute; /* Set the navbar to fixed position */
+    top: 0.5vw; /* Position the navbar at the top of the page */
+    width: 100%; /* Full width */
+}
+
+.wrapper {
+    display: flex;
+}
+
+.container {
+    /* background-color: green; */
+}
+
+.work {
+    width: 70vw;
+    justify-content: space-between;
+}
+
+.sidebar {
+    width: 30vw;
+    /* background: orange; */
+}
+
+.top-right-side {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.username-btn {
+    display: flex;
+    align-items: center;
+}
+
+.nav-item-username {
+    width: 10vw;
+}
+
+.navbar-brand {
+    margin-inline-start: 32px;
+    color: black;
+}
+
+.top-left-side {
+    display: flex;
+    align-items: center;
 }
 </style>

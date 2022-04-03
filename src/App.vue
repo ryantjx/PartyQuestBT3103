@@ -1,6 +1,10 @@
 <template>
-    <div>
-        <navbar></navbar>
+    <div id="appbg">
+        <vue-confirm-dialog></vue-confirm-dialog>
+        <navbar />
+        <br />
+        <br />
+        <hr />
         <main class="py-4">
             <router-view></router-view>
         </main>
@@ -8,7 +12,6 @@
 </template>
 
 <script>
-// import sidebar from './components/Sidebar.vue';
 import navbar from './components/Navbar';
 
 export default {

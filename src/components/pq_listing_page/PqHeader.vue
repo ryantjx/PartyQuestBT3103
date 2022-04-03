@@ -2,8 +2,11 @@
     <div class="header">
         <div class="float-left-child">
             <div class="combine">
-                <!--<img id="profilePic" />-->
-                <img src="../../assets/logo.png" alt="" />
+                <div v-if="images.length > 0">
+                    <div v-for="image in images" :key="image.src">
+                        <img :src="image.src" />
+                    </div>
+                </div>
                 <div class="title" id="title">
                     <h1></h1>
                 </div>
@@ -19,21 +22,43 @@
 import firebaseApp from '../../firebase.js';
 import { getFirestore } from 'firebase/firestore';
 import { collection, getDocs, query, where } from 'firebase/firestore';
-//import { getStorage, ref } from 'firebase/storage';
-//import getDownloadURL from 'firebase/storage';
-var uuid;
+import { getStorage, ref } from 'firebase/storage';
+import { getDownloadURL } from 'firebase/storage';
 
+var uuid;
+var picUrl;
+var listOfImages = [];
 export default {
     name: 'PqHeader',
 
     data() {
         uuid = this.$route.params.id;
         return {
+            images: listOfImages,
             id: this.$route.params.id,
         };
     },
-
     mounted() {
+        // async function displayPic() {
+        //     // var metaData = {
+        //     //     contentType: 'image/jpeg',
+        //     // };
+        //     const storage = getStorage();
+        //     // const storageRef = storage.ref();
+        //     // const imageRef = storageRef.child(picUrl);
+        //     const pathReference = ref(storage, picUrl);
+
+        //     // await imageRef.put(file, metaData);
+
+        //     // const downloadUrl = await imageRef.getDownloadURL();
+        //     getDownloadURL(pathReference)
+        //         .then(url => {
+        //             this.images.push({ src: url });
+        //         })
+        //         .catch(error => {
+        //             console.log(error);
+        //         });
+        // }
         async function display() {
             const db = getFirestore(firebaseApp);
             // create query
@@ -47,7 +72,22 @@ export default {
             querySnapshot.forEach(docs => {
                 // get documents
                 let pqDoc = docs.data();
+                picUrl = pqDoc.photoId;
+                const storage = getStorage();
+                // const storageRef = storage.ref();
+                // const imageRef = storageRef.child(picUrl);
+                const pathReference = ref(storage, picUrl);
 
+                // await imageRef.put(file, metaData);
+
+                // const downloadUrl = await imageRef.getDownloadURL();
+                getDownloadURL(pathReference)
+                    .then(url => {
+                        listOfImages.push({ src: url });
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
                 let title = document.getElementById('title');
                 console.log(title.innerHTML);
                 console.log('Changing');
@@ -81,12 +121,18 @@ export default {
             });
         }
         display();
+        // displayPic();
     },
 };
 </script>
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200&family=PT+Serif&display=swap');
+
+img {
+    max-width: 250px;
+    margin: 15px;
+}
 
 .header {
     display: flex;
