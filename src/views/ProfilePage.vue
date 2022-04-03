@@ -37,9 +37,15 @@
             <div class="col-lg-8">
                 <div class="padding-top-2x mt-2 hidden-lg-up"></div>
                 <div class="my-listings margin-bottom-none">
-                    <h1>My Listings</h1>
-                    <div v-if="isEmptyList()">
-                        <h1>There are no partyquest data</h1>
+                    <h1>PartyQuest History</h1>
+                    <div v-if="isNotLoaded()">
+                        <div class="loader"></div>
+                    </div>
+                    <div v-else-if="isEmptyList()">
+                        <h1>
+                            Your PartyQuest History is empty.<br />
+                            Start one now!
+                        </h1>
                     </div>
                     <div v-else>
                         <PartyQuestList :partyQuestData="items" v-if="items" />
@@ -78,8 +84,15 @@ export default {
         PartyQuestList,
     },
     methods: {
+        isNotLoaded() {
+            return this.items == null;
+        },
         isEmptyList() {
-            return this.items == null || this.items.length == 0;
+            console.log(
+                'Print items passed into the partyquests profile : ',
+                this.items
+            );
+            return this.items != null && this.items.length == 0;
         },
         async passListasData(newItem) {
             // Reassign items to the loaded list
@@ -92,15 +105,41 @@ export default {
                 user.displayName
             );
             var pqRef = collection(db, 'PartyQuests');
-            var q = query(
+            // To be changed, only query for PartyQuests that are already completed
+            // Query for user completed party quest
+            // Query for partyquest where a user joined and completed
+            // var qUserGroupCreator = query(
+            //     pqRef,
+            //     where('status', '==', 'Completed'),
+            //     where('groupCreatorid', '==', user.displayName)
+            // );
+
+            var qUserJoinedPQ = query(
                 pqRef,
-                where('groupCreatorId', '==', user.displayName)
+                where('status', '==', 'Completed'),
+                where('participants', 'array-contains', user.displayName)
             );
 
-            var querySnapshotPQ = await getDocs(q);
+            // var querySnapshotPQ = await getDocs(qUserGroupCreator);
+            // var queryGroupCreatorSnapshot = await getDocs(qUserGroupCreator);
+            var queryUserJoinedSnapshot = await getDocs(qUserJoinedPQ);
             var itemsList = [];
 
-            querySnapshotPQ.forEach(docs => {
+            // queryGroupCreatorSnapshot.forEach(docs => {
+            //     var pq = docs.data();
+            //     var pqMap = {};
+
+            //     pqMap['brand'] = pq['brand'];
+            //     pqMap['totalAmount'] = pq['totalAmount'];
+            //     pqMap['itemLink'] = pq['itemLink'];
+            //     pqMap['status'] = pq['status'];
+            //     pqMap['title'] = pq['title'];
+            //     pqMap['participants'] = pq['participants'];
+            //     //Push map into array
+            //     itemsList.push(pqMap);
+            // });
+
+            queryUserJoinedSnapshot.forEach(docs => {
                 var pq = docs.data();
                 var pqMap = {};
 
@@ -134,9 +173,6 @@ export default {
                 this.user = user;
                 var completedList = [];
                 completedList = this.getData(this.user);
-                console.log('completed list ', completedList);
-                console.log('User Name that is passed : ', this.user);
-                console.log('User email that is passed : ', this.user.email);
                 this.passListasData(completedList);
             }
         });
@@ -205,5 +241,24 @@ body {
     border-radius: 5px;
     border: 0;
     margin-bottom: 1rem;
+}
+
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+    margin: auto;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 </style>

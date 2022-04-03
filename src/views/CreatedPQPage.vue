@@ -1,6 +1,6 @@
 <template>
     <div class="col-lg-8">
-        <h1>This is the My Joined PQ Page</h1>
+        <h1>This is the My Created PQ Page</h1>
         <div class="padding-top-2x mt-2 hidden-lg-up"></div>
         <div class="my-listings margin-bottom-none">
             <div v-if="isNotLoaded()">
@@ -31,7 +31,7 @@ import store from '../store.js';
 const db = getFirestore(firebaseApp);
 
 export default {
-    name: 'JoinedPQPage',
+    name: 'CreatedPQPage',
     data() {
         return {
             items: null,
@@ -64,10 +64,12 @@ export default {
             );
             var pqRef = collection(db, 'PartyQuests');
             // To be changed!!!
+            // Should be partyquests that are 'in Progress' and created by user
+            // Query all status that is not 'Completed'
             var q = query(
                 pqRef,
                 where('status', '!=', 'Completed'),
-                where('participants', 'array-contains', user.displayName)
+                where('groupCreatorid', '==', user.displayName)
             );
 
             var querySnapshotPQ = await getDocs(q);
