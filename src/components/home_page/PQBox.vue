@@ -7,7 +7,7 @@
         </div>
         <div class="row">
             <div
-                v-for="(value, index) in partyQuestData"
+                v-for="(value, index) in pqList"
                 :key="index"
                 class="col-md-6 col-xl-4 col-12 pt-3 justify-content-around d-flex"
             >
@@ -31,9 +31,7 @@
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">{{ value.title }}</h5>
-                        <p class="card-text">
-                            {{ value.description.substring(0, 65) }}...
-                        </p>
+                        <p class="card-text">{{ value.description }}...</p>
                         <!-- <router-link
                 :to="{ name: 'EditProduct', params: { id: product.id } }"
             >
@@ -48,6 +46,11 @@
 </template>
 
 <script>
+import firebaseApp from '../../firebase.js';
+import { getStorage, ref, getDownloadURL } from 'firebase/storage';
+const storage = getStorage(firebaseApp);
+var listOfPQs = [];
+
 export default {
     name: 'ProductBox',
     props: {
@@ -55,8 +58,40 @@ export default {
             type: Array,
         },
     },
+    data() {
+        return {
+            pqList: listOfPQs,
+        };
+    },
+    methods: {
+        async display() {
+            //obtain photo and pass it as a variable
+            console.log(
+                'type of partyquestdata in pqbox ',
+                this.partyQuestData
+            );
+            var pqDataLength = this.partyQuestData.length;
+            for (var i = 0; i < pqDataLength; i++) {
+                var someMap = this.partyQuestData[i];
+                var photoReference = ref(storage, someMap['photoId']);
+                await getDownloadURL(photoReference).then(value => {
+                    someMap['imageUrl'] = value;
+                    console.log(value);
+                    listOfPQs.push(someMap);
+                });
+                // console.log(
+                //     'type of map in pqbox ',
+                //     typeof JSON.parse(JSON.stringify(someMap))
+                // );
+            }
+            console.log('values of pq in pqbox ', listOfPQs);
+        },
+    },
     mounted() {
         console.log('Data passed into the component', this.partyQuestData);
+        if (this.partyQuestData) {
+            this.display();
+        }
     },
 };
 </script>
