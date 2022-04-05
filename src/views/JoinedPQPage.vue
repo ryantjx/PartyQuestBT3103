@@ -1,6 +1,7 @@
 <template>
-    <div class="col-lg-8">
-        <h1>This is the My Joined PQ Page</h1>
+    <div class="centre">
+        <PQNavBar />
+        <h1>Joined PartyQuests</h1>
         <div class="padding-top-2x mt-2 hidden-lg-up"></div>
         <div class="my-listings margin-bottom-none">
             <div v-if="isNotLoaded()">
@@ -26,6 +27,7 @@ import { getFirestore } from 'firebase/firestore';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import PartyQuestList from '../components/PartyQuestList.vue';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import PQNavBar from '../components/PQNavBar.vue';
 import store from '../store.js';
 
 const db = getFirestore(firebaseApp);
@@ -40,6 +42,7 @@ export default {
     },
     components: {
         PartyQuestList,
+        PQNavBar,
     },
     methods: {
         isNotLoaded() {
@@ -83,6 +86,14 @@ export default {
                 pqMap['status'] = pq['status'];
                 pqMap['title'] = pq['title'];
                 pqMap['participants'] = pq['participants'];
+                pqMap['photoId'] = pq['photoId'];
+                pqMap['description'] = pq['description'];
+                pqMap['requirements'] = pq['requirements'];
+                pqMap['groupCreatorid'] = pq['groupCreatorid'];
+                pqMap['numOfPeople'] = pq['numOfPeople'];
+                pqMap['collectionLocation'] = pq['collectionLocation'];
+                pqMap['endDate'] = pq['endDate'];
+                pqMap['status'] = pq['status'];
                 //Push map into array
                 itemsList.push(pqMap);
             });

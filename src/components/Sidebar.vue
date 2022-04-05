@@ -33,7 +33,10 @@
                                 >
                             </div>
                             <div class="row">
-                                <router-link to="/pq" class="sidebar-rows">
+                                <router-link
+                                    to="/mypq/CreatedPQPage"
+                                    class="sidebar-rows"
+                                >
                                     <i class="fa fa-group"></i
                                     ><span class="text"
                                         >My PartyQuests</span
