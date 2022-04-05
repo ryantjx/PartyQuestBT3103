@@ -149,16 +149,16 @@ export default {
                 cell1.innerHTML = userName;
                 cell2.className = 'view-button';
 
-                // // create button for action column
-                // var viewButton = document.createElement('button');
-                // viewButton.className = 'bwt';
-                // viewButton.id = String(docs.id);
-                // viewButton.innerHTML = 'View';
-                // viewButton.onclick = function() {
-                //     window.location.replace('/pq/' + docs.id);
-                // };
-                // // add button to action column cell
-                // cell2.appendChild(viewButton);
+                // create button for action column
+                var viewButton = document.createElement('button');
+                viewButton.className = 'bwt';
+                viewButton.id = String(docs.id);
+                viewButton.innerHTML = 'View';
+                viewButton.onclick = function() {
+                    window.location.replace('/profile/user/' + docs.id);
+                };
+                // add button to action column cell
+                cell2.appendChild(viewButton);
 
                 // increase counter (s/no.)
                 idx += 1;
