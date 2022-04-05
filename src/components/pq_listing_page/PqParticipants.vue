@@ -56,38 +56,6 @@
                     </button>
                 </div>
             </template>
-            <!-- need to change check to check if user is a participant-->
-            <!--<template v-if="userName == grpId">
-                For Owner View
-                <div class="buttons">
-                    <button v-on:click="handleComplete()" class="complete">
-                        Complete PQ
-                    </button>
-                    <button v-on:click="handleLeave()" class="leave">
-                        Leave PQ
-                    </button>
-                </div>
-            </template>
-            <template v-else-if="this.participantCheck">
-                <For Participant View
-                <div class="buttons">
-                    <button v-on:click="handleConfirm()" class="confirm">
-                        Confirm Status
-                    </button>
-                    <button v-on:click="handleLeave2()" class="leave2">
-                        Leave PQ2
-                    </button>
-                </div>
-            </template>
-            <template v-else>
-                For Non - Participant View
-                <div class="buttons">
-                    <button v-on:click="handleJoin()" class="join">Join</button>
-                    <button v-on:click="handleSave()" class="save">
-                        Save PQ
-                    </button>
-                </div>
-            </template>-->
         </div>
         <div>
             <ClientOnly>
@@ -225,14 +193,11 @@ export default {
             console.log('filterquery');
             console.log(filterQuery);
 
-            //const auth = getAuth(firebaseApp);
-            //const user = auth.currentUser;
             let querySnapshot = await getDocs(filterQuery);
             querySnapshot.forEach(docs => {
                 //get documents
                 let pqDoc = docs.data();
                 this.grpId = pqDoc.groupCreatorid;
-                //this.userName = user.displayName;
                 pqDoc.participants.forEach(val => {
                     console.log('In for each loop');
                     console.log(val);
@@ -294,22 +259,6 @@ export default {
 
         async participantDisplay() {
             const page = this;
-            /*const db = getFirestore(firebaseApp);
-            
-            let filterQuery = query(
-                collection(db, 'PartyQuests'),
-                where('partyQuestid', '==', uuid)
-            );
-            console.log('filterquery');
-            console.log(filterQuery);
-            const auth = getAuth(firebaseApp);
-            const user = auth.currentUser;
-            let querySnapshot = await getDocs(filterQuery);
-            let index = 1;
-            querySnapshot.forEach(docs => {
-                //get documents
-                let pqDoc = docs.data();*/
-            //let participants = pqDoc.participants;
             let index = 1;
             for (let x = 0; x < this.participants.length; x++) {
                 console.log(x);
@@ -393,10 +342,6 @@ export default {
                                 );
                             };
 
-                            //add check for whether user is participant already
-                            //if (user.displayName in pqDoc.participants){
-                            //add report button
-                            //}
                             var reportButton2 = document.createElement(
                                 'button'
                             );
