@@ -24,7 +24,10 @@
                             </div>
                             <div class="about">
                                 <h5>Account Details</h5>
-                                <div class="mp-0 text-muted small">
+                                <div
+                                    class="mp-0 text-muted small"
+                                    v-if="userData"
+                                >
                                     <p>First Name: {{ userData.firstName }}</p>
                                     <p>Last Name: {{ userData.lastName }}</p>
                                     <p>Phone Number: {{ userData.phoneNum }}</p>
@@ -34,6 +37,9 @@
                                         }}|{{ userData.streetName }}
                                     </p>
                                     <p>Postal: {{ user.postalCode }}</p>
+                                </div>
+                                <div v-else class="mp-0 text-muted small">
+                                    No data filled in yet!
                                 </div>
                             </div>
                         </div>
