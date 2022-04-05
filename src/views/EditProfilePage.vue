@@ -97,7 +97,7 @@
                                         />
                                     </div>
                                 </div>
-                                <div
+                                <!-- <div
                                     class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
                                 >
                                     <div class="form-group">
@@ -109,10 +109,7 @@
                                             placeholder="Enter Email Address"
                                         />
                                     </div>
-                                </div>
-                                <div
-                                    class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12"
-                                ></div>
+                                </div> -->
                                 <div
                                     class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
                                 >
@@ -226,7 +223,7 @@
                                             class="btn btn-primary"
                                             v-on:click="goBack()"
                                         >
-                                            Go Back
+                                            Back
                                         </button>
                                         &nbsp;
                                         <button
@@ -251,7 +248,7 @@
 
 <script>
 import firebaseApp from '../firebase.js';
-import { getAuth, onAuthStateChanged, updateEmail } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import store from '../store.js';
 import { doc, getFirestore, setDoc } from '@firebase/firestore';
 // import { set } from 'vue/types/umd';
@@ -279,7 +276,7 @@ export default {
             var firstName = document.getElementById('firstName').value;
             var lastName = document.getElementById('lastName').value;
             var phoneNum = document.getElementById('phoneNum').value;
-            var newEmail = document.getElementById('email').value;
+            // var newEmail = document.getElementById('email').value;
             var bankAccNum = document.getElementById('bankAccNum').value;
 
             // // Address
@@ -315,25 +312,25 @@ export default {
 
             try {
                 const docRef = await setDoc(userRef, {
-                    fireName: firstName,
+                    firstName: firstName,
                     lastName: lastName,
                     phoneNum: phoneNum,
-                    email: newEmail,
+                    // email: newEmail,
                     bankAccNum: bankAccNum,
                 });
-                console.log('Updating Email: ', newEmail);
-                var tempAuth = getAuth(firebaseApp);
-                await updateEmail(tempAuth.currentUser, newEmail)
-                    .then(newEmail => {
-                        console.log('email is updated to', newEmail);
-                    })
-                    .catch(error => {
-                        console.log('Error Updating Email: ', error);
-                        alert(
-                            'Something went wrong with updating email: ',
-                            error
-                        );
-                    });
+                // console.log('Updating Email: ', newEmail);
+                // var tempAuth = getAuth(firebaseApp);
+                // await updateEmail(tempAuth.currentUser, newEmail)
+                //     .then(newEmail => {
+                //         console.log('email is updated to', newEmail);
+                //     })
+                //     .catch(error => {
+                //         console.log('Error Updating Email: ', error);
+                //         alert(
+                //             'Something went wrong with updating email: ',
+                //             error
+                //         );
+                //     });
 
                 await setDoc(addressRef, {
                     streetName: streetName,

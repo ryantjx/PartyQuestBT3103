@@ -1,11 +1,6 @@
 <template>
     <div class="container">
         <div class="row">
-            <div class="col-12 text-center">
-                <h2 class="pt-3">Top Categories</h2>
-            </div>
-        </div>
-        <div class="row">
             <div
                 v-for="(value, index) in pqList"
                 :key="index"
@@ -31,13 +26,17 @@
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">{{ value.title }}</h5>
-                        <p class="card-text">{{ value.description }}...</p>
+                        <div class="card-text text-muted small">
+                            <p>Brand: {{ value.brand }}</p>
+                            <p>Description: {{ value.description }}</p>
+                        </div>
+
                         <!-- <router-link
                 :to="{ name: 'EditProduct', params: { id: product.id } }"
             >
                 <button class="btn btn-primary">Edit</button>
             </router-link> -->
-                        <button class="btn btn-primary">Join Now</button>
+                        <button class="btn btn-primary">View Details</button>
                     </div>
                 </div>
             </div>
@@ -49,7 +48,6 @@
 import firebaseApp from '../../firebase.js';
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
 const storage = getStorage(firebaseApp);
-var listOfPQs = [];
 
 export default {
     name: 'ProductBox',
@@ -60,11 +58,12 @@ export default {
     },
     data() {
         return {
-            pqList: listOfPQs,
+            pqList: null,
         };
     },
     methods: {
         async display() {
+            this.pqList = [];
             //obtain photo and pass it as a variable
             console.log(
                 'type of partyquestdata in pqbox ',
@@ -77,14 +76,14 @@ export default {
                 await getDownloadURL(photoReference).then(value => {
                     someMap['imageUrl'] = value;
                     console.log(value);
-                    listOfPQs.push(someMap);
+                    this.pqList.push(someMap);
                 });
                 // console.log(
                 //     'type of map in pqbox ',
                 //     typeof JSON.parse(JSON.stringify(someMap))
                 // );
             }
-            console.log('values of pq in pqbox ', listOfPQs);
+            console.log('values of pq in pqbox ', this.pqList);
         },
     },
     mounted() {
