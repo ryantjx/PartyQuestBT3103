@@ -2,12 +2,14 @@
     <div>
         <h3 class="pq-search-header">PartyQuest Search Results</h3>
         <br />
-        <form class="search-res-form">
+        <form class="search-res-form" @submit.prevent="searchByBrand">
             <input
                 id="search"
                 type="search"
                 placeholder="Search by Brand ..."
                 v-model="message"
+                v-on:
+                keyup.enter="searchByBrand()"
             />
             <button
                 type="button"
