@@ -3,7 +3,7 @@
         <router-link to="/searchresults/">PQs</router-link>
         <h3 class="pq-search-header">PartyQuest Search Results</h3>
         <br />
-        <form class="search-res-form">
+        <form class="search-res-form" @submit.prevent="searchByUser">
             <input
                 id="search"
                 type="search"
@@ -18,19 +18,6 @@
                 Search
             </button>
         </form>
-        <!--<br />
-        <form>
-            <input
-                id="search"
-                type="search"
-                placeholder="Search Users ..."
-                v-model="message"
-                v-on:keydown.enter="searchUsers()"
-            />
-            <button type="button" v-on:click="searchUsers()">
-                Search
-            </button>
-        </form> -->
         <table id="search-result-table" class="auto-index">
             <thead>
                 <th></th>
