@@ -174,7 +174,6 @@ export default {
             var picture = document.getElementById('picture').value;
             var lowerBrand = brand.toLowerCase();
             var lowerUser = this.username.toLowerCase();
-            console.log(lowerUser);
 
             if (
                 title &&
@@ -205,6 +204,7 @@ export default {
                     participantStatus: ['Not Confirmed'],
                     lowerBrand: lowerBrand,
                     lowerUser: lowerUser,
+                    savedPqs: [],
                 });
                 console.log('Generating random String');
                 this.$emit('Created');

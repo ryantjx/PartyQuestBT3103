@@ -125,8 +125,6 @@ export default {
                 console.log(description.innerHTML);
 
                 let misc = document.getElementById('misc');
-                //let c = pqDoc.requirements.join(', ');
-                //console.log(c);
                 document.getElementById('misc').innerHTML = pqDoc.requirements;
                 console.log(misc.innerHTML);
             });

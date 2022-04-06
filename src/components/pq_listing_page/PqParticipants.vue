@@ -104,7 +104,6 @@ import { getFirestore, addDoc, updateDoc } from 'firebase/firestore';
 import { collection, getDocs, query, where, doc } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 var uuid;
-//var groupCreatorid;
 
 const db = getFirestore(firebaseApp);
 
@@ -122,16 +121,51 @@ export default {
         };
     },
     methods: {
-        handleStart() {},
+        //all functions need method to reload page
+        async handleStart() {
+            let currNum = this.participants.length;
+            let total = parseInt(this.numOfPeople);
+            console.log(currNum);
+            console.log(total);
+            if (currNum == total) {
+                console.log('Max participants reached');
+                alert('Max Participants reached');
+                //max capacity reached, can start
+                var pqRef = doc(db, 'PartyQuests', uuid);
+
+                try {
+                    const docRef = await updateDoc(pqRef, {
+                        status: 'In Progress',
+                    });
+                    console.log(docRef);
+                    console.log('Trying to update doc');
+                    alert('Party Quest has been started');
+                } catch (error) {
+                    console.error('Error Updating doc');
+                }
+            } else {
+                console.log('Not enough participants');
+                alert('Not enough participants');
+            }
+        },
         //for owner to change status of PQ once all have confirmed (Either Not confirmed or confirmed)
         //check how to reload other components -> push back to same page
         async handleComplete() {
             //current status must be In Progress/Complete
+            //bring check into start function
             let check = true;
+            let index = 1;
             this.participantStatus.forEach(status => {
                 console.log(status);
                 if (status == 'Not Confirmed') {
-                    check = false;
+                    if (index == 1) {
+                        //owner, who will only confirm when completing
+                        //TO ADD: owner status change
+                        index++;
+                    } else {
+                        check = false;
+                        index++;
+                    }
                 }
             });
             if (this.PQstatus != 'Completed') {
@@ -157,11 +191,67 @@ export default {
                 alert('PQ is already completed');
             }
         },
-        handleLeave() {},
-        handleConfirm() {},
-        handleLeave2() {},
-        handleJoin() {},
-        handleSave() {},
+
+        handleLeave() {
+            //leave for owner
+            //leave PQ and pass down 'ownership' to next participant
+            //change creator id and remove status and name
+        },
+
+        async handleConfirm() {
+            let index = 0;
+            let currIndex = null;
+            this.participants.forEach(participant => {
+                if (participant == this.userName) {
+                    //at current user
+                    console.log('At Index of current user');
+                    currIndex = index;
+                }
+            });
+            //check type of this.participantsStatus
+            //edit status at index found
+            //update status in document
+            var pqRef = doc(db, 'PartyQuests', uuid);
+            let newStatus = this.participantStatus;
+            console.log(newStatus[currIndex]);
+            newStatus[currIndex] = 'Confirmed';
+            console.log(newStatus[currIndex]);
+            try {
+                const docRef = await updateDoc(pqRef, {
+                    participantStatus: newStatus,
+                });
+                console.log(docRef);
+                console.log('Trying to update doc');
+                alert('Status Updated');
+            } catch (error) {
+                console.error('Error Updating doc');
+            }
+        },
+        handleLeave2() {
+            //leave for normal participants
+            //remove participant and status from pq
+        },
+        handleJoin() {
+            //check if max number of participants
+            //then add user to list of participants and participant status
+        },
+        async handleSave() {
+            //save pq uuid to a new field within user
+            //if already saved then handle error
+            console.log('Saving PQ');
+            var pqRef = doc(db, 'PartyQuests', uuid);
+            try {
+                const docRef = await updateDoc(pqRef, {
+                    status: 'Completed',
+                });
+                console.log(docRef);
+                console.log('Trying to update doc');
+                alert('Status Updated');
+            } catch (error) {
+                console.error('Error Updating doc');
+            }
+        },
+
         async submit() {
             var reason = document.getElementById('formField1').value;
             try {
@@ -210,50 +300,6 @@ export default {
                 this.participantStatus = pqDoc.participantStatus;
                 this.numOfPeople = pqDoc.numOfPeople;
                 this.PQstatus = pqDoc.status;
-                console.log(this.PQstatus);
-            });
-        },
-
-        handleClick() {
-            this.$confirm({
-                message: 'Confirm to leave PQ?',
-                button: {
-                    no: 'Stay',
-                    yes: 'Leave',
-                },
-                /**
-                 * Callback Function
-                 * @param {Boolean} confirm
-                 */
-                callback: async confirm => {
-                    if (confirm) {
-                        const db = getFirestore(firebaseApp);
-                        let filterQuery = query(
-                            collection(db, 'PartyQuests'),
-                            where('partyQuestid', '==', uuid)
-                        );
-                        let querySnapshot = await getDocs(filterQuery);
-                        querySnapshot.forEach(docs => {
-                            //get documents
-                            let pqDoc = docs.data();
-                            for (
-                                let x = 0;
-                                x < pqDoc.participants.length;
-                                x++
-                            ) {
-                                if (pqDoc.participants[x] == 'ryanng') {
-                                    pqDoc.participants.splice(1, 1);
-                                    pqDoc.participantStatus.splice(1, 1);
-                                } else {
-                                    //donothing;
-                                }
-                            }
-                        });
-                        window.location.replace('/home');
-                    } else {
-                        //donothing
-                    }
-                },
             });
         },
 
@@ -388,113 +434,7 @@ export default {
         });
 
         this.test();
-        /*async function ownerDisplay() {
-            function updateFields(id, participants, participantStatus, x) {
-                db.collection('PartyQuests')
-                    .doc(id)
-                    .update({
-                        participants: participants.splice(x, 1),
-                        participantStatus: participantStatus.splice(x, 1),
-                    })
-                    .then(ref => {
-                        console.log(ref);
-                        window.location.reload();
-                    })
-                    .catch(err => {
-                        console.error(err);
-                    });
-            }
-            let querySnapshot = await getDocs(filterQuery);
-            let index = 1;
-            querySnapshot.forEach(docs => {
-                console.log('querysnapshot');
-                console.log(querySnapshot);
-                //get documents
-                let pqDoc = docs.data();
-                //let participants = pqDoc.participants;
-                console.log(pqDoc);
-                console.log(pqDoc.participants.length);
-                for (let x = 0; x < pqDoc.participants.length; x++) {
-                    console.log(x);
-                    console.log(pqDoc.participants[x]);
-                    console.log(pqDoc.participantStatus[x]);
 
-                    let ppl = document.getElementById('Participants');
-                    let a =
-                        'Participants: ' +
-                        pqDoc.participants.length +
-                        '/' +
-                        pqDoc.numOfPeople;
-                    document.getElementById('Participants').innerHTML = a;
-                    console.log(ppl.innerHTML);
-
-                    var table = document.getElementById('table-participants');
-                    var row = table.insertRow(index);
-
-                    var name = pqDoc.participants[x];
-                    var status = pqDoc.participantStatus[x];
-
-                    var cell1 = row.insertCell(0);
-                    var cell2 = row.insertCell(1);
-                    var cell3 = row.insertCell(2);
-
-                    cell1.innerHTML = name;
-                    cell2.innerHTML = status;
-                    cell3.className = 'view-manage-buttons';
-
-                    var viewButton = document.createElement('button');
-                    var kickButton = document.createElement('button');
-                    viewButton.className = 'bwt';
-                    viewButton.id = String(name);
-                    viewButton.innerHTML = 'View';
-                    viewButton.onclick = function() {
-                        window.location.replace(
-                            '/profile/user/' + pqDoc.participants[x]
-                        );
-                    };
-                    var reportButton = document.createElement('button');
-                    reportButton.className = 'bwt';
-                    reportButton.id = String(name);
-                    reportButton.innerHTML = 'Report';
-                    reportButton.onclick = function() {
-                        page.reportUser();
-                    };
-                    if (pqDoc.participants[x] == pqDoc.groupCreatorid) {
-                        cell3.appendChild(viewButton);
-                        cell3.appendChild(reportButton);
-                        index++;
-                    } else {
-                        kickButton.className = 'bwt';
-                        kickButton.id = String(name);
-                        kickButton.innerHTML = 'Kick';
-                        kickButton.onclick = function() {
-                            updateFields(
-                                docs.id,
-                                pqDoc.participants,
-                                pqDoc.participantStatus,
-                                x
-                            );
-                        };
-                        cell3.appendChild(viewButton);
-                        cell3.appendChild(kickButton);
-                        cell3.appendChild(reportButton);
-                        index++;
-                    }
-                }
-            });
-        }*/
-        /*
-            if (user.displayName == groupCreatorid) {
-                console.log(groupCreatorid);
-                console.log(user.displayName);
-                console.log('In Owner Display');
-                ownerDisplay();
-            } else {
-                console.log(groupCreatorid);
-                console.log(user.displayName);
-                console.log('In participant display');
-                participantDisplay();
-            }*/
         // async function viewUser(name) {
         //     const db = getFirestore(firebaseApp);
         //     const auth = getAuth();
