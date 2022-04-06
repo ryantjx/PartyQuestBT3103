@@ -170,9 +170,10 @@ export default {
             var description = document.getElementById('description').value;
             var requirements = document.getElementById('requirements').value;
             this.username = user.displayName;
-            console.log(user);
             console.log(this.username);
             var picture = document.getElementById('picture').value;
+            var lowerBrand = brand.toLowerCase();
+            var lowerUser = this.username.toLowerCase();
 
             if (
                 title &&
@@ -197,10 +198,13 @@ export default {
                     numOfPeople: participants,
                     endDate: enddate,
                     description: description,
-                    requirements: [requirements],
+                    requirements: requirements,
                     status: 'Not Started',
                     participants: [this.username],
-                    participantStatus: ['Not confirmed'],
+                    participantStatus: ['Not Confirmed'],
+                    lowerBrand: lowerBrand,
+                    lowerUser: lowerUser,
+                    savedPqs: [],
                 });
                 console.log('Generating random String');
                 this.$emit('Created');
