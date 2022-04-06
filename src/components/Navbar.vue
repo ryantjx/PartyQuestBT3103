@@ -113,7 +113,7 @@ export default {
 }
 
 .work {
-    width: 70vw;
+    width: 69vw;
     justify-content: space-between;
 }
 

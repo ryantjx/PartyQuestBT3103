@@ -237,7 +237,7 @@ export default {
                         viewButton.innerHTML = 'Test';
                         viewButton.onclick = function() {
                             window.location.replace(
-                                '/profile/' + pqDoc.participants[x]
+                                '/profile/user/' + pqDoc.participants[x]
                             );
                         };
 
@@ -269,7 +269,7 @@ export default {
                         viewButton2.innerHTML = 'View';
                         viewButton2.onclick = function() {
                             window.location.replace(
-                                '/profile/' + pqDoc.participants[x]
+                                '/profile/user/' + pqDoc.participants[x]
                             );
                         };
 
@@ -353,7 +353,7 @@ export default {
                     viewButton.innerHTML = 'View';
                     viewButton.onclick = function() {
                         window.location.replace(
-                            '/profile/' + pqDoc.participants[x]
+                            '/profile/user/' + pqDoc.participants[x]
                         );
                     };
                     var reportButton = document.createElement('button');
