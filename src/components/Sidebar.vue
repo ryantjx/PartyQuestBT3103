@@ -13,6 +13,10 @@
         >
             <template #default="{  }">
                 <div class="p-3">
+                    <img
+                        src="../assets/PartyQuest_Logo.png"
+                        class="card-img-top embed-responsive-item"
+                    />
                     <h4 id="sidebar-no-header-title">
                         Welcome to PartyQuest!
                     </h4>

@@ -28,17 +28,15 @@
                     </div>
                 </div>
                 <div v-else>
-                    <div class="top-right-side">
-                        <div class="nav-item mr-3">
-                            <router-link to="login" class="nav-link"
-                                >Login</router-link
-                            >
-                        </div>
-                        <div class="nav-item">
-                            <router-link to="register" class="nav-link"
-                                >Register</router-link
-                            >
-                        </div>
+                    <div class="nav-item mr-3">
+                        <router-link to="login" class="nav-link"
+                            >Login</router-link
+                        >
+                    </div>
+                    <div class="nav-item">
+                        <router-link to="register" class="nav-link"
+                            >Register</router-link
+                        >
                     </div>
                 </div>
             </div>
@@ -111,6 +109,7 @@ export default {
 .sidebar {
     width: 30vw;
     /* background: orange; */
+    align-self: left;
 }
 
 .top-right-side {
