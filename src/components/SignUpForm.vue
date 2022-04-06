@@ -80,7 +80,7 @@ export default {
                         displayName: username,
                     });
                     alert('Successfully registered! Please login.');
-                    this.$router.push('/dashboard').catch(() => {});
+                    this.$router.push('/Home').catch(() => {});
                 })
                 .catch(error => {
                     alert(error.message);

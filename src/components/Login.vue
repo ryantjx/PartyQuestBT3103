@@ -37,7 +37,7 @@ export default {
                 .then(() => {
                     //First Alert
                     // alert('You have logged in successfully');
-                    this.$router.push('/dashboard').catch(() => {});
+                    this.$router.push('/Home').catch(() => {});
                 })
                 .catch(error => {
                     alert(error.message);

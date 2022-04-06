@@ -119,7 +119,7 @@ export default {
 
             signOut(auth).then(() => {
                 this.$router.replace({
-                    name: 'home',
+                    name: 'LandingPage',
                 });
             });
         },
