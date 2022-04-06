@@ -6,12 +6,12 @@
                     <div class="card-body">
                         <div class="account-settings">
                             <div class="user-profile">
-                                <div class="user-avatar">
+                                <!-- <div class="user-avatar">
                                     <img
                                         src="https://bootdey.com/img/Content/avatar/avatar7.png"
                                         alt="Maxwell Admin"
                                     />
-                                </div>
+                                </div> -->
                                 <h5 class="user-name" v-if="user">
                                     {{ this.user.displayName }}
                                 </h5>
@@ -20,12 +20,24 @@
                                 </h6>
                             </div>
                             <div class="about">
-                                <h5>About</h5>
-                                <p>
-                                    I'm Yuki. Full Stack Designer I enjoy
-                                    creating user-centric, delightful and human
-                                    experiences.
-                                </p>
+                                <h5>Account Details</h5>
+                                <div
+                                    class="mp-0 text-muted small"
+                                    v-if="userData"
+                                >
+                                    <p>First Name: {{ userData.firstName }}</p>
+                                    <p>Last Name: {{ userData.lastName }}</p>
+                                    <p>Phone Number: {{ userData.phoneNum }}</p>
+                                    <p>
+                                        Address : {{ userData.unitNum }}|{{
+                                            userData.streetNum
+                                        }}|{{ userData.streetName }}
+                                    </p>
+                                    <p>Postal: {{ user.postalCode }}</p>
+                                </div>
+                                <div v-else class="mp-0 text-muted small">
+                                    No data filled in yet!
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -250,7 +262,7 @@
 import firebaseApp from '../firebase.js';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import store from '../store.js';
-import { doc, getFirestore, setDoc } from '@firebase/firestore';
+import { doc, getFirestore, setDoc, getDoc } from '@firebase/firestore';
 // import { set } from 'vue/types/umd';
 
 const db = getFirestore(firebaseApp);
@@ -261,6 +273,7 @@ export default {
     data() {
         return {
             user: null,
+            userData: null,
         };
     },
     methods: {
@@ -268,9 +281,43 @@ export default {
             // Returns back to the previous page
             this.$router.go(-1);
             // Force the page to reload
-            window.onpopstate = function() {
-                location.reload();
-            };
+            // window.onpopstate = function() {
+            //     location.reload();
+            // };
+        },
+        async getUserData() {
+            console.log('user query data');
+            var userRef = doc(db, 'Users', this.user.displayName);
+            var addressRef = doc(
+                db,
+                'Users',
+                this.user.displayName,
+                'Address',
+                'Location'
+            );
+
+            var userQuery = await getDoc(userRef);
+            var addressQuery = await getDoc(addressRef);
+
+            var userInfo = userQuery.data();
+            var addressInfo = addressQuery.data();
+
+            // console.log(userInfo);
+            // console.log(addressInfo);
+            var mapUserInfo = {};
+
+            //User Info
+            mapUserInfo['firstName'] = userInfo['firstName'];
+            mapUserInfo['lastName'] = userInfo['lastName'];
+            mapUserInfo['phoneNum'] = userInfo['phoneNum'];
+            //Address Info
+            mapUserInfo['unitNum'] = addressInfo['unitNumber'];
+            mapUserInfo['streetNum'] = addressInfo['streetNum'];
+            mapUserInfo['streetName'] = addressInfo['streetName'];
+            mapUserInfo['postalCode'] = addressInfo['postalCode'];
+
+            this.userData = mapUserInfo;
+            // console.log(this.userData);
         },
         async saveInformation() {
             var firstName = document.getElementById('firstName').value;
@@ -284,17 +331,6 @@ export default {
             var streetNum = document.getElementById('streetNum').value;
             var unitNumber = document.getElementById('unitNumber').value;
             var postalCode = document.getElementById('postalCode').value;
-
-            // console.log('first name: ', firstName);
-            // console.log('last name: ', lastName);
-            // console.log('phonenum: ', phoneNum);
-            // console.log('email: ', email);
-            // console.log('bankaccnum: ', bankAccNum);
-
-            // console.log('streetname: ', streetName);
-            // console.log('streetnum: ', streetNum);
-            // console.log('unitnum: ', unitNumber);
-            // console.log('postal code: ', postalCode);
 
             var currentUser = auth.currentUser;
 
@@ -318,37 +354,12 @@ export default {
                     // email: newEmail,
                     bankAccNum: bankAccNum,
                 });
-                // console.log('Updating Email: ', newEmail);
-                // var tempAuth = getAuth(firebaseApp);
-                // await updateEmail(tempAuth.currentUser, newEmail)
-                //     .then(newEmail => {
-                //         console.log('email is updated to', newEmail);
-                //     })
-                //     .catch(error => {
-                //         console.log('Error Updating Email: ', error);
-                //         alert(
-                //             'Something went wrong with updating email: ',
-                //             error
-                //         );
-                //     });
-
                 await setDoc(addressRef, {
                     streetName: streetName,
                     streetNum: streetNum,
                     unitNumber: unitNumber,
                     postalCode: postalCode,
                 });
-                // Need to set address as a nested collection in the user
-                // not working
-                // db.collection('Users')
-                //     .doc(currentUser.displayName)
-                //     .collection('Address')
-                //     .add({
-                //         streetName: streetName,
-                //         streetNum: streetNum,
-                //         unitNumber: unitNumber,
-                //         postalCode: postalCode,
-                //     });
                 console.log(docRef);
                 document.getElementById('editprofileform').reset();
                 alert('Personal Information Updated!');
@@ -363,6 +374,7 @@ export default {
             store.dispatch('fetchUser', user);
             if (user != null) {
                 this.user = user;
+                this.getUserData();
             }
         });
     },
