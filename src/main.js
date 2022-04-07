@@ -11,7 +11,8 @@ import VueModal from '@kouts/vue-modal';
 import '@kouts/vue-modal/dist/vue-modal.css';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'; /* import font awesome icon component */
-import {  /* import font awesome icon component */
+import {
+    /* import specific icon component */
     faUsers,
     faTruckFast,
     faHandshake,
