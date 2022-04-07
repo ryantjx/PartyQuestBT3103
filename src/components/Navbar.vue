@@ -1,17 +1,13 @@
 <template>
     <div class="navbar">
         <div class="wrapper">
-            <div class="sidebar">
-                <template v-if="user">
-                    <div class="top-left-side">
-                        <Sidebar />
-                        <router-link to="/home" class="navbar-brand"
-                            ><h2>PartyQuest</h2></router-link
-                        >
-                    </div>
-                </template>
-            </div>
-            <div v-if="user" class="top-right-side">
+            <div v-if="user" class="logged-in-nav">
+                <div class="top-left-side">
+                    <Sidebar />
+                    <router-link to="/home" class="navbar-brand"
+                        ><h2>PartyQuest</h2></router-link
+                    >
+                </div>
                 <div class="nav-bar-search">
                     <SearchBar />
                 </div>
@@ -23,6 +19,24 @@
                         <CreatePQButton />
                     </div>
                 </div>
+            </div>
+
+            <div v-else-if="user === null" class="logged-out-view">
+                <h2>test</h2>
+                <router-link to="aboutus" class="nav-link "
+                    >About Us</router-link
+                >
+                <router-link to="contactus" class="nav-link "
+                    >Contact Us</router-link
+                >
+                <router-link to="login" class="nav-link">Login</router-link>
+                <router-link to="register" class="nav-link"
+                    >Register</router-link
+                >
+            </div>
+
+            <div v-else>
+                <h2>nothin</h2>
             </div>
         </div>
     </div>
@@ -75,11 +89,24 @@ export default {
     height: 48px;
 }
 
+.logged-in-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    /* background: pink; */
+}
+
 .navbar {
     overflow: hidden;
     position: absolute; /* Set the navbar to fixed position */
     top: 0.5vw; /* Position the navbar at the top of the page */
     width: 100%; /* Full width */
+}
+
+.logged-out-view {
+    /* background-color: green; */
+    display: flex;
 }
 
 .wrapper {
@@ -95,11 +122,6 @@ export default {
     position: absolute;
     left: 32vw;
     right: 32vw;
-}
-
-.top-right-side {
-    display: flex;
-    align-items: center;
 }
 
 .username-btn {
