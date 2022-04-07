@@ -673,7 +673,7 @@ export default {
             querySnapshot2.forEach(docs => {
                 //get documents
                 let pqDoc2 = docs.data();
-                this.savedPQ = pqDoc2.savedPqs;
+                this.savedPQ = pqDoc2.savedPartyQuests;
                 if (this.savedPQ.length > 0) {
                     //array not empty
                     this.savedPQ.forEach(pq => {
