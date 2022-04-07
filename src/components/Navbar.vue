@@ -43,11 +43,11 @@
                             >Login</router-link
                         >
                     </div>
-                    <div class="nav-item">
+                    <!-- <div class="nav-item">
                         <router-link to="login" class="nav-link"
                             >Login</router-link
                         >
-                    </div>
+                    </div> -->
                     <div class="nav-item">
                         <router-link to="register" class="nav-link"
                             >Register</router-link

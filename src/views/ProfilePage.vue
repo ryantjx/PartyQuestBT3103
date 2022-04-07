@@ -6,12 +6,12 @@
                     <div class="card-body">
                         <div class="account-settings">
                             <div class="user-profile">
-                                <!-- <div class="user-avatar">
+                                <div class="user-avatar">
                                     <img
                                         src="https://bootdey.com/img/Content/avatar/avatar7.png"
                                         alt="Maxwell Admin"
                                     />
-                                </div> -->
+                                </div>
                                 <h5 class="user-name" v-if="user">
                                     {{ this.user.displayName }}
                                 </h5>
@@ -177,6 +177,7 @@ export default {
                 pqMap['collectionLocation'] = pq['collectionLocation'];
                 pqMap['endDate'] = pq['endDate'];
                 pqMap['status'] = pq['status'];
+                pqMap['id'] = docs.id;
                 //Push map into array
                 itemsList.push(pqMap);
             });
