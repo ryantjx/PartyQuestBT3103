@@ -3,8 +3,6 @@
     <div id="home">
         <h1>All Available PartyQuests</h1>
         <div v-if="isNotLoaded()">
-            <router-link to="aboutus">About Us</router-link>
-            <router-link to="contactus">Contact Us</router-link>
             <div class="loader"></div>
         </div>
         <div v-else-if="isEmptyList()">
