@@ -11,47 +11,16 @@
                     </div>
                 </template>
             </div>
-            <div class="container">
-                <div v-if="user" class="top-right-side">
-                    <div class="top-right-side">
-                        <div class="nav-bar-search">
-                            <SearchBar />
-                        </div>
-                        <div class="username-btn">
-                            <div class="nav-item-username">
-                                Welcome, {{ this.user.displayName }}!
-                            </div>
-                            <div class="create-pq-btn">
-                                <CreatePQButton />
-                            </div>
-                        </div>
-                    </div>
+            <div v-if="user" class="top-right-side">
+                <div class="nav-bar-search">
+                    <SearchBar />
                 </div>
-                <div v-else>
-                    <div class="nav-item">
-                        <router-link to="aboutus" class="nav-link "
-                            >About Us</router-link
-                        >
+                <div class="username-btn">
+                    <div class="nav-item-username">
+                        Welcome, {{ this.user.displayName }}!
                     </div>
-                    <div class="nav-item">
-                        <router-link to="contactus" class="nav-link "
-                            >Contact Us</router-link
-                        >
-                    </div>
-                    <div class="nav-item">
-                        <router-link to="login" class="nav-link"
-                            >Login</router-link
-                        >
-                    </div>
-                    <!-- <div class="nav-item">
-                        <router-link to="login" class="nav-link"
-                            >Login</router-link
-                        >
-                    </div> -->
-                    <div class="nav-item">
-                        <router-link to="register" class="nav-link"
-                            >Register</router-link
-                        >
+                    <div class="create-pq-btn">
+                        <CreatePQButton />
                     </div>
                 </div>
             </div>
@@ -101,6 +70,11 @@ export default {
 </script>
 
 <style scoped>
+.logo {
+    width: 48px;
+    height: 48px;
+}
+
 .navbar {
     overflow: hidden;
     position: absolute; /* Set the navbar to fixed position */
@@ -110,32 +84,28 @@ export default {
 
 .wrapper {
     display: flex;
-}
-
-.container {
-    /* background-color: green; */
-}
-
-.work {
-    width: 69vw;
+    width: 100%;
     justify-content: space-between;
 }
 
 .sidebar {
-    width: 30vw;
-    /* background: orange; */
-    align-self: left;
+}
+
+.nav-bar-search {
+    position: absolute;
+    left: 32vw;
+    right: 32vw;
 }
 
 .top-right-side {
     display: flex;
     align-items: center;
-    justify-content: space-between;
 }
 
 .username-btn {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
 }
 
 .nav-item-username {
