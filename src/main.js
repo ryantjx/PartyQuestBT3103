@@ -9,7 +9,15 @@ import PubNubVue from 'pubnub-vue';
 import VueConfirmDialog from 'vue-confirm-dialog';
 import VueModal from '@kouts/vue-modal';
 import '@kouts/vue-modal/dist/vue-modal.css';
-
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'; /* import font awesome icon component */
+import {  /* import font awesome icon component */
+    faUsers,
+    faTruckFast,
+    faHandshake,
+} from '@fortawesome/free-solid-svg-icons';
+library.add(faUsers, faTruckFast, faHandshake); /* icons */
+Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.config.productionTip = false;
 
 const publish_Key = 'pub-c-67e1b963-c30c-47a5-a408-69f9db564ce5';
@@ -74,4 +82,7 @@ new Vue({
     store,
     render: h => h(App),
     created,
+    el: '#app',
+    components: { App },
+    template: '<App/>',
 }).$mount('#app');

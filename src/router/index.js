@@ -18,6 +18,9 @@ import SearchResultPQ from '../components/SearchResultPQ';
 import SearchResultUser from '../components/SearchResultUser';
 import EditProfilePage from '../views/EditProfilePage';
 import OtherUserProfile from '../views/OtherUserProfilePage';
+import ResetPW from '../components/ResetPassword';
+import AboutUs from '../components/AboutUs';
+import ContactUs from '../components/ContactUs';
 import LandingPage from '../views/LandingPage';
 
 Vue.use(VueRouter);
@@ -128,6 +131,21 @@ const routes = [
         name: 'PQDetails',
         component: PqDetails,
         // props: true,
+    },
+    {
+        path: '/resetpassword',
+        name: 'ResetPW',
+        component: ResetPW,
+    },
+    {
+        path: '/aboutus',
+        name: 'AboutUs',
+        component: AboutUs,
+    },
+    {
+        path: '/contactus',
+        name: 'ContactUs',
+        component: ContactUs,
     },
 ];
 
