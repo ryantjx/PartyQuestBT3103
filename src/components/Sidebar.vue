@@ -13,6 +13,10 @@
         >
             <template #default="{  }">
                 <div class="p-3">
+                    <img
+                        src="../assets/PartyQuest_Logo.png"
+                        class="card-img-top embed-responsive-item"
+                    />
                     <h4 id="sidebar-no-header-title">
                         Welcome to PartyQuest!
                     </h4>
@@ -33,7 +37,10 @@
                                 >
                             </div>
                             <div class="row">
-                                <router-link to="/pq" class="sidebar-rows">
+                                <router-link
+                                    to="/mypq/CreatedPQPage"
+                                    class="sidebar-rows"
+                                >
                                     <i class="fa fa-group"></i
                                     ><span class="text"
                                         >My PartyQuests</span
@@ -116,7 +123,7 @@ export default {
 
             signOut(auth).then(() => {
                 this.$router.replace({
-                    name: 'home',
+                    name: 'LandingPage',
                 });
             });
         },

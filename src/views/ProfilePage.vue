@@ -6,12 +6,12 @@
                     <div class="card-body">
                         <div class="account-settings">
                             <div class="user-profile">
-                                <div class="user-avatar">
+                                <!-- <div class="user-avatar">
                                     <img
                                         src="https://bootdey.com/img/Content/avatar/avatar7.png"
                                         alt="Maxwell Admin"
                                     />
-                                </div>
+                                </div> -->
                                 <h5 class="user-name" v-if="user">
                                     {{ this.user.displayName }}
                                 </h5>
@@ -23,12 +23,24 @@
                                 >
                             </div>
                             <div class="about">
-                                <h5>About</h5>
-                                <p>
-                                    I'm Yuki. Full Stack Designer I enjoy
-                                    creating user-centric, delightful and human
-                                    experiences.
-                                </p>
+                                <h5>Account Details</h5>
+                                <div
+                                    class="mp-0 text-muted small"
+                                    v-if="userData"
+                                >
+                                    <p>First Name: {{ userData.firstName }}</p>
+                                    <p>Last Name: {{ userData.lastName }}</p>
+                                    <p>Phone Number: {{ userData.phoneNum }}</p>
+                                    <p>
+                                        Address : {{ userData.unitNum }}|{{
+                                            userData.streetNum
+                                        }}|{{ userData.streetName }}
+                                    </p>
+                                    <p>Postal: {{ user.postalCode }}</p>
+                                </div>
+                                <div v-else class="mp-0 text-muted small">
+                                    No data filled in yet!
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -60,7 +72,14 @@
 <script>
 import firebaseApp from '../firebase.js';
 import { getFirestore } from 'firebase/firestore';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import {
+    collection,
+    getDocs,
+    query,
+    where,
+    doc,
+    getDoc,
+} from 'firebase/firestore';
 import PartyQuestList from '../components/PartyQuestList.vue';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import store from '../store.js';
@@ -78,6 +97,7 @@ export default {
             isCreated: false,
             items: null,
             user: null,
+            userData: null,
         };
     },
     components: {
@@ -149,10 +169,52 @@ export default {
                 pqMap['status'] = pq['status'];
                 pqMap['title'] = pq['title'];
                 pqMap['participants'] = pq['participants'];
+                pqMap['photoId'] = pq['photoId'];
+                pqMap['description'] = pq['description'];
+                pqMap['requirements'] = pq['requirements'];
+                pqMap['groupCreatorid'] = pq['groupCreatorid'];
+                pqMap['numOfPeople'] = pq['numOfPeople'];
+                pqMap['collectionLocation'] = pq['collectionLocation'];
+                pqMap['endDate'] = pq['endDate'];
+                pqMap['status'] = pq['status'];
                 //Push map into array
                 itemsList.push(pqMap);
             });
             return itemsList;
+        },
+        async getUserData() {
+            console.log('user query data');
+            var userRef = doc(db, 'Users', this.user.displayName);
+            var addressRef = doc(
+                db,
+                'Users',
+                this.user.displayName,
+                'Address',
+                'Location'
+            );
+
+            var userQuery = await getDoc(userRef);
+            var addressQuery = await getDoc(addressRef);
+
+            var userInfo = userQuery.data();
+            var addressInfo = addressQuery.data();
+
+            // console.log(userInfo);
+            // console.log(addressInfo);
+            var mapUserInfo = {};
+
+            //User Info
+            mapUserInfo['firstName'] = userInfo['firstName'];
+            mapUserInfo['lastName'] = userInfo['lastName'];
+            mapUserInfo['phoneNum'] = userInfo['phoneNum'];
+            //Address Info
+            mapUserInfo['unitNum'] = addressInfo['unitNumber'];
+            mapUserInfo['streetNum'] = addressInfo['streetNum'];
+            mapUserInfo['streetName'] = addressInfo['streetName'];
+            mapUserInfo['postalCode'] = addressInfo['postalCode'];
+
+            this.userData = mapUserInfo;
+            // console.log(this.userData);
         },
     },
     mounted() {
@@ -174,6 +236,7 @@ export default {
                 var completedList = [];
                 completedList = this.getData(this.user);
                 this.passListasData(completedList);
+                this.getUserData();
             }
         });
     },

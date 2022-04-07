@@ -10,19 +10,45 @@
         </table>
 
         <br /><br />
-        <div class="container" id="buttons">
+        <div class="container" id="buttons" v-onload="participantDisplay()">
             <!-- need to change check to check if user is a participant-->
             <template v-if="userName == grpId">
                 <!--For Owner View-->
+                <template v-if="PQstatus == 'Not Started'">
+                    <!--if status is not started -->
+                    <div class="buttons">
+                        <button v-on:click="handleStart()" class="start">
+                            Start PQ
+                        </button>
+                    </div>
+                </template>
+                <template v-else>
+                    <!-- if status is in progress -->
+                    <div class="buttons">
+                        <button v-on:click="handleComplete()" class="complete">
+                            Complete PQ
+                        </button>
+                    </div>
+                </template>
                 <div class="buttons">
-                    <button class="confirm">Complete/Confirm</button>
-                    <button v-on:click="handleClick()" class="leave">
+                    <button v-on:click="handleLeave()" class="leave">
                         Leave PQ
                     </button>
                 </div>
             </template>
-            <template v-else>
+            <template v-else-if="this.participantCheck">
                 <!--For Participant View-->
+                <div class="buttons">
+                    <button v-on:click="handleConfirm()" class="confirm">
+                        Confirm Status
+                    </button>
+                    <button v-on:click="handleLeave2()" class="leave2">
+                        Leave PQ2
+                    </button>
+                </div>
+            </template>
+            <template v-else>
+                <!--For Non - Participant View-->
                 <div class="buttons">
                     <button v-on:click="handleJoin()" class="join">Join</button>
                     <button v-on:click="handleSave()" class="save">
@@ -74,11 +100,12 @@
 
 <script>
 import firebaseApp from '../../firebase.js';
-import { getFirestore, addDoc } from 'firebase/firestore';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { getFirestore, addDoc, updateDoc } from 'firebase/firestore';
+import { collection, getDocs, query, where, doc } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 var uuid;
-var groupCreatorid;
+
+const db = getFirestore(firebaseApp);
 
 export default {
     name: 'Participants',
@@ -89,10 +116,142 @@ export default {
             id: this.$route.params.id,
             grpId: '',
             userName: '',
+            participantCheck: false,
             showSecondModal: false,
         };
     },
     methods: {
+        //all functions need method to reload page
+        async handleStart() {
+            let currNum = this.participants.length;
+            let total = parseInt(this.numOfPeople);
+            console.log(currNum);
+            console.log(total);
+            if (currNum == total) {
+                console.log('Max participants reached');
+                alert('Max Participants reached');
+                //max capacity reached, can start
+                var pqRef = doc(db, 'PartyQuests', uuid);
+
+                try {
+                    const docRef = await updateDoc(pqRef, {
+                        status: 'In Progress',
+                    });
+                    console.log(docRef);
+                    console.log('Trying to update doc');
+                    alert('Party Quest has been started');
+                } catch (error) {
+                    console.error('Error Updating doc');
+                }
+            } else {
+                console.log('Not enough participants');
+                alert('Not enough participants');
+            }
+        },
+        //for owner to change status of PQ once all have confirmed (Either Not confirmed or confirmed)
+        //check how to reload other components -> push back to same page
+        async handleComplete() {
+            //current status must be In Progress/Complete
+            //bring check into start function
+            let check = true;
+            let index = 1;
+            this.participantStatus.forEach(status => {
+                console.log(status);
+                if (status == 'Not Confirmed') {
+                    if (index == 1) {
+                        //owner, who will only confirm when completing
+                        //TO ADD: owner status change
+                        index++;
+                    } else {
+                        check = false;
+                        index++;
+                    }
+                }
+            });
+            if (this.PQstatus != 'Completed') {
+                if (check) {
+                    var pqRef = doc(db, 'PartyQuests', uuid);
+
+                    try {
+                        const docRef = await updateDoc(pqRef, {
+                            status: 'Completed',
+                        });
+                        console.log(docRef);
+                        console.log('Trying to update doc');
+                        alert('Status Updated');
+                    } catch (error) {
+                        console.error('Error Updating doc');
+                    }
+                    //if all participants confirmed
+                    //update firebase status
+                } else {
+                    alert('Not all participants have confirmed');
+                }
+            } else {
+                alert('PQ is already completed');
+            }
+        },
+
+        handleLeave() {
+            //leave for owner
+            //leave PQ and pass down 'ownership' to next participant
+            //change creator id and remove status and name
+        },
+
+        async handleConfirm() {
+            let index = 0;
+            let currIndex = null;
+            this.participants.forEach(participant => {
+                if (participant == this.userName) {
+                    //at current user
+                    console.log('At Index of current user');
+                    currIndex = index;
+                }
+            });
+            //check type of this.participantsStatus
+            //edit status at index found
+            //update status in document
+            var pqRef = doc(db, 'PartyQuests', uuid);
+            let newStatus = this.participantStatus;
+            console.log(newStatus[currIndex]);
+            newStatus[currIndex] = 'Confirmed';
+            console.log(newStatus[currIndex]);
+            try {
+                const docRef = await updateDoc(pqRef, {
+                    participantStatus: newStatus,
+                });
+                console.log(docRef);
+                console.log('Trying to update doc');
+                alert('Status Updated');
+            } catch (error) {
+                console.error('Error Updating doc');
+            }
+        },
+        handleLeave2() {
+            //leave for normal participants
+            //remove participant and status from pq
+        },
+        handleJoin() {
+            //check if max number of participants
+            //then add user to list of participants and participant status
+        },
+        async handleSave() {
+            //save pq uuid to a new field within user
+            //if already saved then handle error
+            console.log('Saving PQ');
+            var pqRef = doc(db, 'PartyQuests', uuid);
+            try {
+                const docRef = await updateDoc(pqRef, {
+                    status: 'Completed',
+                });
+                console.log(docRef);
+                console.log('Trying to update doc');
+                alert('Status Updated');
+            } catch (error) {
+                console.error('Error Updating doc');
+            }
+        },
+
         async submit() {
             var reason = document.getElementById('formField1').value;
             try {
@@ -124,284 +283,158 @@ export default {
             console.log('filterquery');
             console.log(filterQuery);
 
-            const auth = getAuth(firebaseApp);
-            const user = auth.currentUser;
             let querySnapshot = await getDocs(filterQuery);
             querySnapshot.forEach(docs => {
                 //get documents
                 let pqDoc = docs.data();
                 this.grpId = pqDoc.groupCreatorid;
-                this.userName = user.displayName;
+                pqDoc.participants.forEach(val => {
+                    console.log('In for each loop');
+                    console.log(val);
+                    if (this.userName == val) {
+                        this.participantCheck = true;
+                    }
+                });
+                console.log(this.participantCheck);
+                this.participants = pqDoc.participants;
+                this.participantStatus = pqDoc.participantStatus;
+                this.numOfPeople = pqDoc.numOfPeople;
+                this.PQstatus = pqDoc.status;
             });
         },
-        // add handleSave handleJoin functions
-        //handleSave -> bookmark within Participant database,
-        //save PQ title (handle error for already saved -> Alert already saved)
-        //handleJoin -> add user id to pq list of participants -> check for max
 
-        handleClick() {
-            this.$confirm({
-                message: 'Confirm to leave PQ?',
-                button: {
-                    no: 'Stay',
-                    yes: 'Leave',
-                },
-                /**
-                 * Callback Function
-                 * @param {Boolean} confirm
-                 */
-                callback: async confirm => {
-                    if (confirm) {
-                        const db = getFirestore(firebaseApp);
-                        let filterQuery = query(
-                            collection(db, 'PartyQuests'),
-                            where('partyQuestid', '==', uuid)
-                        );
-                        let querySnapshot = await getDocs(filterQuery);
-                        querySnapshot.forEach(docs => {
-                            //get documents
-                            let pqDoc = docs.data();
-                            for (
-                                let x = 0;
-                                x < pqDoc.participants.length;
-                                x++
-                            ) {
-                                if (pqDoc.participants[x] == 'ryanng') {
-                                    pqDoc.participants.splice(1, 1);
-                                    pqDoc.participantStatus.splice(1, 1);
-                                } else {
-                                    //donothing;
-                                }
-                            }
-                        });
-                        window.location.replace('/home');
+        async participantDisplay() {
+            const page = this;
+            let index = 1;
+            for (let x = 0; x < this.participants.length; x++) {
+                console.log(x);
+                console.log(this.participants[x]);
+                console.log(this.participantStatus[x]);
+                let ppl = document.getElementById('Participants');
+                let a =
+                    'Participants: ' +
+                    this.participants.length +
+                    '/' +
+                    this.numOfPeople;
+                document.getElementById('Participants').innerHTML = a;
+                console.log(ppl.innerHTML);
+
+                var table = document.getElementById('table-participants');
+                var row = table.insertRow(index);
+
+                var name = this.participants[x];
+                var status = this.participantStatus[x];
+
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+
+                cell1.innerHTML = name;
+                cell2.innerHTML = status;
+                //first check if its current user
+                console.log(this.userName);
+                console.log(name);
+                if (this.userName == name) {
+                    console.log('Current User Functions');
+                    console.log('No functions');
+                    index++;
+                } else {
+                    if (this.participantCheck) {
+                        //Check for Owner or Participant
+                        if (this.grpId == this.userName) {
+                            //if owner report view kick
+                            console.log('Owner Table Functions');
+
+                            var viewButton = document.createElement('button');
+                            viewButton.className = 'bwt';
+                            viewButton.id = String(name);
+                            viewButton.innerHTML = 'View';
+                            viewButton.onclick = function() {
+                                window.location.replace(
+                                    '/profile/user/' + this.participants[x]
+                                );
+                            };
+
+                            var reportButton = document.createElement('button');
+                            reportButton.className = 'bwt';
+                            reportButton.id = String(name);
+                            reportButton.innerHTML = 'Report';
+                            reportButton.onclick = function() {
+                                page.reportUser();
+                            };
+
+                            var kickButton = document.createElement('button');
+                            kickButton.className = 'bwt';
+                            kickButton.id = String(name);
+                            kickButton.innerHTML = 'Kick';
+                            kickButton.onclick = function() {
+                                //kick function
+                            };
+
+                            cell3.appendChild(viewButton);
+                            cell3.appendChild(reportButton);
+                            cell3.appendChild(kickButton);
+                            index++;
+                        } else {
+                            //if participant report view
+                            console.log('Participant Table Functions');
+                            var viewButton2 = document.createElement('button');
+                            viewButton2.className = 'bwt';
+                            viewButton2.id = String(name);
+                            viewButton2.innerHTML = 'View';
+                            viewButton2.onclick = function() {
+                                window.location.replace(
+                                    '/profile/user/' + this.participants[x]
+                                );
+                            };
+
+                            var reportButton2 = document.createElement(
+                                'button'
+                            );
+                            reportButton2.className = 'bwt';
+                            reportButton2.id = String(name);
+                            reportButton2.innerHTML = 'Report';
+                            reportButton2.onclick = function() {
+                                page.reportUser();
+                            };
+                            cell3.appendChild(viewButton2);
+                            cell3.appendChild(reportButton2);
+                            index++;
+                        }
                     } else {
-                        //donothing
+                        //check for non-participant view
+                        console.log('Non-Participant Table Functions');
+                        var viewButton3 = document.createElement('button');
+                        viewButton3.className = 'bwt';
+                        viewButton3.id = String(name);
+                        viewButton3.innerHTML = 'View';
+                        viewButton3.onclick = function() {
+                            window.location.replace(
+                                '/profile/user/' + this.participants[x]
+                            );
+                        };
+
+                        cell3.appendChild(viewButton3);
+                        index++;
                     }
-                },
-            });
+                }
+            }
         },
     },
     mounted() {
-        const page = this;
-        const db = getFirestore(firebaseApp);
-        let filterQuery = query(
-            collection(db, 'PartyQuests'),
-            where('partyQuestid', '==', uuid)
-        );
-        console.log('filterquery');
-        console.log(filterQuery);
-        async function participantDisplay() {
-            const auth = getAuth(firebaseApp);
-            const user = auth.currentUser;
-            let querySnapshot = await getDocs(filterQuery);
-            let index = 1;
-            querySnapshot.forEach(docs => {
-                //get documents
-                let pqDoc = docs.data();
-                //let participants = pqDoc.participants;
-                for (let x = 0; x < pqDoc.participants.length; x++) {
-                    console.log(x);
-                    console.log(pqDoc.participants[x]);
-                    console.log(pqDoc.participantStatus[x]);
-                    groupCreatorid = pqDoc.groupCreatorid;
-                    let ppl = document.getElementById('Participants');
-                    let a =
-                        'Participants: ' +
-                        pqDoc.participants.length +
-                        '/' +
-                        pqDoc.numOfPeople;
-                    document.getElementById('Participants').innerHTML = a;
-                    console.log(ppl.innerHTML);
-
-                    var table = document.getElementById('table-participants');
-                    var row = table.insertRow(index);
-
-                    var name = pqDoc.participants[x];
-                    var status = pqDoc.participantStatus[x];
-
-                    var cell1 = row.insertCell(0);
-                    var cell2 = row.insertCell(1);
-                    var cell3 = row.insertCell(2);
-
-                    cell1.innerHTML = name;
-                    cell2.innerHTML = status;
-
-                    //Check for Owner or Participant
-                    if (pqDoc.groupCreatorid == user.displayName) {
-                        console.log('Owner Table Functions');
-
-                        var viewButton = document.createElement('button');
-                        viewButton.className = 'bwt';
-                        viewButton.id = String(name);
-                        viewButton.innerHTML = 'Test';
-                        viewButton.onclick = function() {
-                            window.location.replace(
-                                '/profile/user/' + pqDoc.participants[x]
-                            );
-                        };
-
-                        var reportButton = document.createElement('button');
-                        reportButton.className = 'bwt';
-                        reportButton.id = String(name);
-                        reportButton.innerHTML = 'Test2';
-                        reportButton.onclick = function() {
-                            page.reportUser();
-                        };
-
-                        var kickButton = document.createElement('button');
-                        kickButton.className = 'bwt';
-                        kickButton.id = String(name);
-                        kickButton.innerHTML = 'Kick';
-                        kickButton.onclick = function() {
-                            //kick function
-                        };
-
-                        cell3.appendChild(viewButton);
-                        cell3.appendChild(reportButton);
-                        cell3.appendChild(kickButton);
-                        index++;
-                    } else {
-                        console.log('Participant Table Functions');
-                        var viewButton2 = document.createElement('button');
-                        viewButton2.className = 'bwt';
-                        viewButton2.id = String(name);
-                        viewButton2.innerHTML = 'View';
-                        viewButton2.onclick = function() {
-                            window.location.replace(
-                                '/profile/user/' + pqDoc.participants[x]
-                            );
-                        };
-
-                        //add check for whether user is participant already
-                        //if (user.displayName in pqDoc.participants){
-                        //add report button
-                        //}
-                        var reportButton2 = document.createElement('button');
-                        reportButton2.className = 'bwt';
-                        reportButton2.id = String(name);
-                        reportButton2.innerHTML = 'Report';
-                        reportButton2.onclick = function() {
-                            page.reportUser();
-                        };
-                        cell3.appendChild(viewButton2);
-                        cell3.appendChild(reportButton2);
-                        index++;
-                    }
-                }
-            });
-        }
-
-        async function ownerDisplay() {
-            function updateFields(id, participants, participantStatus, x) {
-                db.collection('PartyQuests')
-                    .doc(id)
-                    .update({
-                        participants: participants.splice(x, 1),
-                        participantStatus: participantStatus.splice(x, 1),
-                    })
-                    .then(ref => {
-                        console.log(ref);
-                        window.location.reload();
-                    })
-                    .catch(err => {
-                        console.error(err);
-                    });
-            }
-            let querySnapshot = await getDocs(filterQuery);
-            let index = 1;
-            querySnapshot.forEach(docs => {
-                console.log('querysnapshot');
-                console.log(querySnapshot);
-                //get documents
-                let pqDoc = docs.data();
-                //let participants = pqDoc.participants;
-                console.log(pqDoc);
-                console.log(pqDoc.participants.length);
-                for (let x = 0; x < pqDoc.participants.length; x++) {
-                    console.log(x);
-                    console.log(pqDoc.participants[x]);
-                    console.log(pqDoc.participantStatus[x]);
-
-                    let ppl = document.getElementById('Participants');
-                    let a =
-                        'Participants: ' +
-                        pqDoc.participants.length +
-                        '/' +
-                        pqDoc.numOfPeople;
-                    document.getElementById('Participants').innerHTML = a;
-                    console.log(ppl.innerHTML);
-
-                    var table = document.getElementById('table-participants');
-                    var row = table.insertRow(index);
-
-                    var name = pqDoc.participants[x];
-                    var status = pqDoc.participantStatus[x];
-
-                    var cell1 = row.insertCell(0);
-                    var cell2 = row.insertCell(1);
-                    var cell3 = row.insertCell(2);
-
-                    cell1.innerHTML = name;
-                    cell2.innerHTML = status;
-                    cell3.className = 'view-manage-buttons';
-
-                    var viewButton = document.createElement('button');
-                    var kickButton = document.createElement('button');
-                    viewButton.className = 'bwt';
-                    viewButton.id = String(name);
-                    viewButton.innerHTML = 'View';
-                    viewButton.onclick = function() {
-                        window.location.replace(
-                            '/profile/user/' + pqDoc.participants[x]
-                        );
-                    };
-                    var reportButton = document.createElement('button');
-                    reportButton.className = 'bwt';
-                    reportButton.id = String(name);
-                    reportButton.innerHTML = 'Report';
-                    reportButton.onclick = function() {
-                        page.reportUser();
-                    };
-                    if (pqDoc.participants[x] == pqDoc.groupCreatorid) {
-                        cell3.appendChild(viewButton);
-                        cell3.appendChild(reportButton);
-                        index++;
-                    } else {
-                        kickButton.className = 'bwt';
-                        kickButton.id = String(name);
-                        kickButton.innerHTML = 'Kick';
-                        kickButton.onclick = function() {
-                            updateFields(
-                                docs.id,
-                                pqDoc.participants,
-                                pqDoc.participantStatus,
-                                x
-                            );
-                        };
-                        cell3.appendChild(viewButton);
-                        cell3.appendChild(kickButton);
-                        cell3.appendChild(reportButton);
-                        index++;
-                    }
-                }
-            });
-        }
-
         const auth = getAuth();
         onAuthStateChanged(auth, user => {
-            if (user.displayName == groupCreatorid) {
-                console.log(groupCreatorid);
-                console.log(user.displayName);
-                console.log('In Owner Display');
-                ownerDisplay();
-            } else {
-                console.log(groupCreatorid);
-                console.log(user.displayName);
-                console.log('In participant display');
-                participantDisplay();
+            if (user != null) {
+                console.log(
+                    'user name is passed and obtained:',
+                    user.displayName
+                );
+                this.userName = user.displayName;
             }
         });
+
+        this.test();
+
         // async function viewUser(name) {
         //     const db = getFirestore(firebaseApp);
         //     const auth = getAuth();
@@ -484,7 +517,7 @@ td {
     font-family: 'PT Serif', serif;
 }
 
-.confirm {
+.complete {
     background-color: green;
     border: none;
     color: white;
@@ -521,6 +554,29 @@ td {
 
 .save {
     background-color: lightblue;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 8px 8px;
+}
+.confirm {
+    background-color: lightgreen;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 8px 8px;
+}
+
+.leave2 {
+    background-color: yellow;
     border: none;
     color: white;
     padding: 15px 32px;
