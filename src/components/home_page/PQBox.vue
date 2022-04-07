@@ -36,7 +36,13 @@
             >
                 <button class="btn btn-primary">Edit</button>
             </router-link> -->
-                        <button class="btn btn-primary">View Details</button>
+                        <button
+                            class="btn btn-primary btn-sm"
+                            type="button"
+                            v-on:click="directToPQ(value.id)"
+                        >
+                            Join Now!
+                        </button>
                     </div>
                 </div>
             </div>
@@ -62,6 +68,11 @@ export default {
         };
     },
     methods: {
+        directToPQ(id) {
+            console.log('this is the docs id for search results user', id);
+            // alert('pause the loading');
+            window.location.replace('/pq/' + id);
+        },
         async display() {
             this.pqList = [];
             //obtain photo and pass it as a variable

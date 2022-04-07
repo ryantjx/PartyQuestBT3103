@@ -97,6 +97,7 @@ export default {
                     pqMap['description'] = pq['description'];
                     pqMap['participants'] = pq['participants'];
                     pqMap['photoId'] = pq['photoId'];
+                    pqMap['id'] = docs.id;
 
                     //Push map into array
                     itemsList.push(pqMap);

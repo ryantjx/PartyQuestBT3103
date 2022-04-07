@@ -6,12 +6,12 @@
                     <div class="card-body">
                         <div class="account-settings">
                             <div class="user-profile">
-                                <div class="user-avatar">
+                                <!-- <div class="user-avatar">
                                     <img
                                         src="https://bootdey.com/img/Content/avatar/avatar7.png"
                                         alt="Maxwell Admin"
                                     />
-                                </div>
+                                </div> -->
                                 <h5 class="user-name">
                                     {{ this.id }}
                                 </h5>
@@ -20,10 +20,10 @@
                                 </h6>
                             </div>
                             <div class="about">
-                                <h5>About</h5>
+                                <!-- <h5>About</h5>
                                 <p>
                                     This is the other PQ page.
-                                </p>
+                                </p> -->
                             </div>
                         </div>
                     </div>
@@ -38,8 +38,7 @@
                     </div>
                     <div v-else-if="isEmptyList()">
                         <h1>
-                            Your PartyQuest History is empty.<br />
-                            Start one now!
+                            User has not completed any PartyQuests
                         </h1>
                     </div>
                     <div v-else>

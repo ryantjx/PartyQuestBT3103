@@ -107,6 +107,8 @@ export default {
                 viewButton.id = String(docs.id);
                 viewButton.innerHTML = 'View';
                 viewButton.onclick = function() {
+                    console.log('this is the partyquest id', docs.id);
+                    alert('pause the load');
                     window.location.replace('/pq/' + docs.id);
                 };
                 // add button to action column cell
