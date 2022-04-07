@@ -7,7 +7,7 @@
                         <div class="img-head">
                             <img
                                 id="friends-laughing"
-                                src="../assets/aboutus-friends.jpg"
+                                src="../assets/collage1.jpg"
                                 alt="friends-laughing"
                             />
                         </div>
@@ -18,27 +18,24 @@
                         </h2>
                         <div class="break-small mb-2"></div>
                         <p class="text-para">
-                            Lorem Ipsum is simply dummy text of the printing and
-                            typesetting industry. Lorem Ipsum has been the
-                            industry's standard dummy text ever since the 1500s,
-                            when an unknown printer took a galley of type and
-                            scrambled it to make a type specimen book. It has
-                            survived not only five centuries, but also the leap
-                            into electronic typesetting, remaining essentially
-                            unchanged. It was popularised in the 1960s with the
-                            release of Letraset sheets containing Lorem Ipsum
-                            passages, and more recently with desktop publishing
-                            software like Aldus PageMaker including versions of
-                            Lorem Ipsum.
+                            PartyQuest is an web application that helps to
+                            connect like-minded shoppers together. Ever found
+                            yourself needing more people to complete an online
+                            purchase/subscription?
+                        </p>
+                        <p>
+                            With just a simple click, you can now create your
+                            very own PartyQuest that allows others to join in
+                            with you for your online purchase.
                         </p>
                         <div id="app" class="row">
-                            <div id="app" class="col-12 col-md-4 mb-2 mb-md-0">
+                            <div class="col-12 col-md-4 mb-2 mb-md-0">
                                 <div class="box">
                                     <font-awesome-icon
                                         icon="fa fa-users mb-3"
                                     />
-                                    <h4 class="mb=0">TOTAL CLIENTS</h4>
-                                    <p class="mb-0">999</p>
+                                    <h4 class="mb=0">TOTAL NUMBER OF USERS</h4>
+                                    <p class="mb-0">600+</p>
                                 </div>
                             </div>
                             <div class="col-12 col-md-4 mb-2 mb-md-0">
@@ -46,8 +43,10 @@
                                     <font-awesome-icon
                                         icon="fa-solid fa-truck-fast mb-3"
                                     />
-                                    <h4 class="mb=0">TOTAL CLIENTS</h4>
-                                    <p class="mb-0">999</p>
+                                    <h4 class="mb=0">
+                                        CURRENT AVAILABLE QUESTS
+                                    </h4>
+                                    <p class="mb-0">1000+</p>
                                 </div>
                             </div>
                             <div class="col-12 col-md-4 mb-2 mb-md-0">
@@ -55,8 +54,8 @@
                                     <font-awesome-icon
                                         icon="fa-solid fa-handshake mb-3"
                                     />
-                                    <h4 class="mb=0">TOTAL CLIENTS</h4>
-                                    <p class="mb-0">999</p>
+                                    <h4 class="mb=0">TOTAL COMPLETED QUESTS</h4>
+                                    <p class="mb-0">200+</p>
                                 </div>
                             </div>
                         </div>
@@ -149,6 +148,7 @@ p {
 .about-us-section .text-head {
     font-size: 28px;
     color: #16c79a;
+    text-align: left;
 }
 
 .about-us-section .break-small {
