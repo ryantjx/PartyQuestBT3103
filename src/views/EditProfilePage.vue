@@ -6,12 +6,12 @@
                     <div class="card-body">
                         <div class="account-settings">
                             <div class="user-profile">
-                                <!-- <div class="user-avatar">
+                                <div class="user-avatar">
                                     <img
                                         src="https://bootdey.com/img/Content/avatar/avatar7.png"
                                         alt="Maxwell Admin"
                                     />
-                                </div> -->
+                                </div>
                                 <h5 class="user-name" v-if="user">
                                     {{ this.user.displayName }}
                                 </h5>

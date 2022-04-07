@@ -9,7 +9,7 @@ import CreatePQ from '../views/CreatePQ.vue';
 import ProfilePage from '../views/ProfilePage';
 import MyPQPage from '../views/MyPQPage';
 import ChatsPage from '../views/ChatsPage';
-import SavedPQ from '../components/SavedPQ';
+import SavedPQPage from '../views/SavedPQPage';
 import CreatedPQPage from '../views/CreatedPQPage';
 import PqDetails from '../views/PqDetailsPage';
 import JoinedPQPage from '../views/JoinedPQPage';
@@ -92,9 +92,9 @@ const routes = [
         component: MyPQPage,
     },
     {
-        path: '/mypq/saved',
-        name: 'SavedPQ',
-        component: SavedPQ,
+        path: '/mypq/SavedPQPage',
+        name: 'SavedPQPage',
+        component: SavedPQPage,
     },
     {
         path: '/mypq/JoinedPQPage',
