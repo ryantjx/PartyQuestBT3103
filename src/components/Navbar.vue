@@ -28,7 +28,22 @@
                     </div>
                 </div>
                 <div v-else>
-                    <div class="nav-item mr-3">
+                    <div class="nav-item">
+                        <router-link to="aboutus" class="nav-link "
+                            >About Us</router-link
+                        >
+                    </div>
+                    <div class="nav-item">
+                        <router-link to="contactus" class="nav-link "
+                            >Contact Us</router-link
+                        >
+                    </div>
+                    <div class="nav-item">
+                        <router-link to="login" class="nav-link"
+                            >Login</router-link
+                        >
+                    </div>
+                    <div class="nav-item">
                         <router-link to="login" class="nav-link"
                             >Login</router-link
                         >
