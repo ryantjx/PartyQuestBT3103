@@ -1,7 +1,7 @@
 <template>
     <div class="detailpage">
         <h1 id="Participants"></h1>
-        <table id="table-participants" class="auto-index" v-onload="test()">
+        <table id="table-participants" class="auto-index">
             <tr>
                 <th>Name</th>
                 <th>Status</th>
@@ -10,7 +10,7 @@
         </table>
 
         <br /><br />
-        <div class="container" id="buttons" v-onload="participantDisplay()">
+        <div class="container" id="buttons">
             <!-- need to change check to check if user is a participant-->
             <template v-if="userName == grpId">
                 <!--For Owner View-->
@@ -51,6 +51,18 @@
                 <!--For Non - Participant View-->
                 <div class="buttons">
                     <button v-on:click="handleJoin()" class="join">Join</button>
+                </div>
+            </template>
+            <template v-if="this.saveCheck">
+                <!-- check whether PQ is currently saved -->
+                <div class="buttons">
+                    <button v-on:click="handleUnsave()" class="unsave">
+                        Unsave PQ
+                    </button>
+                </div>
+            </template>
+            <template v-else>
+                <div class="buttons">
                     <button v-on:click="handleSave()" class="save">
                         Save PQ
                     </button>
@@ -100,7 +112,7 @@
 
 <script>
 import firebaseApp from '../../firebase.js';
-import { getFirestore, addDoc, updateDoc } from 'firebase/firestore';
+import { getFirestore, addDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { collection, getDocs, query, where, doc } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 var uuid;
@@ -118,6 +130,8 @@ export default {
             userName: '',
             participantCheck: false,
             showSecondModal: false,
+            saveCheck: false,
+            PQstatus: null,
         };
     },
     methods: {
@@ -130,18 +144,44 @@ export default {
             if (currNum == total) {
                 console.log('Max participants reached');
                 alert('Max Participants reached');
-                //max capacity reached, can start
-                var pqRef = doc(db, 'PartyQuests', uuid);
+                //max capacity reached, check whether all have confirmed
+                let check = true;
+                let index = 1;
+                this.participantStatus.forEach(status => {
+                    console.log(status);
+                    if (status == 'Not Confirmed') {
+                        if (index == 1) {
+                            //owner, who will only confirm when completing
+                            //TO ADD: owner status change
+                            index++;
+                        } else {
+                            check = false;
+                            index++;
+                        }
+                    }
+                });
 
-                try {
-                    const docRef = await updateDoc(pqRef, {
-                        status: 'In Progress',
-                    });
-                    console.log(docRef);
-                    console.log('Trying to update doc');
-                    alert('Party Quest has been started');
-                } catch (error) {
-                    console.error('Error Updating doc');
+                if (this.PQstatus == 'Not Started') {
+                    if (check) {
+                        //all other users have confirmed, owner can confirm and start PQ
+                        var pqRef = doc(db, 'PartyQuests', uuid);
+
+                        try {
+                            const docRef = await updateDoc(pqRef, {
+                                status: 'In Progress',
+                            });
+                            console.log(docRef);
+                            console.log('Trying to update doc');
+                            alert('Party Quest has been started');
+                            this.pushPage(uuid);
+                        } catch (error) {
+                            console.error('Error Updating doc');
+                        }
+                    } else {
+                        alert('Not all participants have confirmed yet');
+                    }
+                } else {
+                    alert('PQ has already been started');
                 }
             } else {
                 console.log('Not enough participants');
@@ -179,6 +219,7 @@ export default {
                         console.log(docRef);
                         console.log('Trying to update doc');
                         alert('Status Updated');
+                        this.pushPage(uuid);
                     } catch (error) {
                         console.error('Error Updating doc');
                     }
@@ -192,10 +233,90 @@ export default {
             }
         },
 
-        handleLeave() {
+        async handleLeave() {
             //leave for owner
             //leave PQ and pass down 'ownership' to next participant
             //change creator id and remove status and name
+            let check = false;
+            this.participants.forEach(participant => {
+                if (participant == this.userName) {
+                    check = true;
+                }
+            });
+
+            let currStatus = false;
+            if (this.PQstatus == 'Not Started') {
+                currStatus = true;
+            }
+
+            if (currStatus) {
+                if (check) {
+                    //you are owner of pq
+                    var pqRef = doc(db, 'PartyQuests', uuid);
+                    if (this.participants.length > 1) {
+                        //can pass down ownership
+                        let a = this.participants[1];
+                        console.log('Replacement is ', a);
+
+                        let d = [];
+                        let e = [];
+                        for (let x = 0; x < this.participants.length; x++) {
+                            if (this.participants[x] == this.grpId) {
+                                console.log('current user is creator');
+                            } else {
+                                //create new array with all other participants and status
+                                d.push(this.participants[x]);
+                                e.push(this.participantStatus[x]);
+                            }
+                        }
+                        console.log('After removing', d);
+                        console.log('After removing status', e);
+                        this.grpId = a;
+
+                        try {
+                            const docRef = await updateDoc(pqRef, {
+                                groupCreatorid: a,
+                                participants: d,
+                                participantStatus: e,
+                            });
+                            console.log(docRef);
+                            console.log('Trying to update doc');
+                            alert('Status Updated');
+                            this.pushPage(uuid);
+                        } catch (error) {
+                            console.error('Error Updating doc');
+                        }
+                    } else {
+                        try {
+                            const docRef3 = await deleteDoc(
+                                doc(db, 'PartyQuests', uuid)
+                            );
+                            alert('PQ deleted');
+                            console.log(docRef3);
+                            console.log('Trying to update doc');
+                            this.pushPage2();
+                        } catch (error) {
+                            console.error('Error Updating doc');
+                        }
+                        //cannot pass down ownership, delete PQ
+                        /*let filterQuery = query(
+                            collection(db, 'PartyQuests'),
+                            where('partyQuestid', '==', uuid)
+                        );
+                        console.log('filterquery');
+                        console.log(filterQuery);
+
+                        let querySnapshot = await getDocs(filterQuery);
+                        querySnapshot.forEach(docs => {
+                            docs.ref.delete();
+                        */
+                    }
+                } else {
+                    alert('You are not the owner of this PQ');
+                }
+            } else {
+                alert('You cannot leave a PQ that is in progress/completed');
+            }
         },
 
         async handleConfirm() {
@@ -206,49 +327,288 @@ export default {
                     //at current user
                     console.log('At Index of current user');
                     currIndex = index;
+                    index++;
+                } else {
+                    index++;
                 }
             });
             //check type of this.participantsStatus
             //edit status at index found
             //update status in document
-            var pqRef = doc(db, 'PartyQuests', uuid);
-            let newStatus = this.participantStatus;
-            console.log(newStatus[currIndex]);
-            newStatus[currIndex] = 'Confirmed';
-            console.log(newStatus[currIndex]);
-            try {
-                const docRef = await updateDoc(pqRef, {
-                    participantStatus: newStatus,
-                });
-                console.log(docRef);
-                console.log('Trying to update doc');
-                alert('Status Updated');
-            } catch (error) {
-                console.error('Error Updating doc');
+            if (this.participantStatus[currIndex] == 'Not Confirmed') {
+                var pqRef = doc(db, 'PartyQuests', uuid);
+                let newStatus = this.participantStatus;
+                console.log(newStatus[currIndex]);
+                newStatus[currIndex] = 'Confirmed';
+                console.log(newStatus[currIndex]);
+                this.participantStatus = newStatus;
+                try {
+                    const docRef = await updateDoc(pqRef, {
+                        participantStatus: newStatus,
+                    });
+                    console.log(docRef);
+                    console.log('Trying to update doc');
+                    alert('Status Updated');
+                    this.pushPage(uuid);
+                } catch (error) {
+                    console.error('Error Updating doc');
+                }
+            } else {
+                alert('You have already confirmed');
             }
         },
-        handleLeave2() {
+
+        async handleLeave2() {
             //leave for normal participants
             //remove participant and status from pq
+            //leave for owner
+            //leave PQ and pass down 'ownership' to next participant
+            //change creator id and remove status and name
+            let check = false;
+            this.participants.forEach(participant => {
+                if (participant == this.userName) {
+                    check = true;
+                }
+            });
+
+            let currStatus = false;
+            if (this.PQstatus == 'Not Started') {
+                currStatus = true;
+            }
+
+            if (currStatus) {
+                if (check) {
+                    //you are participant in pq
+                    var pqRef = doc(db, 'PartyQuests', uuid);
+                    let d = [];
+                    let e = [];
+                    for (let x = 0; x < this.participants.length; x++) {
+                        if (this.participants[x] == this.userName) {
+                            console.log('current user');
+                        } else {
+                            //create new array with all other participants and status
+                            d.push(this.participants[x]);
+                            e.push(this.participantStatus[x]);
+                        }
+                    }
+                    console.log('After removing', d);
+                    console.log('After removing status', e);
+                    try {
+                        const docRef = await updateDoc(pqRef, {
+                            participants: d,
+                            participantStatus: e,
+                        });
+                        console.log(docRef);
+                        console.log('Trying to update doc');
+                        alert('Status Updated');
+                        this.pushPage(uuid);
+                    } catch (error) {
+                        console.error('Error Updating doc');
+                    }
+                } else {
+                    //you are not participant in PQ
+                    alert('You did not join this PQ');
+                }
+            }
         },
-        handleJoin() {
+
+        clearTable() {
+            console.warn('tryna clear the table');
+            var table = document.getElementById('table-participants');
+            var rowCount = table.rows.length;
+            while (--rowCount) {
+                table.deleteRow(rowCount);
+            }
+        },
+
+        pushPage(id) {
+            window.location.replace('/pq/' + id);
+        },
+
+        pushPage2() {
+            window.location.replace('/home');
+        },
+        async handleJoin() {
             //check if max number of participants
             //then add user to list of participants and participant status
+            let check = true;
+            this.participants.forEach(participant => {
+                if (participant == this.userName) {
+                    check = false;
+                }
+            });
+            if (check) {
+                if (this.participants.length >= this.numOfPeople) {
+                    //max num reached
+                    alert('Sorry, this Party Quest is full');
+                } else {
+                    //PQ is not full
+                    let a = this.participants;
+                    console.log('Initial A is', a);
+                    let b = this.participantStatus;
+                    console.log('Initial B is', b);
+                    a.push(this.userName);
+                    b.push('Not Confirmed');
+                    console.log('Curr A is', a);
+                    console.log('Curr B is', b);
+                    var pqRef = doc(db, 'PartyQuests', uuid);
+                    try {
+                        const docRef = await updateDoc(pqRef, {
+                            participants: a,
+                            participantStatus: b,
+                        });
+                        console.log(docRef);
+                        console.log('Trying to update doc');
+                        alert('Joined Party Quest');
+                        this.pushPage(uuid);
+                    } catch (error) {
+                        console.error('Error Updating doc');
+                    }
+                }
+            } else {
+                alert('You are already a member');
+            }
         },
+
+        async handleKick(x) {
+            //then remove user from list of participants and participant status
+            let check = false;
+            this.participants.forEach(participant => {
+                if (participant == x) {
+                    check = true;
+                }
+            });
+            if (check) {
+                //if participant is member of PQ
+                let d = [];
+                let e = [];
+
+                for (let y = 0; y < this.participants.length; y++) {
+                    if (this.participants[y] == x) {
+                        console.log('user to remove');
+                    } else {
+                        //create new array with all other participants and status
+                        d.push(this.participants[y]);
+                        e.push(this.participantStatus[y]);
+                    }
+                }
+                console.log('After removing', d);
+                console.log('After removing status', e);
+                this.participants = d;
+                this.participants = e;
+
+                var pqRef = doc(db, 'PartyQuests', uuid);
+
+                try {
+                    const docRef = await updateDoc(pqRef, {
+                        participants: d,
+                        participantStatus: e,
+                    });
+                    console.log(docRef);
+                    console.log('Trying to update doc');
+                    alert('Participant Kicked');
+                    this.pushPage(uuid);
+                } catch (error) {
+                    console.error('Error Updating doc');
+                }
+            } else {
+                //participant not member
+                alert('User is no longer in PQ');
+            }
+        },
+
         async handleSave() {
             //save pq uuid to a new field within user
+            //we allow for them to save their own PQ, jic they want to keep track of it
             //if already saved then handle error
-            console.log('Saving PQ');
-            var pqRef = doc(db, 'PartyQuests', uuid);
-            try {
-                const docRef = await updateDoc(pqRef, {
-                    status: 'Completed',
+            /*let check = true;
+            if (this.savedPQ.length > 0) {
+                //savedPQ list is not null
+                this.savedPQ.forEach(pq => {
+                    if (pq == uuid) {
+                        //already saved current PQ
+                        console.log('Already Saved Current PQ');
+                        check = false;
+                    }
                 });
-                console.log(docRef);
-                console.log('Trying to update doc');
-                alert('Status Updated');
-            } catch (error) {
-                console.error('Error Updating doc');
+            }
+            console.log(check);*/
+            if (!this.saveCheck) {
+                //PQ can be saved
+                this.clearTable();
+                let a = this.savedPQ;
+                console.log('Curr Saved');
+                console.log(a);
+                if (a.length > 0) {
+                    a.push(uuid);
+                } else {
+                    a = [uuid];
+                }
+
+                console.log(a);
+                this.savedPQ = a;
+                var userRef = doc(db, 'Users', this.userName);
+                try {
+                    const docRef = await updateDoc(userRef, {
+                        savedPqs: a,
+                    });
+                    console.log(docRef);
+                    console.log('Trying to update doc');
+                    alert('PQ saved');
+                    this.pushPage(uuid);
+                } catch (error) {
+                    console.error('Error Updating doc');
+                }
+            } else {
+                //PQ cannot be saved
+                alert('PQ is already saved');
+            }
+        },
+
+        async handleUnsave() {
+            //when user has saved PQ, remove from saved PQ
+            let check = false;
+            if (this.savedPQ.length > 0) {
+                //savedPQ list is not null
+                this.savedPQ.forEach(pq => {
+                    if (pq == uuid) {
+                        //already saved current PQ
+                        console.log('Already Saved Current PQ');
+                        check = true;
+                    }
+                });
+            }
+            if (check) {
+                //PQ is in list so can remove it
+                this.clearTable();
+                let c = this.savedPQ;
+                console.log('Curr Saved');
+                console.log(c);
+                let d = [];
+                d.forEach(pq => {
+                    if (pq == uuid) {
+                        console.log('current pq');
+                    } else {
+                        d.push(pq);
+                    }
+                });
+                console.log(d);
+
+                var userRef = doc(db, 'Users', this.userName);
+                try {
+                    const docRef = await updateDoc(userRef, {
+                        savedPqs: d,
+                    });
+                    console.log(docRef);
+                    console.log('Trying to update doc');
+                    alert('Status Updated');
+                    this.pushPage(uuid);
+                } catch (error) {
+                    console.error('Error Updating doc');
+                }
+            } else {
+                //PQ cannot be saved
+                alert('PQ is not saved');
             }
         },
 
@@ -274,6 +634,7 @@ export default {
         reportUser() {
             this.showSecondModal = true;
         },
+
         async test() {
             const db = getFirestore(firebaseApp);
             let filterQuery = query(
@@ -295,17 +656,41 @@ export default {
                         this.participantCheck = true;
                     }
                 });
+
                 console.log(this.participantCheck);
                 this.participants = pqDoc.participants;
                 this.participantStatus = pqDoc.participantStatus;
                 this.numOfPeople = pqDoc.numOfPeople;
                 this.PQstatus = pqDoc.status;
             });
+            let filterQuery2 = query(
+                collection(db, 'Users'),
+                where('username', '==', this.userName)
+            );
+            console.log('filterquery2');
+            console.log(filterQuery2);
+            let querySnapshot2 = await getDocs(filterQuery2);
+            querySnapshot2.forEach(docs => {
+                //get documents
+                let pqDoc2 = docs.data();
+                this.savedPQ = pqDoc2.savedPqs;
+                if (this.savedPQ.length > 0) {
+                    //array not empty
+                    this.savedPQ.forEach(pq => {
+                        if (pq == uuid) {
+                            //pq is already saved
+                            this.saveCheck = true;
+                        }
+                    });
+                }
+            });
+            await this.participantDisplay();
         },
 
         async participantDisplay() {
             const page = this;
-            let index = 1;
+            let index1 = 1;
+            console.log('Num of Participants', this.participants);
             for (let x = 0; x < this.participants.length; x++) {
                 console.log(x);
                 console.log(this.participants[x]);
@@ -320,7 +705,7 @@ export default {
                 console.log(ppl.innerHTML);
 
                 var table = document.getElementById('table-participants');
-                var row = table.insertRow(index);
+                var row = table.insertRow(index1);
 
                 var name = this.participants[x];
                 var status = this.participantStatus[x];
@@ -332,12 +717,10 @@ export default {
                 cell1.innerHTML = name;
                 cell2.innerHTML = status;
                 //first check if its current user
-                console.log(this.userName);
-                console.log(name);
                 if (this.userName == name) {
                     console.log('Current User Functions');
                     console.log('No functions');
-                    index++;
+                    index1++;
                 } else {
                     if (this.participantCheck) {
                         //Check for Owner or Participant
@@ -369,12 +752,13 @@ export default {
                             kickButton.innerHTML = 'Kick';
                             kickButton.onclick = function() {
                                 //kick function
+                                page.handleKick(this.participants[x]);
                             };
 
                             cell3.appendChild(viewButton);
                             cell3.appendChild(reportButton);
                             cell3.appendChild(kickButton);
-                            index++;
+                            index1++;
                         } else {
                             //if participant report view
                             console.log('Participant Table Functions');
@@ -399,7 +783,7 @@ export default {
                             };
                             cell3.appendChild(viewButton2);
                             cell3.appendChild(reportButton2);
-                            index++;
+                            index1++;
                         }
                     } else {
                         //check for non-participant view
@@ -415,7 +799,7 @@ export default {
                         };
 
                         cell3.appendChild(viewButton3);
-                        index++;
+                        index1++;
                     }
                 }
             }
@@ -430,10 +814,9 @@ export default {
                     user.displayName
                 );
                 this.userName = user.displayName;
+                this.test();
             }
         });
-
-        this.test();
 
         // async function viewUser(name) {
         //     const db = getFirestore(firebaseApp);
