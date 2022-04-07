@@ -1,7 +1,6 @@
 <template>
     <div class="centre">
         <PQNavBar />
-        <h1>Joined PartyQuests</h1>
         <div class="padding-top-2x mt-2 hidden-lg-up"></div>
         <div class="my-listings margin-bottom-none">
             <div v-if="isNotLoaded()">
@@ -94,6 +93,7 @@ export default {
                 pqMap['collectionLocation'] = pq['collectionLocation'];
                 pqMap['endDate'] = pq['endDate'];
                 pqMap['status'] = pq['status'];
+                pqMap['id'] = docs.id;
                 //Push map into array
                 itemsList.push(pqMap);
             });
