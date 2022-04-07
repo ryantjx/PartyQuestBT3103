@@ -21,20 +21,25 @@
                             Start PQ
                         </button>
                     </div>
-                </template>
-                <template v-else>
-                    <!-- if status is in progress -->
                     <div class="buttons">
-                        <button v-on:click="handleComplete()" class="complete">
-                            Complete PQ
+                        <button v-on:click="handleLeave()" class="leave">
+                            Leave PQ
                         </button>
                     </div>
                 </template>
-                <div class="buttons">
-                    <button v-on:click="handleLeave()" class="leave">
-                        Leave PQ
-                    </button>
-                </div>
+                <template v-else>
+                    <!-- if status is in progress -->
+                    <template v-if="PQstatus == 'In Progress'">
+                        <div class="buttons">
+                            <button
+                                v-on:click="handleComplete()"
+                                class="complete"
+                            >
+                                Complete PQ
+                            </button>
+                        </div>
+                    </template>
+                </template>
             </template>
             <template v-else-if="this.participantCheck">
                 <!--For Participant View-->
@@ -42,9 +47,11 @@
                     <button v-on:click="handleConfirm()" class="confirm">
                         Confirm Status
                     </button>
-                    <button v-on:click="handleLeave2()" class="leave2">
-                        Leave PQ2
-                    </button>
+                    <template v-if="PQstatus == 'Not Started'">
+                        <button v-on:click="handleLeave2()" class="leave2">
+                            Leave PQ2
+                        </button>
+                    </template>
                 </div>
             </template>
             <template v-else>
@@ -673,7 +680,7 @@ export default {
             querySnapshot2.forEach(docs => {
                 //get documents
                 let pqDoc2 = docs.data();
-                this.savedPQ = pqDoc2.savedPqs;
+                this.savedPQ = pqDoc2.savedPartyQuests;
                 if (this.savedPQ.length > 0) {
                     //array not empty
                     this.savedPQ.forEach(pq => {
@@ -750,10 +757,9 @@ export default {
                             kickButton.className = 'bwt';
                             kickButton.id = String(name);
                             kickButton.innerHTML = 'Kick';
-                            kickButton.onclick = function() {
-                                //kick function
-                                page.handleKick(this.participants[x]);
-                            };
+                            //kickButton.onclick = this.handleKick(
+                            //this.participants[x]
+                            //);
 
                             cell3.appendChild(viewButton);
                             cell3.appendChild(reportButton);
@@ -790,7 +796,7 @@ export default {
                         console.log('Non-Participant Table Functions');
                         var viewButton3 = document.createElement('button');
                         viewButton3.className = 'bwt';
-                        viewButton3.id = String(name);
+                        //viewButton3.id = String(name);
                         viewButton3.innerHTML = 'View';
                         viewButton3.onclick = function() {
                             window.location.replace(
@@ -912,6 +918,18 @@ td {
     border-radius: 8px 8px;
 }
 
+.start {
+    background-color: green;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 8px 8px;
+}
+
 .leave {
     background-color: red;
     border: none;
@@ -923,8 +941,19 @@ td {
     font-size: 16px;
     border-radius: 8px 8px;
 }
+.unsave {
+    background-color: red;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 8px 8px;
+}
 .join {
-    background-color: lightsalmon;
+    background-color: rgb(231, 117, 72);
     border: none;
     color: white;
     padding: 15px 32px;
@@ -936,7 +965,7 @@ td {
 }
 
 .save {
-    background-color: lightblue;
+    background-color: rgb(65, 188, 228);
     border: none;
     color: white;
     padding: 15px 32px;
@@ -947,7 +976,7 @@ td {
     border-radius: 8px 8px;
 }
 .confirm {
-    background-color: lightgreen;
+    background-color: rgb(73, 239, 73);
     border: none;
     color: white;
     padding: 15px 32px;
@@ -959,7 +988,7 @@ td {
 }
 
 .leave2 {
-    background-color: yellow;
+    background-color: rgb(208, 208, 78);
     border: none;
     color: white;
     padding: 15px 32px;
