@@ -179,18 +179,22 @@
                                             <div
                                                 class="d-flex flex-column mt-4"
                                             >
+                                                <!-- ADD IN LINK TO CONNECT TO PQ PAGE -->
                                                 <button
                                                     class="btn btn-primary btn-sm"
                                                     type="button"
+                                                    v-on:click="
+                                                        directToPQ(value.id)
+                                                    "
                                                 >
                                                     Details
                                                 </button>
-                                                <button
+                                                <!-- <button
                                                     class="btn btn-outline-primary btn-sm mt-2"
                                                     type="button"
                                                 >
                                                     Add to wishlist
-                                                </button>
+                                                </button> -->
                                             </div>
                                         </div>
                                     </div>
@@ -223,6 +227,12 @@ export default {
         };
     },
     methods: {
+        directToPQ(id) {
+            console.log('this is the docs id for search results user', id);
+            // alert('pause the loading');
+            window.location.replace('/pq/' + id);
+        },
+
         async display() {
             //obtain photo and pass it as a variable
             this.pqList = [];

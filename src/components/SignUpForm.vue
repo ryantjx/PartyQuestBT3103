@@ -71,6 +71,7 @@ export default {
                         username: username,
                         email: email,
                         password: password,
+                        savedPartyQuests: [],
                     });
                     //Sets the state user displayName
                     // userCredential.user.updateProfile({

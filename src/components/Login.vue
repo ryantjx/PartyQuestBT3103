@@ -13,6 +13,9 @@
                 v-model="password"
             />
             <button type="submit" v-on:click="login()">Login</button>
+            <button class="forgot" v-on:click="goToReset()">
+                Forgot your password?
+            </button>
         </form>
     </div>
 </template>
@@ -42,6 +45,9 @@ export default {
                 .catch(error => {
                     alert(error.message);
                 });
+        },
+        goToReset() {
+            this.$router.push('/resetpassword').catch(() => {});
         },
     },
 };
