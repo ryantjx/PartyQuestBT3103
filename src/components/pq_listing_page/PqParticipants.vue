@@ -276,6 +276,7 @@ export default {
             saveCheck: false,
             PQstatus: null,
             showThirdModal: false,
+            thirdCheck: null,
         };
     },
     methods: {
