@@ -21,22 +21,24 @@
                 </div>
             </div>
 
-            <div v-else-if="user === null" class="logged-out-view">
-                <h2>test</h2>
-                <router-link to="aboutus" class="nav-link "
-                    >About Us</router-link
-                >
-                <router-link to="contactus" class="nav-link "
-                    >Contact Us</router-link
-                >
-                <router-link to="login" class="nav-link">Login</router-link>
-                <router-link to="register" class="nav-link"
-                    >Register</router-link
-                >
-            </div>
-
-            <div v-else>
-                <h2>nothin</h2>
+            <div v-else class="logged-out-view">
+                <router-link to="/" class="logged-out-nav">
+                    <h2 class="logged-out-header">PartyQuest</h2>
+                </router-link>
+                <div class="sticky-routes">
+                    <router-link to="aboutus" class="logged-out-nav"
+                        >About Us</router-link
+                    >
+                    <router-link to="contactus" class="logged-out-nav"
+                        >Contact Us</router-link
+                    >
+                    <router-link to="login" class="logged-out-nav"
+                        >Login</router-link
+                    >
+                    <router-link to="register" class="logged-out-nav"
+                        >Register</router-link
+                    >
+                </div>
             </div>
         </div>
     </div>
@@ -97,6 +99,16 @@ export default {
     /* background: pink; */
 }
 
+.logged-out-nav {
+    color: black;
+    font-family: 'PT Serif', serif;
+    margin-block-start: 16px;
+    margin-block-end: 16px;
+    margin-inline-start: 16px;
+    font-size: large;
+    align-items: center;
+}
+
 .navbar {
     overflow: hidden;
     position: absolute; /* Set the navbar to fixed position */
@@ -105,7 +117,13 @@ export default {
 }
 
 .logged-out-view {
-    /* background-color: green; */
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logged-out-top-left {
     display: flex;
 }
 
@@ -128,6 +146,10 @@ export default {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+}
+
+.logged-out-header {
+    text-decoration: none;
 }
 
 .nav-item-username {
