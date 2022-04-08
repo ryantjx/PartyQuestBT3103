@@ -30,7 +30,7 @@
                     </div>
                     <div class="pqdetailslist2">
                         <br />
-                        <label class="fieldName"><h3>Creator:</h3></label>
+                        <label class="fieldName"><h3>Owner:</h3></label>
                         <br />
                         <label class="field" id="creator"><h5></h5></label>
 
