@@ -10,54 +10,49 @@
         </table>
 
         <br /><br />
-        <div class="container" id="buttons">
+        <div class="text-center" id="buttons">
             <template v-if="userName == grpId">
                 <!--For Owner View-->
                 <template v-if="PQstatus == 'Not Started'">
                     <!--if status is not started -->
-                    <div class="buttons">
-                        <button
-                            v-on:click="
-                                setStart();
-                                confirmation();
-                            "
-                            class="start"
-                        >
-                            Start PQ
-                        </button>
-                    </div>
-                    <div class="buttons">
-                        <button
-                            v-on:click="
-                                setLeave1();
-                                confirmation();
-                            "
-                            class="leave"
-                        >
-                            Leave PQ
-                        </button>
-                    </div>
+                    <button
+                        v-on:click="
+                            setStart();
+                            confirmation();
+                        "
+                        class="start"
+                    >
+                        Start PQ
+                    </button>
+                    <button
+                        v-on:click="
+                            setLeave1();
+                            confirmation();
+                        "
+                        class="leave"
+                    >
+                        Leave PQ
+                    </button>
                 </template>
                 <template v-else>
                     <!-- if status is in progress, cannot leave -->
                     <template v-if="PQstatus == 'In Progress'">
-                        <div class="buttons">
-                            <button
-                                v-on:click="
-                                    setComplete();
-                                    confirmation();
-                                "
-                                class="complete"
-                            >
-                                Complete PQ
-                            </button>
-                        </div>
+                        <button
+                            v-on:click="
+                                setComplete();
+                                confirmation();
+                            "
+                            class="complete"
+                        >
+                            Complete PQ
+                        </button>
                     </template>
                 </template>
             </template>
+
             <template v-else-if="this.participantCheck">
                 <!--For Participant View-->
-                <div class="buttons">
+                <template v-if="this.personalStatus == 'Not Confirmed'">
                     <button
                         v-on:click="
                             setConfirm();
@@ -67,59 +62,59 @@
                     >
                         Confirm Status
                     </button>
-                    <template v-if="PQstatus == 'Not Started'">
-                        <button
-                            v-on:click="
-                                setLeave2();
-                                confirmation();
-                            "
-                            class="leave2"
-                        >
-                            Leave PQ2
-                        </button>
-                    </template>
-                </div>
+                </template>
+                <template v-if="PQstatus == 'Not Started'">
+                    <!-- can only leave if PQ is not started yet -->
+                    <button
+                        v-on:click="
+                            setLeave2();
+                            confirmation();
+                        "
+                        class="leave2"
+                    >
+                        Leave PQ2
+                    </button>
+                </template>
             </template>
             <template v-else>
                 <!--For Non - Participant View-->
-                <div class="buttons">
-                    <button
-                        v-on:click="
-                            setJoin();
-                            confirmation();
-                        "
-                        class="join"
-                    >
-                        Join
-                    </button>
-                </div>
+                <template v-if="PQstatus == 'Not Started'">
+                    <!-- can only join a PQ which is not started-->
+                    <div class="buttons">
+                        <button
+                            v-on:click="
+                                setJoin();
+                                confirmation();
+                            "
+                            class="join"
+                        >
+                            Join
+                        </button>
+                    </div>
+                </template>
             </template>
             <template v-if="this.saveCheck">
-                <!-- check whether PQ is currently saved -->
-                <div class="buttons">
-                    <button
-                        v-on:click="
-                            setUnsave();
-                            confirmation();
-                        "
-                        class="unsave"
-                    >
-                        Unsave PQ
-                    </button>
-                </div>
+                <!-- check whether PQ is currently saved regardless of whether owner/participant-->
+                <button
+                    v-on:click="
+                        setUnsave();
+                        confirmation();
+                    "
+                    class="unsave"
+                >
+                    Unsave PQ
+                </button>
             </template>
             <template v-else>
-                <div class="buttons">
-                    <button
-                        v-on:click="
-                            setSave();
-                            confirmation();
-                        "
-                        class="save"
-                    >
-                        Save PQ
-                    </button>
-                </div>
+                <button
+                    v-on:click="
+                        setSave();
+                        confirmation();
+                    "
+                    class="save"
+                >
+                    Save PQ
+                </button>
             </template>
         </div>
         <div>
@@ -277,6 +272,7 @@ export default {
             PQstatus: null,
             showThirdModal: false,
             thirdCheck: null,
+            personalStatus: null,
         };
     },
     methods: {
@@ -569,36 +565,41 @@ export default {
                     check = false;
                 }
             });
-            if (check) {
-                if (this.participants.length >= this.numOfPeople) {
-                    //max num reached
-                    alert('Sorry, this Party Quest is full');
-                } else {
-                    //PQ is not full
-                    let a = this.participants;
-                    console.log('Initial A is', a);
-                    let b = this.participantStatus;
-                    console.log('Initial B is', b);
-                    a.push(this.userName);
-                    b.push('Not Confirmed');
-                    console.log('Curr A is', a);
-                    console.log('Curr B is', b);
-                    var pqRef = doc(db, 'PartyQuests', uuid);
-                    try {
-                        const docRef = await updateDoc(pqRef, {
-                            participants: a,
-                            participantStatus: b,
-                        });
-                        console.log(docRef);
-                        console.log('Trying to update doc');
-                        alert('Joined Party Quest');
-                        this.pushPage(uuid);
-                    } catch (error) {
-                        console.error('Error Updating doc');
+
+            if (this.PQstatus == 'Not Started') {
+                if (check) {
+                    if (this.participants.length >= this.numOfPeople) {
+                        //max num reached
+                        alert('Sorry, this Party Quest is full');
+                    } else {
+                        //PQ is not full
+                        let a = this.participants;
+                        console.log('Initial A is', a);
+                        let b = this.participantStatus;
+                        console.log('Initial B is', b);
+                        a.push(this.userName);
+                        b.push('Not Confirmed');
+                        console.log('Curr A is', a);
+                        console.log('Curr B is', b);
+                        var pqRef = doc(db, 'PartyQuests', uuid);
+                        try {
+                            const docRef = await updateDoc(pqRef, {
+                                participants: a,
+                                participantStatus: b,
+                            });
+                            console.log(docRef);
+                            console.log('Trying to update doc');
+                            alert('Joined Party Quest');
+                            this.pushPage(uuid);
+                        } catch (error) {
+                            console.error('Error Updating doc');
+                        }
                     }
+                } else {
+                    alert('You are already a member');
                 }
             } else {
-                alert('You are already a member');
+                console.log('Cannot join Completed/In Progress');
             }
         },
 
@@ -844,12 +845,16 @@ export default {
                 //get documents
                 let pqDoc = docs.data();
                 this.grpId = pqDoc.groupCreatorid;
+                let index = 0;
+                let userIndex = null;
                 pqDoc.participants.forEach(val => {
                     console.log('In for each loop');
                     console.log(val);
                     if (this.userName == val) {
                         this.participantCheck = true;
+                        userIndex = index;
                     }
+                    index++;
                 });
 
                 console.log(this.participantCheck);
@@ -857,6 +862,10 @@ export default {
                 this.participantStatus = pqDoc.participantStatus;
                 this.numOfPeople = pqDoc.numOfPeople;
                 this.PQstatus = pqDoc.status;
+                if (userIndex) {
+                    //setting personal status
+                    this.personalStatus = this.participantStatus[userIndex];
+                }
             });
             let filterQuery2 = query(
                 collection(db, 'Users'),
@@ -1091,6 +1100,7 @@ td {
     text-decoration: none;
     font-size: 16px;
     border-radius: 8px 8px;
+    margin: 10px;
 }
 
 .start {
@@ -1103,6 +1113,7 @@ td {
     text-decoration: none;
     font-size: 16px;
     border-radius: 8px 8px;
+    margin: 10px;
 }
 
 .leave {
@@ -1115,6 +1126,7 @@ td {
     text-decoration: none;
     font-size: 16px;
     border-radius: 8px 8px;
+    margin: 10px;
 }
 .unsave {
     background-color: rgb(252, 134, 50);
@@ -1126,6 +1138,7 @@ td {
     text-decoration: none;
     font-size: 16px;
     border-radius: 8px 8px;
+    margin: 10px;
 }
 .join {
     background-color: rgb(231, 117, 72);
@@ -1137,6 +1150,7 @@ td {
     text-decoration: none;
     font-size: 16px;
     border-radius: 8px 8px;
+    margin: 10px;
 }
 
 .save {
@@ -1149,6 +1163,7 @@ td {
     text-decoration: none;
     font-size: 16px;
     border-radius: 8px 8px;
+    margin: 10px;
 }
 .confirm {
     background-color: rgb(73, 239, 73);
@@ -1160,6 +1175,7 @@ td {
     text-decoration: none;
     font-size: 16px;
     border-radius: 8px 8px;
+    margin: 10px;
 }
 
 .leave2 {
@@ -1172,5 +1188,6 @@ td {
     text-decoration: none;
     font-size: 16px;
     border-radius: 8px 8px;
+    margin: 10px;
 }
 </style>
