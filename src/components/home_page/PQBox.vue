@@ -41,11 +41,11 @@
                 <button class="btn btn-primary">Edit</button>
             </router-link> -->
                         <button
-                            class="btn btn-primary btn-sm"
+                            class="join-btn"
                             type="button"
                             v-on:click="directToPQ(value.id)"
                         >
-                            Join Now!
+                            Click to Join!
                         </button>
                     </div>
                 </div>
@@ -113,6 +113,19 @@ export default {
 .card-img-top {
     object-fit: cover;
 }
+
+/* .card-body {
+    display: inline-block;
+} */
+
+.join-btn {
+    position: absolute;
+    right: 0vw;
+    bottom: 0vh;
+    background: none;
+    border-radius: 8px 8px;
+}
+
 .container {
     width: 100%;
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="create-pq-container">
         <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
             <div class="card h-100">
                 <div class="card-body">
@@ -12,6 +12,9 @@
                                     Create a PartyQuest
                                 </h2>
                             </div>
+
+                            <br /><br />
+
                             <div
                                 class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
                             >
@@ -142,17 +145,19 @@
                             <div
                                 class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
                             >
-                                <div class="form-group">
+                                <div class="form-group-pic">
                                     <label for="picture">
                                         Upload Picture Here:
                                     </label>
-                                    <input
-                                        id="picture"
-                                        type="file"
-                                        placeholder="Upload Picture Here: "
-                                        accept="image/*"
-                                        @change="onFileSelected"
-                                    />
+                                    <div class="inner-form-group-pic">
+                                        <input
+                                            id="picture"
+                                            type="file"
+                                            placeholder="Upload Picture Here: "
+                                            accept="image/*"
+                                            @change="onFileSelected"
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -351,7 +356,7 @@ export default {
                 //console.log('attempting download');
                 //getDownloadURL(storageRef)
                 // eslint-disable-next-line prettier/prettier
-                    //.then((url) => {
+                //.then((url) => {
                 //console.log('trying url');
                 //console.log(url);
 
@@ -360,7 +365,7 @@ export default {
                 //img.setAttribute('src', url);
                 //})
                 // eslint-disable-next-line prettier/prettier
-                    //.catch((error) => { // eslint-disable-line no-unused-vars
+                //.catch((error) => { // eslint-disable-line no-unused-vars
                 // Handle any errors
                 //});
                 //-----------------------------------------------------------------------------------------------------------------------------
@@ -384,6 +389,15 @@ body {
     background: #f5f6fa;
     position: relative;
     height: 100%;
+}
+
+.inner-form-group-pic {
+    font-size: 0.825rem;
+}
+
+.create-pq-container {
+    justify-content: center;
+    display: flex;
 }
 
 .form-control {
