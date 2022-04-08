@@ -47,51 +47,17 @@
                                     ></router-link
                                 >
                             </div>
-                            <!-- <div class="row">
-                                <router-link to="/chats" class="sidebar-rows">
-                                    <i class="fa fa-comments"></i
-                                    ><span class="text"
-                                        >My Chats</span
+                            <div class="row">
+                                <router-link
+                                    to="/searchresults/user"
+                                    class="sidebar-rows"
+                                >
+                                    <i class="fa fa-search"></i>
+                                    <span class="text"
+                                        >Search for User</span
                                     ></router-link
                                 >
                             </div>
-                            <div class="row">
-                                <router-link to="/test" class="sidebar-rows">
-                                    <i class="fa fa-comments"></i
-                                    ><span class="text"
-                                        >testing</span
-                                    ></router-link
-                                >
-                            </div> -->
-                            <!-- <b-nav-item id="menuitem" href="home" @click="hide"
-                                >Home</b-nav-item
-                            >
-                            <b-nav-item
-                                id="menuitem"
-                                href="profile"
-                                @click="hide"
-                                >My Profile</b-nav-item
-                            >
-                            <b-nav-item id="menuitem" href="pq" @click="hide"
-                                >My PartyQuests</b-nav-item
-                            >
-                            <b-nav-item id="menuitem" href="chats" @click="hide"
-                                >My Chats</b-nav-item
-                            >
-                            <b-nav-item
-                                id="menuitem"
-                                href="searchresults"
-                                @click="hide"
-                                >JUST FOR TESTING: Link to Search Result
-                                Page</b-nav-item
-                            >
-                            <b-nav-item
-                                id="menuitem"
-                                href="pq/listing"
-                                @click="hide"
-                                >JUST FOR TESTING: Link to Product listing
-                                page</b-nav-item
-                            > -->
                         </b-nav>
                     </nav>
                     <br /><br />
@@ -134,10 +100,6 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200&family=PT+Serif&display=swap');
 
-.hamburger {
-    background-blend-mode: lighten;
-}
-
 .text {
     color: grey;
     margin-inline-start: 8px;
@@ -170,7 +132,7 @@ export default {
 }
 
 #toggle {
-    background: white;
+    background: none;
     border: none;
     color: black;
 }
