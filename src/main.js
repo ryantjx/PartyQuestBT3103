@@ -15,6 +15,7 @@ import {
     faTruckFast,
     faHandshake,
 } from '@fortawesome/free-solid-svg-icons';
+import VueMeta from 'vue-meta';
 library.add(faUsers, faTruckFast, faHandshake); /* icons */
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.config.productionTip = false;
@@ -42,6 +43,8 @@ onAuthStateChanged(auth, user => {
         console.log('user name is passed :', user.displayName);
     }
 });
+
+Vue.use(VueMeta);
 
 new Vue({
     router,

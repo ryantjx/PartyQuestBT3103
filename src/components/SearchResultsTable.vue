@@ -2,9 +2,6 @@
     <div>
         <h3 class="pq-search-header">PartyQuest Search Results</h3>
         <br />
-        <button id="btn" @click="$router.push('/searchresults/user')">
-            Click to Search for Users Instead
-        </button>
         <form class="search-res-form" @submit.prevent="searchByBrand">
             <input
                 id="search"
@@ -20,6 +17,10 @@
                 v-on:click="searchByBrand()"
             >
                 Search
+            </button>
+            <br />
+            <button id="btn" @click="$router.push('/searchresults/user')">
+                Click to Search for Users Instead
             </button>
         </form>
         <table id="search-result-table" class="auto-index">
@@ -139,7 +140,7 @@ export default {
             // clear the existing rows in the table first
             this.clearTable();
             // save user's input to state manager (vuex)
-            // save sas lowercase for better querying
+            // save as lowercase for better querying
             let x = this.message;
             let y = x.toLowerCase();
             store.state.searchText = y;
@@ -148,7 +149,7 @@ export default {
             // create query based on the given field
             let filterQuery = query(
                 collection(db, 'PartyQuests'),
-                where('lowerBrand', '==', this.message)
+                where('lowerBrand', '==', y)
             );
             // use query to filter the documents in the PQ collection
             let querySnapshot = await getDocs(filterQuery);
@@ -302,7 +303,7 @@ input[type='search']::placeholder {
     opacity: 1;
 }
 #btn {
-    background-color: blueviolet; /* Green */
+    background-color: burlywood; /* Green */
     border: none;
     color: white;
     padding: 12px 20;
@@ -312,6 +313,5 @@ input[type='search']::placeholder {
     display: inline-block;
     font-size: 12px;
     margin: auto;
-    width: 6%;
 }
 </style>

@@ -18,6 +18,9 @@ export default {
     components: {
         navbar,
     },
+    metaInfo: {
+        title: 'PartyQuest',
+    },
 };
 </script>
 

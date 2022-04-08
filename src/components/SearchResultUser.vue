@@ -1,7 +1,7 @@
 <template>
     <div>
         <router-link to="/searchresults/">PQs</router-link>
-        <h3 class="pq-search-header">PartyQuest Search Results</h3>
+        <h3 class="pq-search-header">User Search Results</h3>
         <br />
         <form class="search-res-form" @submit.prevent="searchByUser">
             <input
