@@ -79,7 +79,7 @@
             />
             <br />
             <br />
-            <button id="createbutton" type="button" v-on:click="create()">
+            <button id="createbutton" type="button" v-on:click="handleSubmit()">
                 Create
             </button>
         </form>
@@ -149,6 +149,11 @@ export default {
             fileReader.readAsDataURL(this.selectedFile);
             console.log('Uploading Data');
         },
+
+        async handleSubmit() {
+            await this.create();
+        },
+
         //used to handle form submission
         async create() {
             console.log('Attempting to Create PQ');
