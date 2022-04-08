@@ -669,7 +669,7 @@ export default {
                 var userRef = doc(db, 'Users', this.userName);
                 try {
                     const docRef = await updateDoc(userRef, {
-                        savedPqs: a,
+                        savedPartyQuests: a,
                     });
                     console.log(docRef);
                     console.log('Trying to update doc');
@@ -716,7 +716,7 @@ export default {
                 var userRef = doc(db, 'Users', this.userName);
                 try {
                     const docRef = await updateDoc(userRef, {
-                        savedPqs: d,
+                        savedPartyQuests: d,
                     });
                     console.log(docRef);
                     console.log('Trying to update doc');
