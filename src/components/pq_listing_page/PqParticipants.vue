@@ -1117,7 +1117,7 @@ td {
     border-radius: 8px 8px;
 }
 .unsave {
-    background-color: red;
+    background-color: rgb(252, 134, 50);
     border: none;
     color: white;
     padding: 15px 32px;

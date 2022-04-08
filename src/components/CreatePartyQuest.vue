@@ -1,93 +1,200 @@
 <template>
-    <div>
-        <form @submit.prevent="create">
-            <h2>Create a PartyQuest</h2>
-            <input
-                id="title"
-                type="text"
-                required=""
-                placeholder="Title of PQ"
-            />
-            <br />
-            <br />
-            <input id="brand" type="text" required="" placeholder="Brand" />
-            <br />
-            <br />
-            <input
-                id="link"
-                type="href"
-                required=""
-                placeholder="Link to Website"
-            />
-            <br />
-            <br />
-            <input
-                id="total"
-                type="number"
-                required=""
-                placeholder="Total Amount"
-            />
-            <br />
-            <br />
-            <input
-                id="location"
-                type="text"
-                required=""
-                placeholder="Collection Location"
-            />
-            <br />
-            <br />
-            <input
-                id="participants"
-                type="number"
-                required=""
-                placeholder="Total Number of Participants"
-            />
-            <br />
-            <br />
-            <input
-                id="enddate"
-                type="date"
-                required=""
-                placeholder="Projected End Date"
-            />
-            <br />
-            <br />
-            <input
-                id="description"
-                type="text"
-                required=""
-                placeholder="Description"
-            />
-            <br />
-            <br />
-            <input
-                id="requirements"
-                type="text"
-                required=""
-                placeholder="Requirements"
-            />
-            <br />
-            <br />
-            <label for="picture"> Upload Picture Here: </label>
-            <input
-                id="picture"
-                type="file"
-                placeholder="Upload Picture Here: "
-                accept="image/*"
-                @change="onFileSelected"
-            />
-            <br />
-            <br />
-            <button id="createbutton" type="button" v-on:click="handleSubmit()">
-                Create
-            </button>
-        </form>
+    <div class="container">
+        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+            <div class="card h-100">
+                <div class="card-body">
+                    <form id="editprofileform">
+                        <div class="row gutters">
+                            <div
+                                class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12"
+                            >
+                                <h2 class="mb-2 text-primary">
+                                    Create a PartyQuest
+                                </h2>
+                            </div>
+                            <div
+                                class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                            >
+                                <div class="form-group">
+                                    <label for="title">Title</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="title"
+                                        placeholder="Enter Title of PQ"
+                                    />
+                                </div>
+                            </div>
+                            <div
+                                class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                            >
+                                <div class="form-group">
+                                    <label for="brand">Brand</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="brand"
+                                        placeholder="Enter Brand"
+                                    />
+                                </div>
+                            </div>
 
-        <!-------------------- IMAGE Display Div--------------------------->
-        <!--image element to be added where you want picture to be displayed
-        <img id="profilePic" />-->
+                            <div
+                                class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                            >
+                                <div class="form-group">
+                                    <label for="participants"
+                                        >Total Number of Participants</label
+                                    >
+                                    <input
+                                        type="number"
+                                        class="form-control"
+                                        id="participants"
+                                        placeholder="Enter Number of Participants"
+                                    />
+                                </div>
+                            </div>
+
+                            <div
+                                class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                            >
+                                <div class="form-group">
+                                    <label for="total">Total Amount</label>
+                                    <input
+                                        type="number"
+                                        class="form-control"
+                                        id="total"
+                                        placeholder="Enter Total Amount"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row gutters">
+                            <div
+                                class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                            >
+                                <div class="form-group">
+                                    <label for="link">Website</label>
+                                    <input
+                                        type="href"
+                                        class="form-control"
+                                        id="link"
+                                        placeholder="Enter Link to Website"
+                                    />
+                                </div>
+                            </div>
+                            <div
+                                class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                            >
+                                <div class="form-group">
+                                    <label for="enddate">End Date</label>
+                                    <input
+                                        type="date"
+                                        class="form-control"
+                                        id="enddate"
+                                        placeholder="Enter Enddate"
+                                    />
+                                </div>
+                            </div>
+                            <div
+                                class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                            >
+                                <div class="form-group">
+                                    <label for="location"
+                                        >Collection Location</label
+                                    >
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="location"
+                                        placeholder="Enter Collection Location"
+                                    />
+                                </div>
+                            </div>
+                            <div
+                                class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                            >
+                                <div class="form-group">
+                                    <label for="description">Description</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="description"
+                                        placeholder="Enter Description of PQ"
+                                    />
+                                </div>
+                            </div>
+                            <div
+                                class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                            >
+                                <div class="form-group">
+                                    <label for="requirements"
+                                        >Requirements</label
+                                    >
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="requirements"
+                                        placeholder="Enter any Requirements for PQ"
+                                    />
+                                </div>
+                            </div>
+                            <div
+                                class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                            >
+                                <div class="form-group">
+                                    <label for="picture">
+                                        Upload Picture Here:
+                                    </label>
+                                    <input
+                                        id="picture"
+                                        type="file"
+                                        placeholder="Upload Picture Here: "
+                                        accept="image/*"
+                                        @change="onFileSelected"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row gutters">
+                            <div
+                                class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12"
+                            >
+                                <div class="text-right">
+                                    <!-- <router-link to="/profile" tag="button"
+                                    >Cancel</router-link
+                                > -->
+                                    <button
+                                        type="button"
+                                        id="submit"
+                                        name="submit"
+                                        class="btn btn-primary"
+                                        v-on:click="goHome()"
+                                    >
+                                        Back
+                                    </button>
+                                    &nbsp;
+                                    <button
+                                        type="button"
+                                        id="createbutton"
+                                        name="create"
+                                        class="btn btn-primary"
+                                        v-on:click="handleSubmit()"
+                                    >
+                                        Create PQ
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <!-------------------- IMAGE Display Div--------------------------->
+    <!--image element to be added where you want picture to be displayed
+        <img id="profilePic" />-->
 </template>
 
 <script>
@@ -130,6 +237,9 @@ export default {
         }),
     },
     methods: {
+        goHome() {
+            window.location.replace('/home');
+        },
         //function to handle new image added to be uploaded
         onFileSelected(event) {
             this.selectedFile = event.target.files[0];
@@ -265,3 +375,33 @@ export default {
     },
 };
 </script>
+
+<style>
+body {
+    margin: 0;
+    padding-top: 40px;
+    color: #2e323c;
+    background: #f5f6fa;
+    position: relative;
+    height: 100%;
+}
+
+.form-control {
+    border: 1px solid #cfd1d8;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    font-size: 0.825rem;
+    background: #ffffff;
+    color: #2e323c;
+}
+
+.card {
+    background: #ffffff;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: 0;
+    margin-bottom: 1rem;
+}
+</style>
