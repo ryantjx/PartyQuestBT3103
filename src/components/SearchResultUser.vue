@@ -1,7 +1,11 @@
 <template>
     <div>
-        <router-link to="/searchresults/">PQs</router-link>
-        <h3 class="pq-search-header">User Search Results</h3>
+        <h1 class="pq-search-header">User Search Results</h1>
+        <center>
+            <a id="btn1" v-on:click="$router.push('/searchresults')">
+                <i><u>Click here to search for PQs</u></i>
+            </a>
+        </center>
         <br />
         <form class="search-res-form" @submit.prevent="searchByUser">
             <input

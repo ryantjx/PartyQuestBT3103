@@ -1,6 +1,11 @@
 <template>
     <div>
-        <h3 class="pq-search-header">PartyQuest Search Results</h3>
+        <h1 class="pq-search-header">PartyQuest Search Results</h1>
+        <center>
+            <a id="btn1" v-on:click="$router.push('/searchresults/user')">
+                <i><u>Click here to search for Users</u></i>
+            </a>
+        </center>
         <br />
         <form class="search-res-form" @submit.prevent="searchByBrand">
             <input
@@ -19,9 +24,6 @@
                 Search
             </button>
             <br />
-            <button id="btn" @click="$router.push('/searchresults/user')">
-                Click to Search for Users Instead
-            </button>
         </form>
         <table id="search-result-table" class="auto-index">
             <thead>
@@ -302,16 +304,36 @@ input[type='search']::placeholder {
 .search-button:hover {
     opacity: 1;
 }
-#btn {
-    background-color: burlywood; /* Green */
+/* #btn1 {
+    background-color: lightskyblue;
     border: none;
     color: white;
     padding: 12px 20;
-    border-radius: 6px 6px;
+    border-radius: 50%;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 12px;
+    font-size: 10px;
     margin: auto;
+    background-color: blue;
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: auto;
+    border-radius: 50%;
+    transition-duration: 0.4s;
+} */
+
+#btn1:hover {
+    background-color: lightgreen;
+    color: black;
 }
+/* 
+.ashwin {
+    display: flex;
+} */
 </style>
