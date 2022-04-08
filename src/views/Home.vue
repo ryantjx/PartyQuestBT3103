@@ -1,6 +1,6 @@
 <template>
     <!-- Display Top Products -->
-    <div id="home">
+    <div class="home-container">
         <h1>All Available PartyQuests</h1>
         <div v-if="isNotLoaded()">
             <div class="loader"></div>
@@ -154,6 +154,10 @@ export default {
     100% {
         transform: rotate(360deg);
     }
+}
+
+.home-container {
+    width: 100%;
 }
 /* .page-holder {
     min-height: 100vh;

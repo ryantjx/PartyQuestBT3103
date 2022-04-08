@@ -1,12 +1,16 @@
 <template>
     <div class="container">
-        <div class="row">
+        <div class="row justify-content-md-center">
             <div
                 v-for="(value, index) in pqList"
                 :key="index"
-                class="col-md-6 col-xl-4 col-12 pt-3 justify-content-around d-flex"
+                class="col-md-5 col-xl-3 col-8 pt-5 shadow p-3 mb-5 ml-3 mr-3 bg-white rounded"
             >
-                <div class="card h-100 w-100">
+                <div
+                    class="card h-100 w-100"
+                    v-on:click="directToPQ(value.id)"
+                    style="cursor:pointer"
+                >
                     <div class="embed-responsive embed-responsive-16by9">
                         <!-- <div v-if:"{value.image}">
                             <h1> There is not image in the values
@@ -108,5 +112,8 @@ export default {
 <style scoped>
 .card-img-top {
     object-fit: cover;
+}
+.container {
+    width: 100%;
 }
 </style>

@@ -47,7 +47,7 @@
                                     ></router-link
                                 >
                             </div>
-                            <div class="row">
+                            <!-- <div class="row">
                                 <router-link to="/chats" class="sidebar-rows">
                                     <i class="fa fa-comments"></i
                                     ><span class="text"
@@ -62,7 +62,7 @@
                                         >testing</span
                                     ></router-link
                                 >
-                            </div>
+                            </div> -->
                             <!-- <b-nav-item id="menuitem" href="home" @click="hide"
                                 >Home</b-nav-item
                             >

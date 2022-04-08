@@ -256,7 +256,7 @@ export default {
                 //-----------------------------------------------------------------------------------------------------------------------------
 
                 //need to push this to a PQ details page or refresh form fields
-                this.$router.push('/mypq').catch(() => {});
+                this.$router.push('/home').catch(() => {});
             } else {
                 console.error('Error adding PQ: ');
                 alert('Please fill in Valid Details');
