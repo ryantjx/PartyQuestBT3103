@@ -109,6 +109,10 @@ export default {
     align-items: center;
 }
 
+.logged-out-nav:hover {
+    text-decoration: none;
+}
+
 .navbar {
     overflow: hidden;
     position: absolute; /* Set the navbar to fixed position */
