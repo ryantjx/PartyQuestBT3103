@@ -3,7 +3,7 @@
         <div id="nav">
             <router-link to="/mypq/CreatedPQPage">Created PQs</router-link> |
             <router-link to="/mypq/JoinedPQPage">Joined PQs</router-link> |
-            <router-link to="/mypq/saved">Saved PQs</router-link>
+            <router-link to="/mypq/SavedPQPage">Saved PQs</router-link>
         </div>
     </div>
 </template>

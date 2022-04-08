@@ -4,7 +4,7 @@
             <input
                 id="search"
                 type="search"
-                placeholder="Search"
+                placeholder="Search for brand"
                 v-model="message"
                 v-on:keydown.enter="pushToSearchResultsPage()"
             />
@@ -50,7 +50,7 @@ form {
     border: 1px solid currentColor;
     margin-inline-start: 16px;
     border-radius: 4px 4px;
-    width: 30vw;
+    /* width: 30vw; */
 }
 input[type='search'] {
     border: none;
@@ -61,7 +61,7 @@ input[type='search'] {
     color: inherit;
     border: 1px solid transparent;
     border-radius: inherit;
-    width: 27vw;
+    /* width: 27vw; */
 }
 input[type='search']::placeholder {
     color: #bbb;

@@ -1,58 +1,43 @@
 <template>
     <div class="navbar">
         <div class="wrapper">
-            <div class="sidebar">
-                <template v-if="user">
-                    <div class="top-left-side">
-                        <Sidebar />
-                        <router-link to="/home" class="navbar-brand"
-                            ><h2>PartyQuest</h2></router-link
-                        >
+            <div v-if="user" class="logged-in-nav">
+                <div class="top-left-side">
+                    <Sidebar />
+                    <router-link to="/home" class="navbar-brand"
+                        ><h2>PartyQuest</h2></router-link
+                    >
+                </div>
+                <div class="nav-bar-search">
+                    <SearchBar />
+                </div>
+                <div class="username-btn">
+                    <div class="nav-item-username">
+                        Welcome, {{ this.user.displayName }}!
                     </div>
-                </template>
-            </div>
-            <div class="container">
-                <div v-if="user" class="top-right-side">
-                    <div class="top-right-side">
-                        <div class="nav-bar-search">
-                            <SearchBar />
-                        </div>
-                        <div class="username-btn">
-                            <div class="nav-item-username">
-                                Welcome, {{ this.user.displayName }}!
-                            </div>
-                            <div class="create-pq-btn">
-                                <CreatePQButton />
-                            </div>
-                        </div>
+                    <div class="create-pq-btn">
+                        <CreatePQButton />
                     </div>
                 </div>
-                <div v-else>
-                    <div class="nav-item">
-                        <router-link to="aboutus" class="nav-link "
-                            >About Us</router-link
-                        >
-                    </div>
-                    <div class="nav-item">
-                        <router-link to="contactus" class="nav-link "
-                            >Contact Us</router-link
-                        >
-                    </div>
-                    <div class="nav-item">
-                        <router-link to="login" class="nav-link"
-                            >Login</router-link
-                        >
-                    </div>
-                    <div class="nav-item">
-                        <router-link to="login" class="nav-link"
-                            >Login</router-link
-                        >
-                    </div>
-                    <div class="nav-item">
-                        <router-link to="register" class="nav-link"
-                            >Register</router-link
-                        >
-                    </div>
+            </div>
+
+            <div v-else class="logged-out-view">
+                <router-link to="/" class="logged-out-nav">
+                    <h2 class="logged-out-header">PartyQuest</h2>
+                </router-link>
+                <div class="sticky-routes">
+                    <router-link to="aboutus" class="logged-out-nav"
+                        >About Us</router-link
+                    >
+                    <router-link to="contactus" class="logged-out-nav"
+                        >Contact Us</router-link
+                    >
+                    <router-link to="login" class="logged-out-nav"
+                        >Login</router-link
+                    >
+                    <router-link to="register" class="logged-out-nav"
+                        >Register</router-link
+                    >
                 </div>
             </div>
         </div>
@@ -101,6 +86,29 @@ export default {
 </script>
 
 <style scoped>
+.logo {
+    width: 48px;
+    height: 48px;
+}
+
+.logged-in-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    /* background: pink; */
+}
+
+.logged-out-nav {
+    color: black;
+    font-family: 'PT Serif', serif;
+    margin-block-start: 16px;
+    margin-block-end: 16px;
+    margin-inline-start: 16px;
+    font-size: large;
+    align-items: center;
+}
+
 .navbar {
     overflow: hidden;
     position: absolute; /* Set the navbar to fixed position */
@@ -108,34 +116,40 @@ export default {
     width: 100%; /* Full width */
 }
 
-.wrapper {
+.logged-out-view {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logged-out-top-left {
     display: flex;
 }
 
-.container {
-    /* background-color: green; */
-}
-
-.work {
-    width: 69vw;
+.wrapper {
+    display: flex;
+    width: 100%;
     justify-content: space-between;
 }
 
 .sidebar {
-    width: 30vw;
-    /* background: orange; */
-    align-self: left;
 }
 
-.top-right-side {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.nav-bar-search {
+    position: absolute;
+    left: 32vw;
+    right: 32vw;
 }
 
 .username-btn {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
+}
+
+.logged-out-header {
+    text-decoration: none;
 }
 
 .nav-item-username {

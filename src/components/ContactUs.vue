@@ -1,5 +1,5 @@
 <template>
-    <div class="center-vertical bg-light">
+    <div class="center-vertical">
         <div class="col-12 col-lg-4 mb-4 mb-lg-0">
             <h1>
                 Contact Us
@@ -17,17 +17,20 @@
                     <label>Username</label>
                     <input v-model="username" />
                 </div>
+                <br />
                 <div>
                     <label>Email</label>
                     <input v-model="email" />
                 </div>
+                <br />
                 <div>
                     <label>Message</label>
                     <textarea v-model="message"></textarea>
                 </div>
-
-                <button type="submit" @click="submit()">submit</button>
-                <button type="reset" @click="reset()">reset</button>
+                <div class="bottom-btns">
+                    <button type="submit" @click="submit()">Submit</button>
+                    <button type="reset" @click="reset()">Reset</button>
+                </div>
             </form>
         </div>
     </div>
@@ -115,17 +118,18 @@ h1,
 h2,
 label,
 button {
-    font-weight: 900;
+    font-weight: 500;
 }
 
 h3 {
-    font-weight: 300;
+    font-weight: 200;
 }
 
 textarea,
 input {
     color: #19456b;
     font-weight: 300;
+    width: 300px;
 }
 
 form {
@@ -178,5 +182,9 @@ button:hover:before {
     bottom: auto;
     top: 0;
     width: 70%;
+}
+
+.bottom-btns {
+    display: flex;
 }
 </style>
