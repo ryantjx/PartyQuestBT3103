@@ -1,11 +1,13 @@
 <template>
-    <div id="topbar">
-        <PqHeader />
-        <div class="container">
-            <PqDetails />
+    <div class="container">
+        <div id="topbar">
+            <PqHeader />
+            <div class="container">
+                <PqDetails />
+            </div>
+            <br /><br />
+            <PqParticipants />
         </div>
-        <br /><br />
-        <PqParticipants />
     </div>
 </template>
 
