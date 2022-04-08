@@ -66,7 +66,7 @@ export default {
             // create query based on the given field
             let filterQuery = query(
                 collection(db, 'PartyQuests'),
-                where('brand', '==', store.state.searchText)
+                where('lowerBrand', '==', store.state.searchText)
             );
             // use query to filter the documents in the PQ collection
             let querySnapshot = await getDocs(filterQuery);
@@ -139,13 +139,16 @@ export default {
             // clear the existing rows in the table first
             this.clearTable();
             // save user's input to state manager (vuex)
-            store.state.searchText = this.message;
+            // save sas lowercase for better querying
+            let x = this.message;
+            let y = x.toLowerCase();
+            store.state.searchText = y;
             // print out the user's input in the console to ensure data is being captured
             console.warn("User's input is", store.state.searchText);
             // create query based on the given field
             let filterQuery = query(
                 collection(db, 'PartyQuests'),
-                where('brand', '==', this.message)
+                where('lowerBrand', '==', this.message)
             );
             // use query to filter the documents in the PQ collection
             let querySnapshot = await getDocs(filterQuery);
