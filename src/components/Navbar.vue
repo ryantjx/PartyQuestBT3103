@@ -1,17 +1,13 @@
 <template>
     <div class="navbar">
         <div class="wrapper">
-            <div class="sidebar">
-                <template v-if="user">
-                    <div class="top-left-side">
-                        <Sidebar />
-                        <router-link to="/home" class="navbar-brand"
-                            ><h2>PartyQuest</h2></router-link
-                        >
-                    </div>
-                </template>
-            </div>
-            <div v-if="user" class="top-right-side">
+            <div v-if="user" class="logged-in-nav">
+                <div class="top-left-side">
+                    <Sidebar />
+                    <router-link to="/home" class="navbar-brand"
+                        ><h2>PartyQuest</h2></router-link
+                    >
+                </div>
                 <div class="nav-bar-search">
                     <SearchBar />
                 </div>
@@ -22,6 +18,26 @@
                     <div class="create-pq-btn">
                         <CreatePQButton />
                     </div>
+                </div>
+            </div>
+
+            <div v-else class="logged-out-view">
+                <router-link to="/" class="logged-out-nav">
+                    <h2 class="logged-out-header">PartyQuest</h2>
+                </router-link>
+                <div class="sticky-routes">
+                    <router-link to="aboutus" class="logged-out-nav"
+                        >About Us</router-link
+                    >
+                    <router-link to="contactus" class="logged-out-nav"
+                        >Contact Us</router-link
+                    >
+                    <router-link to="login" class="logged-out-nav"
+                        >Login</router-link
+                    >
+                    <router-link to="register" class="logged-out-nav"
+                        >Register</router-link
+                    >
                 </div>
             </div>
         </div>
@@ -75,11 +91,40 @@ export default {
     height: 48px;
 }
 
+.logged-in-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    /* background: pink; */
+}
+
+.logged-out-nav {
+    color: black;
+    font-family: 'PT Serif', serif;
+    margin-block-start: 16px;
+    margin-block-end: 16px;
+    margin-inline-start: 16px;
+    font-size: large;
+    align-items: center;
+}
+
 .navbar {
     overflow: hidden;
     position: absolute; /* Set the navbar to fixed position */
     top: 0.5vw; /* Position the navbar at the top of the page */
     width: 100%; /* Full width */
+}
+
+.logged-out-view {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logged-out-top-left {
+    display: flex;
 }
 
 .wrapper {
@@ -97,15 +142,14 @@ export default {
     right: 32vw;
 }
 
-.top-right-side {
-    display: flex;
-    align-items: center;
-}
-
 .username-btn {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+}
+
+.logged-out-header {
+    text-decoration: none;
 }
 
 .nav-item-username {
