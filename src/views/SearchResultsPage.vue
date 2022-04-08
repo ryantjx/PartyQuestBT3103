@@ -2,7 +2,7 @@
     <div id="topbar">
         <br />
         <!-- <router-link to="/searchresults/">PQs</router-link> | -->
-        <router-link to="/searchresults/user">Users</router-link>
+        <!-- <router-link to="/searchresults/user">Users</router-link> -->
         <SearchResultsTable />
     </div>
 </template>

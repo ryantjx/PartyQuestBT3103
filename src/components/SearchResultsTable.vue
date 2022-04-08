@@ -2,6 +2,9 @@
     <div>
         <h3 class="pq-search-header">PartyQuest Search Results</h3>
         <br />
+        <button id="btn" @click="$router.push('/searchresults/user')">
+            Click to Search for Users Instead
+        </button>
         <form class="search-res-form" @submit.prevent="searchByBrand">
             <input
                 id="search"
@@ -294,5 +297,18 @@ input[type='search']::placeholder {
 }
 .search-button:hover {
     opacity: 1;
+}
+#btn {
+    background-color: blueviolet; /* Green */
+    border: none;
+    color: white;
+    padding: 12px 20;
+    border-radius: 6px 6px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: auto;
+    width: 6%;
 }
 </style>
