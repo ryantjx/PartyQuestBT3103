@@ -105,8 +105,6 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;900&display=swap');
-
 :root {
     --colorOne: #19456b;
     --colorTwo: #16c79a;
@@ -170,14 +168,6 @@ button,
 h2,
 h3 {
     color: #16c79a;
-}
-
-h1,
-label,
-button,
-textarea,
-h4 {
-    font-family: 'Montserrat', sans-serif;
 }
 
 h1,

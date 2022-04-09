@@ -189,7 +189,6 @@ export default {
     border-collapse: collapse;
     margin: 25px 0;
     font-size: 0.9em;
-    font-family: sans-serif;
     min-width: 400px;
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.15);
     width: 60%;

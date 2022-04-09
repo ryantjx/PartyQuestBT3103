@@ -104,7 +104,6 @@ export default {
 
 .logged-out-nav {
     color: black;
-    font-family: 'PT Serif', serif;
     margin-block-start: 16px;
     margin-block-end: 16px;
     margin-inline-start: 16px;
@@ -160,7 +159,8 @@ export default {
 }
 
 .nav-item-username {
-    width: 10vw;
+    /* width: 10vw; */
+    margin-inline-end: 16px;
     backdrop-filter: blur(10px);
 }
 

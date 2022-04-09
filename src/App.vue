@@ -26,6 +26,8 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap');
+
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -34,28 +36,21 @@ export default {
     color: #2c3e50;
     background: url('./assets/pubnub-filter-blocks-bg.png');
 }
-/* body,
-html {
-    padding: 0;
+
+html,
+body {
     margin: 0;
-    width: 100%;
-    min-height: 100vh;
-}
-body {
-    background: pink;
-} */
-body {
-    padding: 0px;
-    background: url('./assets/pubnub-filter-blocks-bg.png');
+    font-family: 'Fira Sans', sans-serif;
+    height: 100%;
 }
 
 #appbg {
-    position: relative;
+    position: absolute;
     width: 100%;
     height: 100%;
+    top: 0vh;
     bottom: 0vh;
     background: url('./assets/test-bg-3.jpg');
-    height: 100%;
     background-position: center;
 }
 

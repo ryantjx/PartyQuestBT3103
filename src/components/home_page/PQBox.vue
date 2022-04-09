@@ -4,7 +4,7 @@
             <div
                 v-for="(value, index) in pqList"
                 :key="index"
-                class="col-md-5 col-xl-3 col-8 pt-5 shadow p-3 mb-5 ml-3 mr-3 bg-white rounded"
+                class="col-md-auto col-xl-3 col-8 pt-5 shadow p-3 mb-5 ml-3 mr-3 bg-white rounded"
             >
                 <div
                     class="pq-card-view"
@@ -45,7 +45,7 @@
                             type="button"
                             v-on:click="directToPQ(value.id)"
                         >
-                            Click to Join!
+                            Click to Join
                         </button>
                     </div>
                 </div>

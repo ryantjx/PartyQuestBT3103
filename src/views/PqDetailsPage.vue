@@ -1,22 +1,22 @@
 <template>
-    <div>
-        <button
-            type="button"
-            id="submit"
-            name="submit"
-            class="btn-go-back"
-            v-on:click="goBack()"
-        >
-            <i class="fa fa-arrow-left"></i>
-        </button>
-        <div class="container">
-            <div id="topbar">
-                <PqHeader />
-                <div class="innercontainer">
+    <div class="overall-detail-page">
+        <div class="detail-page">
+            <button
+                type="button"
+                id="submit"
+                name="submit"
+                class="btn-go-back"
+                v-on:click="goBack()"
+            >
+                <i class="fa fa-arrow-left"></i>
+            </button>
+            <div class="pq-det-container">
+                <div id="pq-det-container-entire">
+                    <PqHeader />
                     <PqDetails />
+                    <br /><br />
+                    <PqParticipants />
                 </div>
-                <br /><br />
-                <PqParticipants />
             </div>
         </div>
     </div>
@@ -59,7 +59,16 @@ export default {
     padding: 32px 32px;
 }
 
-.container {
+.overall-detail-page {
+    display: flex;
+    justify-content: center;
+}
+
+.detail-page {
+    width: 60%;
+}
+
+.pq-det-container {
     border-style: groove;
     border-radius: 16px 16px;
     padding-block-start: 16px;

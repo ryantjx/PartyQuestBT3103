@@ -135,11 +135,7 @@ export default {
 </script>
 
 <style scoped>
-/* @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200&display=swap'); */
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200&family=PT+Serif&display=swap');
 .detailsheader {
-    /* font-family: 'Oswald', sans-serif; */
-    font-family: 'PT Serif', serif;
 }
 .pqdetailslist {
     /* text-align: center;
@@ -165,11 +161,9 @@ export default {
     /* background: lightgrey; */
     border-radius: 8px 8px;
     padding-inline-end: auto;
-    font-family: 'PT Serif', serif;
 }
 
 .fieldName {
     width: 100%;
-    font-family: 'PT Serif', serif;
 }
 </style>

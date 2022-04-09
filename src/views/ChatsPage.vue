@@ -17,7 +17,6 @@ body {
 }
 
 #app {
-    font-family: Helvetica;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
