@@ -1,7 +1,7 @@
 <template>
     <!-- Display Top Products -->
     <div class="home-container">
-        <h1 style="font-size:60px;">Explore PartyQuests</h1>
+        <h1>Explore PartyQuests</h1>
         <br /><br />
         <div v-if="isNotLoaded()">
             <div class="loader"></div>

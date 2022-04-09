@@ -111,6 +111,8 @@ export default {
 
                 // create button for action column
                 var viewButton = document.createElement('button');
+                viewButton.innerHTML = 'Save';
+
                 viewButton.className = 'bwt';
                 viewButton.id = String(docs.id);
                 viewButton.innerHTML = 'View';
@@ -121,7 +123,6 @@ export default {
                 };
                 // add button to action column cell
                 cell6.appendChild(viewButton);
-
                 // increase counter (s/no.)
                 idx += 1;
                 console.log(pqDoc);
@@ -216,7 +217,6 @@ export default {
     border-collapse: collapse;
     margin: 25px 0;
     font-size: 0.9em;
-    font-family: sans-serif;
     min-width: 400px;
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.15);
     width: 60%;

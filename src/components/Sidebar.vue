@@ -52,17 +52,6 @@
                                     ></router-link
                                 >
                             </div>
-                            <div class="row">
-                                <router-link
-                                    to="/searchresults/user"
-                                    class="sidebar-rows"
-                                >
-                                    <i class="fa fa-search"></i>
-                                    <span class="text"
-                                        >Search for User</span
-                                    ></router-link
-                                >
-                            </div>
                         </b-nav>
                     </nav>
                     <br /><br />
@@ -103,8 +92,6 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200&family=PT+Serif&display=swap');
-
 .text {
     color: grey;
     margin-inline-start: 8px;
@@ -126,7 +113,6 @@ export default {
 
 .sidebar-rows {
     color: black;
-    font-family: 'PT Serif', serif;
     /* justify-content: space-between; */
     margin-block-start: 16px;
     margin-block-end: 16px;

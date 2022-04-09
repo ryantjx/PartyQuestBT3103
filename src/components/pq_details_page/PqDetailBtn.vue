@@ -1,18 +1,202 @@
 <template>
-    <div class="detailpage">
-        <h1
-            id="Participants"
-            style="font-size:20px; margin-block-start:12px;"
-        ></h1>
-        <table id="table-participants" class="auto-index">
-            <tr>
-                <th>Name</th>
-                <th>Status</th>
-                <th>Action</th>
-            </tr>
-        </table>
+    <div>
+        <div class="text-center" id="buttons">
+            <template v-if="userName == grpId">
+                <!--For Owner View-->
+                <template v-if="PQstatus == 'Not Started'">
+                    <!--if status is not started -->
+                    <button
+                        v-on:click="
+                            setStart();
+                            confirmation();
+                        "
+                        class="start"
+                    >
+                        Start PQ
+                    </button>
+                    <button
+                        v-on:click="
+                            setLeave1();
+                            confirmation();
+                        "
+                        class="leave"
+                    >
+                        Leave PQ
+                    </button>
+                </template>
+                <template v-else>
+                    <!-- if status is in progress, cannot leave -->
+                    <template v-if="PQstatus == 'In Progress'">
+                        <button
+                            v-on:click="
+                                setComplete();
+                                confirmation();
+                            "
+                            class="complete"
+                        >
+                            Complete PQ
+                        </button>
+                    </template>
+                </template>
+            </template>
 
-        <br /><br />
+            <template v-else-if="this.participantCheck">
+                <!--For Participant View-->
+                <template v-if="this.personalStatus == 'Not Confirmed'">
+                    <button
+                        v-on:click="
+                            setConfirm();
+                            confirmation();
+                        "
+                        class="confirm"
+                    >
+                        Confirm Status
+                    </button>
+                </template>
+                <template v-if="PQstatus == 'Not Started'">
+                    <!-- can only leave if PQ is not started yet -->
+                    <button
+                        v-on:click="
+                            setLeave2();
+                            confirmation();
+                        "
+                        class="leave2"
+                    >
+                        Leave PQ2
+                    </button>
+                </template>
+            </template>
+            <template v-else>
+                <!--For Non - Participant View-->
+                <template v-if="PQstatus == 'Not Started'">
+                    <!-- can only join a PQ which is not started-->
+                    <div class="buttons">
+                        <button
+                            v-on:click="
+                                setJoin();
+                                confirmation();
+                            "
+                            class="join"
+                        >
+                            Join
+                        </button>
+                    </div>
+                </template>
+            </template>
+        </div>
+        <div>
+            <ClientOnly>
+                <Modal v-model="showSecondModal" title="Report User">
+                    <form novalidate>
+                        <div class="form-group">
+                            <label for="formField1">Reason for report: </label>
+                            <input
+                                id="formField1"
+                                type="textarea"
+                                class="form-control"
+                                placeholder=""
+                                rows="4"
+                            />
+                        </div>
+                        <div class="row modal-footer">
+                            <div class="col-sm-12">
+                                <div class="float-right">
+                                    <button
+                                        class="btn btn-primary"
+                                        type="button"
+                                        @click="submit()"
+                                    >
+                                        Submit
+                                    </button>
+                                    <button
+                                        class="btn btn-secondary ml-2"
+                                        type="button"
+                                        @click="cancel()"
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </Modal>
+                <Modal v-model="showThirdModal" title="Confirmation">
+                    <form novalidate>
+                        <template v-if="this.thirdCheck == 'Join'">
+                            <div class="form-group">
+                                <label for="formField1"
+                                    >You are joining this PQ
+                                </label>
+                            </div>
+                        </template>
+                        <template v-else-if="this.thirdCheck == 'Confirm'">
+                            <div class="form-group">
+                                <label for="formField1"
+                                    >You are confirming your status
+                                </label>
+                            </div>
+                        </template>
+                        <template v-else-if="this.thirdCheck == 'Complete'">
+                            <div class="form-group">
+                                <label for="formField1"
+                                    >You are completing the PartyQuest
+                                </label>
+                            </div>
+                        </template>
+                        <template v-else-if="this.thirdCheck == 'Leave1'">
+                            <div class="form-group">
+                                <label for="formField1"
+                                    >You are leaving the PartyQuest. The
+                                    PartyQuest will be deleted.
+                                </label>
+                            </div>
+                        </template>
+                        <template v-else-if="this.thirdCheck == 'Leave2'">
+                            <div class="form-group">
+                                <label for="formField1"
+                                    >You are leaving the PartyQuest
+                                </label>
+                            </div>
+                        </template>
+                        <template v-else-if="this.thirdCheck == 'Start'">
+                            <div class="form-group">
+                                <label for="formField1"
+                                    >You are starting the PartyQuest. No further
+                                    changes can be made.
+                                </label>
+                            </div>
+                        </template>
+                        <template v-else-if="this.thirdCheck == 'Kick'">
+                            <div class="form-group">
+                                <label for="formField1"
+                                    >You are kicking this user out.
+                                </label>
+                            </div>
+                        </template>
+                        <div class="row modal-footer">
+                            <div class="col-sm-12">
+                                <div class="float-right">
+                                    <button
+                                        class="btn btn-primary"
+                                        type="button"
+                                        @click="submit2()"
+                                    >
+                                        Confirm
+                                    </button>
+                                    <button
+                                        class="btn btn-secondary ml-2"
+                                        type="button"
+                                        @click="cancel2()"
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </Modal>
+            </ClientOnly>
+        </div>
     </div>
 </template>
 
@@ -700,141 +884,3 @@ export default {
     },
 };
 </script>
-
-<style>
-h1,
-h2 {
-    text-align: center;
-    /* background-color: rgb(129, 184, 99);
-    font: 700;
-    display: block;
-    font-size: 2em;
-    margin-block-start: 0.67em;
-    margin-block-end: 0.67em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-weight: bold; */
-}
-
-#table-participants {
-    border-collapse: collapse;
-    width: 40%;
-    margin-left: auto;
-    margin-right: auto;
-    /* margin-block-start: 20px; */
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.15);
-    vertical-align: middle;
-}
-
-tr:nth-child(even) {
-    background-color: #e3edee;
-}
-
-th,
-td {
-    border: 1px solid #dddddd;
-    text-align: center;
-    padding: 8px;
-}
-
-.bwt {
-    /* color: black; */
-    text-align: center;
-    display: inline-block;
-    text-decoration: none;
-    font-size: 16px;
-    border-radius: 8px 8px;
-    /* color: rgb(243, 236, 236); */
-    /* background-color: rgb(255, 94, 0); */
-}
-
-.view-manage-buttons {
-    display: flex;
-    justify-content: space-around;
-}
-
-.buttons {
-    display: flex;
-    justify-content: space-between;
-    padding-inline-start: 40%;
-    padding-inline-end: 40%;
-}
-
-.complete {
-    background-color: green;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    display: inline-block;
-    text-decoration: none;
-    font-size: 16px;
-    border-radius: 8px 8px;
-    margin: 10px;
-}
-
-.start {
-    background-color: green;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    display: inline-block;
-    text-decoration: none;
-    font-size: 16px;
-    border-radius: 8px 8px;
-    margin: 10px;
-}
-
-.leave {
-    background-color: red;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    display: inline-block;
-    text-decoration: none;
-    font-size: 16px;
-    border-radius: 8px 8px;
-    margin: 10px;
-}
-
-.join {
-    background-color: rgb(231, 117, 72);
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    display: inline-block;
-    text-decoration: none;
-    font-size: 16px;
-    border-radius: 8px 8px;
-    margin: 10px;
-}
-
-.confirm {
-    background-color: rgb(73, 239, 73);
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    display: inline-block;
-    text-decoration: none;
-    font-size: 16px;
-    border-radius: 8px 8px;
-    margin: 10px;
-}
-
-.leave2 {
-    background-color: rgb(208, 208, 78);
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    display: inline-block;
-    text-decoration: none;
-    font-size: 16px;
-    border-radius: 8px 8px;
-    margin: 10px;
-}
-</style>

@@ -1,27 +1,11 @@
 <template>
-    <div class="header">
-        <div class="float-left-child">
-            <div class="combine">
-                <div v-if="images.length > 0">
-                    <div v-for="image in images" :key="image.src">
-                        <img :src="image.src" />
-                    </div>
-                </div>
-                <div class="title" id="title">
-                    <h1></h1>
-                </div>
-            </div>
-        </div>
-        <div class="float-left-child2">
-            <template v-if="PQstatus == 'Not Started'">
-                <h3 class="completion1" id="status"></h3>
-            </template>
-            <template v-else-if="PQstatus == 'In Progress'">
-                <h3 class="completion2" id="status"></h3>
-            </template>
-            <template v-else>
-                <h3 class="completion3" id="status"></h3>
-            </template>
+    <div v-if="images.length > 0" class="pq-image">
+        <div v-for="image in images" :key="image.src">
+            <img
+                :src="image.src"
+                style="max-width: 400px;
+    margin: 10px;"
+            />
         </div>
     </div>
 </template>
@@ -36,9 +20,10 @@ import { getDownloadURL } from 'firebase/storage';
 var uuid;
 var picUrl;
 var listOfImages = [];
+
 export default {
     name: 'PqHeader',
-
+    components: {},
     data() {
         uuid = this.$route.params.id;
         return {
@@ -117,70 +102,12 @@ export default {
     },
 };
 </script>
-
-<style scoped>
-/* img {
-    max-width: 250px;
-    margin: 15px;
-}
-
-.header {
+<style>
+.pq-image {
     display: flex;
-    padding-inline-start: 100px;
-    padding-inline-end: 100px;
+    justify-content: center;
+    /* background-color: white; */
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(8px);
 }
-
-.title {
-    padding-inline-start: 60px;
-    padding-block-start: 60px;
-}
-
-.combine {
-    display: flex;
-}
-
-.float-left-child {
-    flex: 1;
-    text-align: end;
-}
-
-.float-left-child2 {
-    flex: 1;
-    text-align: end;
-    padding-block-start: 60px;
-} */
-
-/* .completion1 {
-    background-color: rgb(252, 134, 50);
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    border-radius: 8px 8px;
-}
-.completion2 {
-    background-color: rgb(4, 128, 0);
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    border-radius: 8px 8px;
-}
-.completion3 {
-    background-color: rgb(112, 110, 112);
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    border-radius: 8px 8px;
-} */
 </style>

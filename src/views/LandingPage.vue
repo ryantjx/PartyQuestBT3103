@@ -49,3 +49,9 @@ export default {
     components: {},
 };
 </script>
+
+<style scoped>
+.container {
+    backdrop-filter: blur(4px);
+}
+</style>

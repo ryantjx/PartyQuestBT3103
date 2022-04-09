@@ -22,6 +22,7 @@ import ResetPW from '../components/ResetPassword';
 import AboutUs from '../components/AboutUs';
 import ContactUs from '../components/ContactUs';
 import LandingPage from '../views/LandingPage';
+import PqDetailsPage2 from '../views/PqDetailsPage2';
 
 Vue.use(VueRouter);
 
@@ -129,8 +130,13 @@ const routes = [
     {
         path: '/pq/:id',
         name: 'PQDetails',
-        component: PqDetails,
+        component: PqDetailsPage2,
         // props: true,
+    },
+    {
+        path: '/testing/:id',
+        name: 'pqdetailspg',
+        component: PqDetailsPage2,
     },
     {
         path: '/resetpassword',
