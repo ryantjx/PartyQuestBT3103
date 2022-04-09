@@ -17,11 +17,12 @@
                             KNOW MORE ABOUT US
                         </h2>
                         <div class="break-small mb-2"></div>
+                        <br />
                         <p class="text-para">
-                            PartyQuest is an web application that helps to
-                            connect like-minded shoppers together. Ever found
-                            yourself needing more people to complete an online
-                            purchase/subscription?
+                            PartyQuest is a web application that connects
+                            like-minded shoppers. Ever found yourself needing
+                            more people to complete an online purchase or
+                            subscription?
                         </p>
                         <p>
                             With just a simple click, you can now create your
@@ -124,6 +125,7 @@ p {
 .about-us-section {
     width: 100%;
     padding: calc(5% + 30px) 0px;
+    backdrop-filter: blur(4px);
 }
 
 .about-us-section .img-head {

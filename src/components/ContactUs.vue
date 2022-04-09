@@ -1,37 +1,57 @@
 <template>
-    <div class="center-vertical">
-        <div class="col-12 col-lg-4 mb-4 mb-lg-0">
-            <h1>
-                Contact Us
-            </h1>
-        </div>
-        <div v-if="submitted">
-            <h2>Thank you for your response!</h2>
-            <h3>
-                We'll contact you as shortly as possible through your email! =)
-            </h3>
-        </div>
-        <div class="col-12 col-lg-1" v-else>
-            <form>
-                <div>
-                    <label>Username</label>
-                    <input v-model="username" />
-                </div>
-                <br />
-                <div>
-                    <label>Email</label>
-                    <input v-model="email" />
-                </div>
-                <br />
-                <div>
-                    <label>Message</label>
-                    <textarea v-model="message"></textarea>
-                </div>
-                <div class="bottom-btns">
-                    <button type="submit" @click="submit()">Submit</button>
-                    <button type="reset" @click="reset()">Reset</button>
-                </div>
-            </form>
+    <div class="contact-us-view">
+        <div class="contact-us-container">
+            <div class="contact-header">
+                <h1>
+                    Contact Us
+                </h1>
+                <h5>Ask us anything!</h5>
+            </div>
+            <div v-if="submitted">
+                <h2>Thank you for your response!</h2>
+                <h3>
+                    We'll contact you as shortly as possible through your email!
+                    =)
+                </h3>
+            </div>
+            <div class="fill-in-details-form" v-else>
+                <form class="details-form">
+                    <div class="details-row">
+                        <label>Name</label>
+                        <br />
+                        <input
+                            v-model="username"
+                            placeholder=" Enter name"
+                            class="contact-form-field"
+                        />
+                    </div>
+                    <br />
+                    <div class="details-row">
+                        <label>Email</label>
+                        <br />
+                        <input
+                            v-model="email"
+                            placeholder=" Enter email"
+                            class="contact-form-field"
+                        />
+                    </div>
+                    <br />
+                    <div class="details-row">
+                        <label>Message</label>
+                        <br />
+                        <textarea
+                            v-model="message"
+                            placeholder=" Hey PartyQuest, I would like to know more about..."
+                            class="contact-form-field"
+                        ></textarea>
+                    </div>
+                    <br />
+                    <div class="bottom-btns">
+                        <button type="submit" @click="submit()">Submit</button>
+                        <button type="reset" @click="reset()">Reset</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </template>
@@ -92,6 +112,51 @@ export default {
     --colorTwo: #16c79a;
 }
 
+.fill-in-details-form {
+    align-items: center;
+}
+
+.details-form {
+}
+
+.details-row {
+    font-size: 0.825rem;
+    width: 100%;
+}
+
+.contact-header {
+    margin-inline-start: 48px;
+    margin-inline-end: 48px;
+}
+
+.contact-us-view {
+    display: flex;
+    justify-content: center;
+}
+
+.contact-form-field {
+    border: 1px solid #cfd1d8;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    background: #ffffff;
+    color: #2e323c;
+    width: 350px;
+}
+
+.contact-us-container {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    position: relative;
+    overflow: hidden;
+    width: 768px;
+    max-width: 100%;
+    min-height: 480px;
+    display: flex;
+    align-items: center;
+}
+
 .center-vertical {
     display: flex;
     width: 100%;
@@ -110,7 +175,8 @@ h3 {
 h1,
 label,
 button,
-textarea {
+textarea,
+h4 {
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -132,13 +198,13 @@ input {
     width: 300px;
 }
 
-form {
+/* form {
     width: 100%;
     padding: calc(5% + 30px) 0px;
-}
+} */
 
 textarea {
-    width: 300px;
+    width: 350px;
     height: 200px;
 }
 
@@ -146,7 +212,7 @@ button {
     border: 0px;
     letter-spacing: 0;
 }
-button:hover,
+/* button:hover,
 button:active {
     transform: scale(1.2);
     letter-spacing: 5px;
@@ -163,7 +229,7 @@ button:before {
     position: relative;
     transition: all 280ms ease-in-out;
     width: 0;
-}
+} */
 
 button:hover:after {
     backface-visibility: hidden;
@@ -186,5 +252,6 @@ button:hover:before {
 
 .bottom-btns {
     display: flex;
+    justify-content: flex-end;
 }
 </style>

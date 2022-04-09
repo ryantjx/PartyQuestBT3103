@@ -17,7 +17,7 @@ export default {
 
 <style scoped>
 #btn {
-    background-color: #4caf50; /* Green */
+    background-color: #6495ed; /* Green */
     border: none;
     color: white;
     padding: 15px 32px;

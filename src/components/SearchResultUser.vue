@@ -1,6 +1,8 @@
 <template>
     <div>
-        <h1 class="pq-search-header">User Search Results</h1>
+        <h1 class="pq-search-header" style="font-size:60px;">
+            User Search Results
+        </h1>
         <center>
             <a id="btn1" v-on:click="$router.push('/searchresults')">
                 <i><u>Click here to search for PQs</u></i>
