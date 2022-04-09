@@ -1,7 +1,11 @@
 <template>
     <div>
-        <router-link to="/searchresults/">PQs</router-link>
-        <h3 class="pq-search-header">PartyQuest Search Results</h3>
+        <h1 class="pq-search-header">User Search Results</h1>
+        <center>
+            <a id="btn1" v-on:click="$router.push('/searchresults')">
+                <i><u>Click here to search for PQs</u></i>
+            </a>
+        </center>
         <br />
         <form class="search-res-form" @submit.prevent="searchByUser">
             <input
@@ -58,7 +62,7 @@ export default {
             // create query based on the given field
             let filterQuery = query(
                 collection(db, 'Users'),
-                where('username', '==', store.state.searchText)
+                where('lowerUsername', '==', store.state.searchText)
             );
             // use query to filter the documents in the PQ collection
             let querySnapshot = await getDocs(filterQuery);
@@ -117,13 +121,16 @@ export default {
             // clear the existing rows in the table first
             this.clearTable();
             // save user's input to state manager (vuex)
-            store.state.searchText = this.message;
+            // save as lowercase for better querying
+            let x = this.message;
+            let y = x.toLowerCase;
+            store.state.searchText = y;
             // print out the user's input in the console to ensure data is being captured
             console.warn("User's input is", store.state.searchText);
             // create query based on the given field
             let filterQuery = query(
                 collection(db, 'Users'),
-                where('username', '==', store.state.searchText)
+                where('lowerUsername', '==', store.state.searchText)
             );
             // use query to filter the documents in the PQ collection
             let querySnapshot = await getDocs(filterQuery);

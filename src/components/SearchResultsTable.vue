@@ -1,10 +1,12 @@
 <template>
     <div>
-        <h3 class="pq-search-header">PartyQuest Search Results</h3>
+        <h1 class="pq-search-header">PartyQuest Search Results</h1>
+        <center>
+            <a id="btn1" v-on:click="$router.push('/searchresults/user')">
+                <i><u>Click here to search for Users</u></i>
+            </a>
+        </center>
         <br />
-        <button id="btn" @click="$router.push('/searchresults/user')">
-            Click to Search for Users Instead
-        </button>
         <form class="search-res-form" @submit.prevent="searchByBrand">
             <input
                 id="search"
@@ -21,6 +23,7 @@
             >
                 Search
             </button>
+            <br />
         </form>
         <table id="search-result-table" class="auto-index">
             <thead>
@@ -66,7 +69,7 @@ export default {
             // create query based on the given field
             let filterQuery = query(
                 collection(db, 'PartyQuests'),
-                where('brand', '==', store.state.searchText)
+                where('lowerBrand', '==', store.state.searchText)
             );
             // use query to filter the documents in the PQ collection
             let querySnapshot = await getDocs(filterQuery);
@@ -139,13 +142,16 @@ export default {
             // clear the existing rows in the table first
             this.clearTable();
             // save user's input to state manager (vuex)
-            store.state.searchText = this.message;
+            // save as lowercase for better querying
+            let x = this.message;
+            let y = x.toLowerCase();
+            store.state.searchText = y;
             // print out the user's input in the console to ensure data is being captured
             console.warn("User's input is", store.state.searchText);
             // create query based on the given field
             let filterQuery = query(
                 collection(db, 'PartyQuests'),
-                where('brand', '==', this.message)
+                where('lowerBrand', '==', y)
             );
             // use query to filter the documents in the PQ collection
             let querySnapshot = await getDocs(filterQuery);
@@ -298,17 +304,36 @@ input[type='search']::placeholder {
 .search-button:hover {
     opacity: 1;
 }
-#btn {
-    background-color: blueviolet; /* Green */
+/* #btn1 {
+    background-color: lightskyblue;
     border: none;
     color: white;
     padding: 12px 20;
-    border-radius: 6px 6px;
+    border-radius: 50%;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 12px;
+    font-size: 10px;
     margin: auto;
-    width: 6%;
+    background-color: blue;
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: auto;
+    border-radius: 50%;
+    transition-duration: 0.4s;
+} */
+
+#btn1:hover {
+    background-color: lightgreen;
+    color: black;
 }
+/* 
+.ashwin {
+    display: flex;
+} */
 </style>
