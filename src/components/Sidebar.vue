@@ -4,8 +4,10 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
         />
-        <b-button id="toggle" size="md" v-b-toggle.sidebar-no-header
-            ><i class="fa fa-bars"></i
+        <b-button id="toggle" size="md" v-b-toggle.sidebar-no-header>
+            <!-- <i class="fa fa-bars" style="font-size:18px;"></i
+        > -->
+            <i class="fa fa-angle-double-right" style="font-size:28px;"></i
         ></b-button>
         <b-sidebar
             id="sidebar-no-header"
@@ -13,10 +15,13 @@
         >
             <template #default="{  }">
                 <div class="p-3">
-                    <img
-                        src="../assets/PartyQuest_Logo.png"
-                        class="card-img-top embed-responsive-item"
-                    />
+                    <div class="logo-div">
+                        <img
+                            src="../assets/PartyQuest_Logo_small.png"
+                            class="logo-item"
+                        />
+                    </div>
+                    <br />
                     <h4 id="sidebar-no-header-title">
                         Welcome to PartyQuest!
                     </h4>
@@ -103,6 +108,17 @@ export default {
 .text {
     color: grey;
     margin-inline-start: 8px;
+}
+
+.logo-div {
+    display: flex;
+    justify-content: center;
+}
+
+.logo-item {
+    width: 135px;
+    height: 100px;
+    align-items: center;
 }
 
 .row {

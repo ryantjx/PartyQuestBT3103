@@ -442,5 +442,6 @@ body {
     border-radius: 5px;
     border: 0;
     margin-bottom: 1rem;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.15);
 }
 </style>

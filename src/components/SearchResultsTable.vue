@@ -1,6 +1,8 @@
 <template>
-    <div>
-        <h1 class="pq-search-header">PartyQuest Search Results</h1>
+    <div class="search-table-view">
+        <h1 class="pq-search-header" style="font-size:60px;">
+            PartyQuest Search Results
+        </h1>
         <center>
             <a id="btn1" v-on:click="$router.push('/searchresults/user')">
                 <i><u>Click here to search for Users</u></i>
@@ -231,6 +233,7 @@ export default {
 #search-result-table th,
 #search-result-table td {
     padding: 12px 15px;
+    background: white;
 }
 
 #search-result-table tr {
@@ -262,8 +265,16 @@ export default {
     transform: translateY(-50%);
 }
 .pq-search-header {
-    text-align: center;
+    /* backdrop-filter: blur(10px); */
+    /* width: 100%;
+    display: flex;
+    justify-content: center; */
 }
+
+.test-header {
+    /* backdrop-filter: blur(10px); */
+}
+
 .search-res-form {
     color: #555;
     display: flex;
@@ -272,6 +283,7 @@ export default {
     border-radius: 5px;
     width: 20%;
     margin-left: 40%;
+    background: white;
 }
 input[type='search'] {
     border: none;

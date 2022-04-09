@@ -47,16 +47,6 @@ export default {
 </script>
 
 <style scoped>
-/* .background {
-    background: #ccc;
-    filter: blur(5px) brightness(0.5);
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 20%;
-    width: 20%;
-} */
-
 .btn-go-back {
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
@@ -75,6 +65,7 @@ export default {
     padding-block-start: 16px;
     padding-block-end: 32px;
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.15);
+    background-color: white;
     /* /background: rgb(200, 201, 200); */
 }
 </style>
