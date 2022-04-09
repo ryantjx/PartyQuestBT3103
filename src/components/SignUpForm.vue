@@ -76,6 +76,15 @@ export default {
                         email: email,
                         password: password,
                         savedPartyQuests: [],
+                        firstName: '',
+                        lastName: '',
+                        phoneNum: '',
+                    });
+                    setDoc(doc(db, 'Users', username, 'Address', 'Location'), {
+                        streetName: '',
+                        streetNum: '',
+                        unitNumber: '',
+                        postalCode: '',
                     });
                     //Sets the state user displayName
                     // userCredential.user.updateProfile({

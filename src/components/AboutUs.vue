@@ -111,7 +111,7 @@ p {
 
 :root {
     --colorOne: #19456b;
-    --colorTwo: #16c79a;
+    --colorTwo: #6495ed;
 }
 
 .center-vertical {
@@ -147,14 +147,14 @@ p {
 
 .about-us-section .text-head {
     font-size: 28px;
-    color: #16c79a;
+    color: #6495ed;
     text-align: left;
 }
 
 .about-us-section .break-small {
     width: 80px;
     height: 3px;
-    background-color: #16c79a;
+    background-color: #6495ed;
 }
 
 .about-us-section .text-para {
@@ -163,7 +163,7 @@ p {
 }
 
 .about-us-section .box {
-    background-color: #16c79a;
+    background-color: #6495ed;
     color: #fff;
     text-align: center;
     padding: 20px 0px;
