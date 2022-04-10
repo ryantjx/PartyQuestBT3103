@@ -12,7 +12,71 @@
             </tr>
         </table>
 
-        <br /><br />
+        <div>
+            <ClientOnly>
+                <Modal v-model="showThirdModal" title="Confirm Kick">
+                    <form novalidate>
+                        <div class="form-group">
+                            <label for="formField1">Confirm Kick User? </label>
+                        </div>
+                        <div class="row modal-footer">
+                            <div class="col-sm-12">
+                                <div class="float-right">
+                                    <button
+                                        class="btn btn-primary"
+                                        type="button"
+                                        @click="kick()"
+                                    >
+                                        Kick
+                                    </button>
+                                    <button
+                                        class="btn btn-secondary ml-2"
+                                        type="button"
+                                        @click="cancel()"
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </Modal>
+                <Modal v-model="showSecondModal" title="Report User">
+                    <form novalidate>
+                        <div class="form-group">
+                            <label for="formField1">Reason for report: </label>
+                            <input
+                                id="formField1"
+                                type="textarea"
+                                class="form-control"
+                                placeholder=""
+                                rows="4"
+                            />
+                        </div>
+                        <div class="row modal-footer">
+                            <div class="col-sm-12">
+                                <div class="float-right">
+                                    <button
+                                        class="btn btn-primary"
+                                        type="button"
+                                        @click="submit()"
+                                    >
+                                        Submit
+                                    </button>
+                                    <button
+                                        class="btn btn-secondary ml-2"
+                                        type="button"
+                                        @click="cancel()"
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </Modal>
+            </ClientOnly>
+        </div>
     </div>
 </template>
 
@@ -32,6 +96,7 @@ export default {
         uuid = this.$route.params.id;
         return {
             id: this.$route.params.id,
+            reported: '',
             grpId: '',
             userName: '',
             participantCheck: false,
@@ -371,11 +436,10 @@ export default {
             }
         },
 
-        async handleKick(x) {
-            //then remove user from list of participants and participant status
+        async kick() {
             let check = false;
             this.participants.forEach(participant => {
-                if (participant == x) {
+                if (participant == this.reported) {
                     check = true;
                 }
             });
@@ -385,7 +449,7 @@ export default {
                 let e = [];
 
                 for (let y = 0; y < this.participants.length; y++) {
-                    if (this.participants[y] == x) {
+                    if (this.participants[y] == this.reported) {
                         console.log('user to remove');
                     } else {
                         //create new array with all other participants and status
@@ -417,14 +481,19 @@ export default {
                 alert('User is no longer in PQ');
             }
         },
-
-        async submit() {
+        async handleKick(currName) {
+            //then remove user from list of participants and participant status
+            this.showThirdModal = true;
+            this.reported = currName;
+        },
+        async submit(user) {
             var reason = document.getElementById('formField1').value;
             try {
                 const db = getFirestore(firebaseApp);
+                console.log('in function log' + user);
                 const docRef = await addDoc(collection(db, 'Report'), {
                     Reporter: this.userName,
-                    ReportedUser: 'test',
+                    ReportedUser: this.reported,
                     Reason: reason,
                 });
                 console.log(docRef);
@@ -490,18 +559,16 @@ export default {
 
         cancel() {
             this.showSecondModal = false;
+            this.showThirdModal = false;
         },
-        reportUser() {
+        reportUser(currName) {
             this.showSecondModal = true;
+            this.reported = currName;
         },
 
         cancel2() {
             this.showThirdModal = false;
             this.thirdCheck = null;
-        },
-
-        confirmation() {
-            this.showThirdModal = true;
         },
 
         async test() {
@@ -572,6 +639,7 @@ export default {
                 console.log(x);
                 console.log(this.participants[x]);
                 console.log(this.participantStatus[x]);
+                let currName = this.participants[x];
                 let ppl = document.getElementById('Participants');
                 // let a =
                 //     'Participants: ' +
@@ -601,6 +669,8 @@ export default {
                     index1++;
                 } else {
                     if (this.participantCheck) {
+                        console.log('this is :' + currName);
+                        console.log(currName == 'Kang');
                         //Check for Owner or Participant
                         if (this.grpId == this.userName) {
                             //if owner report view kick
@@ -612,16 +682,16 @@ export default {
                             viewButton.innerHTML = 'View';
                             viewButton.onclick = function() {
                                 window.location.replace(
-                                    '/profile/user/' + this.participants[x]
+                                    '/profile/user/' + currName
                                 );
                             };
 
                             var reportButton = document.createElement('button');
                             reportButton.className = 'bwt';
-                            reportButton.id = String(name);
+                            reportButton.id = String(this.participants[x]);
                             reportButton.innerHTML = 'Report';
                             reportButton.onclick = function() {
-                                page.reportUser();
+                                page.reportUser(currName);
                             };
 
                             var kickButton = document.createElement('button');
@@ -629,8 +699,7 @@ export default {
                             kickButton.id = String(name);
                             kickButton.innerHTML = 'Kick';
                             kickButton.onclick = function() {
-                                page.confirmation();
-                                this.thirdCheck = 'Kick';
+                                page.handleKick(currName);
                             };
                             //this.participants[x]
                             //);
@@ -648,7 +717,7 @@ export default {
                             viewButton2.innerHTML = 'View';
                             viewButton2.onclick = function() {
                                 window.location.replace(
-                                    '/profile/user/' + this.participants[x]
+                                    '/profile/user/' + currName
                                 );
                             };
 
@@ -659,7 +728,7 @@ export default {
                             reportButton2.id = String(name);
                             reportButton2.innerHTML = 'Report';
                             reportButton2.onclick = function() {
-                                page.reportUser();
+                                page.reportUser(currName);
                             };
                             cell3.appendChild(viewButton2);
                             cell3.appendChild(reportButton2);
@@ -674,7 +743,7 @@ export default {
                         viewButton3.innerHTML = 'View';
                         viewButton3.onclick = function() {
                             window.location.replace(
-                                '/profile/user/' + this.participants[x]
+                                '/profile/user/' + currName
                             );
                         };
 
@@ -705,29 +774,20 @@ export default {
 h1,
 h2 {
     text-align: center;
-    /* background-color: rgb(129, 184, 99);
-    font: 700;
-    display: block;
-    font-size: 2em;
-    margin-block-start: 0.67em;
-    margin-block-end: 0.67em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-weight: bold; */
 }
 
 #table-participants {
     border-collapse: collapse;
-    width: 40%;
+    width: 10%;
     margin-left: auto;
     margin-right: auto;
     /* margin-block-start: 20px; */
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.15);
-    vertical-align: middle;
 }
 
 tr:nth-child(even) {
     background-color: #e3edee;
+    width: 10px;
 }
 
 th,
@@ -735,6 +795,8 @@ td {
     border: 1px solid #dddddd;
     text-align: center;
     padding: 8px;
+    word-wrap: break-word;
+    max-width: 200px;
 }
 
 .bwt {
@@ -751,90 +813,5 @@ td {
 .view-manage-buttons {
     display: flex;
     justify-content: space-around;
-}
-
-.buttons {
-    display: flex;
-    justify-content: space-between;
-    padding-inline-start: 40%;
-    padding-inline-end: 40%;
-}
-
-.complete {
-    background-color: green;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    display: inline-block;
-    text-decoration: none;
-    font-size: 16px;
-    border-radius: 8px 8px;
-    margin: 10px;
-}
-
-.start {
-    background-color: green;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    display: inline-block;
-    text-decoration: none;
-    font-size: 16px;
-    border-radius: 8px 8px;
-    margin: 10px;
-}
-
-.leave {
-    background-color: red;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    display: inline-block;
-    text-decoration: none;
-    font-size: 16px;
-    border-radius: 8px 8px;
-    margin: 10px;
-}
-
-.join {
-    background-color: rgb(231, 117, 72);
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    display: inline-block;
-    text-decoration: none;
-    font-size: 16px;
-    border-radius: 8px 8px;
-    margin: 10px;
-}
-
-.confirm {
-    background-color: rgb(73, 239, 73);
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    display: inline-block;
-    text-decoration: none;
-    font-size: 16px;
-    border-radius: 8px 8px;
-    margin: 10px;
-}
-
-.leave2 {
-    background-color: rgb(208, 208, 78);
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    display: inline-block;
-    text-decoration: none;
-    font-size: 16px;
-    border-radius: 8px 8px;
-    margin: 10px;
 }
 </style>
