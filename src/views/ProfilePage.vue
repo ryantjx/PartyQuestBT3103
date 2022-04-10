@@ -32,9 +32,9 @@
                                     <p>Last Name: {{ userData.lastName }}</p>
                                     <p>Phone Number: {{ userData.phoneNum }}</p>
                                     <p>
-                                        Address : {{ userData.unitNum }}|{{
-                                            userData.streetNum
-                                        }}|{{ userData.streetName }}
+                                        Address : {{ userData.unitNum }}
+                                        {{ userData.streetNum }}
+                                        {{ userData.streetName }}
                                     </p>
                                     <p>Postal: {{ user.postalCode }}</p>
                                 </div>
@@ -283,7 +283,7 @@ body {
 }
 .account-settings .about h5 {
     margin: 0 0 15px 0;
-    color: #007ae1;
+    color: #6495ed;
 }
 .account-settings .about p {
     font-size: 0.825rem;
@@ -309,7 +309,7 @@ body {
 
 .loader {
     border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #3498db; /* Blue */
+    border-top: 16px solid #6495ed; /* Blue */
     border-radius: 50%;
     width: 120px;
     height: 120px;

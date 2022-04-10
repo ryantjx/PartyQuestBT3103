@@ -29,9 +29,9 @@
                                     <p>Last Name: {{ userData.lastName }}</p>
                                     <p>Phone Number: {{ userData.phoneNum }}</p>
                                     <p>
-                                        Address : {{ userData.unitNum }}|{{
-                                            userData.streetNum
-                                        }}|{{ userData.streetName }}
+                                        Address : {{ userData.unitNum }}
+                                        {{ userData.streetNum }}
+                                        {{ userData.streetName }}
                                     </p>
                                     <p>Postal: {{ user.postalCode }}</p>
                                 </div>
@@ -444,4 +444,7 @@ body {
     margin-bottom: 1rem;
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.15);
 }
+/* .btn {
+    background-color: #6495ed;
+} */
 </style>

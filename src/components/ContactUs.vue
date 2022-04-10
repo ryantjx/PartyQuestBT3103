@@ -107,7 +107,7 @@ export default {
 <style scoped>
 :root {
     --colorOne: #19456b;
-    --colorTwo: #16c79a;
+    --colorTwo: #6495ed;
 }
 
 .fill-in-details-form {
@@ -167,7 +167,7 @@ label,
 button,
 h2,
 h3 {
-    color: #16c79a;
+    color: #6495ed;
 }
 
 h1,
