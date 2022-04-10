@@ -45,7 +45,8 @@
                                         icon="fa-solid fa-truck-fast mb-3"
                                     />
                                     <h4 class="mb=0">
-                                        Order your Item and Receive your Item!
+                                        Order and Receive your Item with your
+                                        Party!
                                     </h4>
                                     <!-- <p class="mb-0">1000+</p> -->
                                 </div>
