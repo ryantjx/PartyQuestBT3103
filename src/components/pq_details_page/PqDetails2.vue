@@ -1,5 +1,5 @@
 <template>
-    <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+    <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
         <div class="card h-100">
             <div class="card-body">
                 <form id="editprofileform">
@@ -198,7 +198,7 @@ export default {
 .info-line {
     display: flex;
     justify-content: space-between;
-    width: 80%;
+    width: 95%;
 }
 
 .form-control {

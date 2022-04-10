@@ -25,14 +25,14 @@
                     </template>
                 </div>
                 <div class="completion-btn">
-                    <template v-if="PQstatus == 'Not Started'">
-                        <h3 class="completion1" id="status"></h3>
+                    <template v-if="this.PQstatus == 'Not Started'">
+                        <h3 class="completion-1" id="status"></h3>
                     </template>
-                    <template v-else-if="PQstatus == 'In Progress'">
-                        <h3 class="completion2" id="status"></h3>
+                    <template v-else-if="this.PQstatus == 'In Progress'">
+                        <h3 class="completion-2" id="status"></h3>
                     </template>
-                    <template v-else>
-                        <h3 class="completion3" id="status"></h3>
+                    <template v-else-if="this.PQstatus == 'Completed'">
+                        <h3 class="completion-3" id="status"></h3>
                     </template>
                 </div>
             </div>
@@ -269,6 +269,7 @@ export default {
                 );
                 this.userName = user.displayName;
                 this.updateData();
+                this.getData();
             }
         });
     },
@@ -327,10 +328,10 @@ export default {
     align-items: center;
 }
 
-.completion1 {
-    background-color: rgb(112, 110, 112);
+.completion-1 {
+    background-color: lightgrey;
     border: none;
-    color: white;
+    color: black;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
@@ -338,10 +339,10 @@ export default {
     font-size: 16px;
     border-radius: 8px 8px;
 }
-.completion2 {
+.completion-2 {
     background-color: orange;
     border: none;
-    color: white;
+    color: black;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
@@ -349,10 +350,10 @@ export default {
     font-size: 16px;
     border-radius: 8px 8px;
 }
-.completion3 {
+.completion-3 {
     background-color: green;
     border: none;
-    color: white;
+    color: black;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;

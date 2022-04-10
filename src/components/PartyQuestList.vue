@@ -246,11 +246,14 @@ export default {
                 var someMap = this.partyQuestData[i];
                 // console.log('this is the map in partyquest list: ', someMap);
                 var photoReference = ref(storage, someMap['photoId']);
-                await getDownloadURL(photoReference).then(value => {
-                    someMap['imageUrl'] = value;
-                    // console.log(value);
-                    this.pqList.push(someMap);
-                });
+                console.log('testin123' + i);
+                await getDownloadURL(photoReference)
+                    .then(value => {
+                        someMap['imageUrl'] = value;
+                        // console.log(value);
+                        this.pqList.push(someMap);
+                    })
+                    .catch(err => console.log(err));
                 // console.log(
                 //     'type of map in pqbox ',
                 //     typeof JSON.parse(JSON.stringify(someMap))

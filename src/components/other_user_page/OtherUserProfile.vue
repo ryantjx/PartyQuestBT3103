@@ -6,12 +6,6 @@
                     <div class="card-body">
                         <div class="account-settings">
                             <div class="user-profile">
-                                <!-- <div class="user-avatar">
-                                    <img
-                                        src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                                        alt="Maxwell Admin"
-                                    />
-                                </div> -->
                                 <h5 class="user-name">
                                     {{ this.id }}
                                 </h5>
@@ -19,12 +13,7 @@
                                     {{ this.email }}
                                 </h6>
                             </div>
-                            <div class="about">
-                                <!-- <h5>About</h5>
-                                <p>
-                                    This is the other PQ page.
-                                </p> -->
-                            </div>
+                            <div class="about"></div>
                         </div>
                     </div>
                 </div>

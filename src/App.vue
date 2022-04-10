@@ -34,7 +34,6 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    background: url('./assets/pubnub-filter-blocks-bg.png');
 }
 
 html,
@@ -42,12 +41,13 @@ body {
     margin: 0;
     font-family: 'Fira Sans', sans-serif;
     height: 100%;
+    background: url('./assets/test-bg-3.jpg');
 }
 
 #appbg {
     position: absolute;
     width: 100%;
-    height: 100%;
+    height: auto;
     top: 0vh;
     bottom: 0vh;
     background: url('./assets/test-bg-3.jpg');
