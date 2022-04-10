@@ -83,19 +83,7 @@
                                         />
                                     </div>
                                 </div>
-                                <!-- <div
-                                class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
-                            >
-                                <div class="form-group">
-                                    <label for="eMail">Email</label>
-                                    <input
-                                        type="email"
-                                        class="form-control"
-                                        id="eMail"
-                                        placeholder="Enter email ID"
-                                    />
-                                </div>
-                            </div> -->
+
                                 <div
                                     class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
                                 >
@@ -109,47 +97,6 @@
                                         />
                                     </div>
                                 </div>
-                                <!-- <div
-                                    class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
-                                >
-                                    <div class="form-group">
-                                        <label for="email">Email</label>
-                                        <input
-                                            type="email"
-                                            class="form-control"
-                                            id="email"
-                                            placeholder="Enter Email Address"
-                                        />
-                                    </div>
-                                </div> -->
-                                <div
-                                    class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
-                                >
-                                    <div class="form-group">
-                                        <label for="bankAccNum"
-                                            >Bank Account Number</label
-                                        >
-                                        <input
-                                            type="name"
-                                            class="form-control"
-                                            id="bankAccNum"
-                                            placeholder="Enter Bank Account Number"
-                                        />
-                                    </div>
-                                </div>
-                                <!-- <div
-                                class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
-                            >
-                                <div class="form-group">
-                                    <label for="website">Website URL</label>
-                                    <input
-                                        type="url"
-                                        class="form-control"
-                                        id="website"
-                                        placeholder="Website url"
-                                    />
-                                </div>
-                            </div> -->
                             </div>
                             <div class="row gutters">
                                 <div
@@ -324,7 +271,6 @@ export default {
             var lastName = document.getElementById('lastName').value;
             var phoneNum = document.getElementById('phoneNum').value;
             // var newEmail = document.getElementById('email').value;
-            var bankAccNum = document.getElementById('bankAccNum').value;
 
             // // Address
             var streetName = document.getElementById('streetName').value;
@@ -348,11 +294,10 @@ export default {
 
             try {
                 const docRef = await setDoc(userRef, {
-                    firstName: firstName,
+                    firstName: firstName ?? '',
                     lastName: lastName,
                     phoneNum: phoneNum,
                     // email: newEmail,
-                    bankAccNum: bankAccNum,
                 });
                 await setDoc(addressRef, {
                     streetName: streetName,
