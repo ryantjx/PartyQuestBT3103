@@ -79,6 +79,7 @@ export default {
                         firstName: '',
                         lastName: '',
                         phoneNum: '',
+                        lowerUsername: username.toLowerCase(),
                     });
                     setDoc(doc(db, 'Users', username, 'Address', 'Location'), {
                         streetName: '',

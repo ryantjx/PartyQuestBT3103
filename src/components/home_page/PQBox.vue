@@ -4,7 +4,7 @@
             <div
                 v-for="(value, index) in pqList"
                 :key="index"
-                class="col-md-auto col-xl-3 col-8 pt-5 shadow p-3 mb-5 ml-3 mr-3 bg-white rounded"
+                class="col-md-6 col-xl-3 col-8 pt-5 shadow p-3 mb-5 ml-3 mr-3 bg-white rounded"
             >
                 <div
                     class="pq-card-view"

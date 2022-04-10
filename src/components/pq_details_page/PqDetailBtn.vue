@@ -234,7 +234,7 @@ export default {
             let total = parseInt(this.numOfPeople);
             console.log(currNum);
             console.log(total);
-            if (currNum != total) {
+            if (currNum == total) {
                 console.log('Max participants reached');
                 alert('Max Participants reached');
                 //max capacity reached, check whether all have confirmed

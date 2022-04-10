@@ -125,7 +125,7 @@ export default {
             // save user's input to state manager (vuex)
             // save as lowercase for better querying
             let x = this.message;
-            let y = x.toLowerCase;
+            let y = x.toLowerCase();
             store.state.searchText = y;
             // print out the user's input in the console to ensure data is being captured
             console.warn("User's input is", store.state.searchText);
