@@ -5,8 +5,11 @@
                 <div class="top-left-side">
                     <Sidebar />
                     <router-link to="/home" class="navbar-brand"
-                        ><h2>PartyQuest</h2></router-link
-                    >
+                        ><img
+                            src="../assets/PartyQuest_Logo_small.png"
+                            class="logo-item"
+                            width="100px"
+                    /></router-link>
                 </div>
                 <div class="nav-bar-search">
                     <SearchBar />
@@ -101,7 +104,6 @@ export default {
 
 .logged-out-nav {
     color: black;
-    font-family: 'PT Serif', serif;
     margin-block-start: 16px;
     margin-block-end: 16px;
     margin-inline-start: 16px;
@@ -116,7 +118,7 @@ export default {
 .navbar {
     overflow: hidden;
     position: absolute; /* Set the navbar to fixed position */
-    top: 0.5vw; /* Position the navbar at the top of the page */
+    top: 0.5vh; /* Position the navbar at the top of the page */
     width: 100%; /* Full width */
 }
 
@@ -157,7 +159,9 @@ export default {
 }
 
 .nav-item-username {
-    width: 10vw;
+    /* width: 10vw; */
+    margin-inline-end: 16px;
+    backdrop-filter: blur(10px);
 }
 
 .nav-item {
@@ -165,8 +169,7 @@ export default {
 }
 
 .navbar-brand {
-    margin-inline-start: 32px;
-    color: black;
+    margin-inline-start: 8px;
 }
 
 .top-left-side {

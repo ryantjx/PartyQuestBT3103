@@ -1,27 +1,7 @@
 <template>
-    <div class="header">
-        <div class="float-left-child">
-            <div class="combine">
-                <div v-if="images.length > 0">
-                    <div v-for="image in images" :key="image.src">
-                        <img :src="image.src" />
-                    </div>
-                </div>
-                <div class="title" id="title">
-                    <h1></h1>
-                </div>
-            </div>
-        </div>
-        <div class="float-left-child2">
-            <template v-if="PQstatus == 'Not Started'">
-                <h3 class="completion1" id="status"></h3>
-            </template>
-            <template v-else-if="PQstatus == 'In Progress'">
-                <h3 class="completion2" id="status"></h3>
-            </template>
-            <template v-else>
-                <h3 class="completion3" id="status"></h3>
-            </template>
+    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+        <div class="card h-100">
+            <PqParticipants />
         </div>
     </div>
 </template>
@@ -32,13 +12,17 @@ import { getFirestore } from 'firebase/firestore';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { getStorage, ref } from 'firebase/storage';
 import { getDownloadURL } from 'firebase/storage';
+import PqParticipants from '../pq_listing_page/PqParticipants.vue';
 
 var uuid;
 var picUrl;
 var listOfImages = [];
+
 export default {
     name: 'PqHeader',
-
+    components: {
+        PqParticipants,
+    },
     data() {
         uuid = this.$route.params.id;
         return {
@@ -98,12 +82,6 @@ export default {
                     .catch(error => {
                         console.log(error);
                     });
-                let title = document.getElementById('title');
-                console.log(title.innerHTML);
-                console.log('Changing');
-                document.getElementById('title').innerHTML = pqDoc.title;
-                console.log(title.innerHTML);
-
                 let status = document.getElementById('status');
                 console.log(status.innerHTML);
                 console.log('Changing');
@@ -117,5 +95,27 @@ export default {
     },
 };
 </script>
+<style>
+body {
+    margin: 0;
+    padding-top: 40px;
+    color: #2e323c;
+    background: #f5f6fa;
+    position: relative;
+    height: 100%;
+}
 
-<style scoped></style>
+.title-head {
+    color: #007ae1;
+}
+
+.card {
+    background: #ffffff;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: 0;
+    margin-bottom: 1rem;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.15);
+}
+</style>

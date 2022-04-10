@@ -138,7 +138,7 @@
                                                 class="d-flex flex-row align-items-center mb-1"
                                             >
                                                 <p>
-                                                    Number of Partipants:
+                                                    Number of Participants:
                                                     {{
                                                         value.participants
                                                             .length
@@ -169,6 +169,16 @@
                                                     "
                                                 >
                                                     <h6 class="text-warning">
+                                                        {{ value.status }}
+                                                    </h6>
+                                                </div>
+                                                <div
+                                                    v-else-if="
+                                                        value.status ==
+                                                            'Completed'
+                                                    "
+                                                >
+                                                    <h6 class="completed-pq">
                                                         {{ value.status }}
                                                     </h6>
                                                 </div>
@@ -246,11 +256,14 @@ export default {
                 var someMap = this.partyQuestData[i];
                 // console.log('this is the map in partyquest list: ', someMap);
                 var photoReference = ref(storage, someMap['photoId']);
-                await getDownloadURL(photoReference).then(value => {
-                    someMap['imageUrl'] = value;
-                    // console.log(value);
-                    this.pqList.push(someMap);
-                });
+                console.log('testin123' + i);
+                await getDownloadURL(photoReference)
+                    .then(value => {
+                        someMap['imageUrl'] = value;
+                        // console.log(value);
+                        this.pqList.push(someMap);
+                    })
+                    .catch(err => console.log(err));
                 // console.log(
                 //     'type of map in pqbox ',
                 //     typeof JSON.parse(JSON.stringify(someMap))
@@ -269,4 +282,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.completed-pq {
+    color: green;
+}
+</style>

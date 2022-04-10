@@ -4,14 +4,14 @@
             <div
                 v-for="(value, index) in pqList"
                 :key="index"
-                class="col-md-5 col-xl-3 col-8 pt-5 shadow p-3 mb-5 ml-3 mr-3 bg-white rounded"
+                class="col-md-auto col-xl-3 col-8 pt-5 shadow p-3 mb-5 ml-3 mr-3 bg-white rounded"
             >
                 <div
-                    class="card h-100 w-100"
+                    class="pq-card-view"
                     v-on:click="directToPQ(value.id)"
                     style="cursor:pointer"
                 >
-                    <div class="embed-responsive embed-responsive-16by9">
+                    <div class="img-card-view">
                         <!-- <div v-if:"{value.image}">
                             <h1> There is not image in the values
                             </div> -->
@@ -34,7 +34,7 @@
                             <p>Brand: {{ value.brand }}</p>
                             <p>Description: {{ value.description }}</p>
                         </div>
-
+                        <br />
                         <!-- <router-link
                 :to="{ name: 'EditProduct', params: { id: product.id } }"
             >
@@ -45,7 +45,7 @@
                             type="button"
                             v-on:click="directToPQ(value.id)"
                         >
-                            Click to Join!
+                            Click to Join
                         </button>
                     </div>
                 </div>
@@ -114,16 +114,22 @@ export default {
     object-fit: cover;
 }
 
-/* .card-body {
-    display: inline-block;
-} */
+.img-card-view {
+    border-color: black;
+    border-width: 4px;
+}
 
 .join-btn {
     position: absolute;
-    right: 0vw;
-    bottom: 0vh;
+    right: 1vw;
+    bottom: 2vh;
     background: none;
-    border-radius: 8px 8px;
+    border-radius: 16px 16px;
+    background-color: #6495ed;
+    color: white;
+    margin-inline-start: 4px;
+    padding: 8px;
+    border-width: 0px;
 }
 
 .container {

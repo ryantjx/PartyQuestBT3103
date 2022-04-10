@@ -1,7 +1,8 @@
 <template>
     <!-- Display Top Products -->
     <div class="home-container">
-        <h1>All Available PartyQuests</h1>
+        <h1>Explore PartyQuests</h1>
+        <br /><br />
         <div v-if="isNotLoaded()">
             <div class="loader"></div>
         </div>

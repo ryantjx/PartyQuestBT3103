@@ -1,6 +1,8 @@
 <template>
     <div>
-        <h1 class="pq-search-header">User Search Results</h1>
+        <h1 class="pq-search-header" style="font-size:60px;">
+            User Search Results
+        </h1>
         <center>
             <a id="btn1" v-on:click="$router.push('/searchresults')">
                 <i><u>Click here to search for PQs</u></i>
@@ -187,7 +189,6 @@ export default {
     border-collapse: collapse;
     margin: 25px 0;
     font-size: 0.9em;
-    font-family: sans-serif;
     min-width: 400px;
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.15);
     width: 60%;

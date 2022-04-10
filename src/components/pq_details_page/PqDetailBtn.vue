@@ -1,46 +1,91 @@
 <template>
-    <div class="detailpage">
-        <h1
-            id="Participants"
-            style="font-size:20px; margin-block-start:12px;"
-        ></h1>
-        <table id="table-participants" class="auto-index">
-            <tr>
-                <th>Name</th>
-                <th>Status</th>
-                <th>Action</th>
-            </tr>
-        </table>
+    <div>
+        <div class="text-center" id="buttons">
+            <template v-if="this.userName == grpId">
+                <!--For Owner View-->
+                <template v-if="PQstatus == 'Not Started'">
+                    <!--if status is not started -->
+                    <button
+                        v-on:click="
+                            setStart();
+                            confirmation();
+                        "
+                        class="start"
+                    >
+                        Start PQ
+                    </button>
+                    <button
+                        v-on:click="
+                            setLeave1();
+                            confirmation();
+                        "
+                        class="leave"
+                    >
+                        Leave PQ
+                    </button>
+                </template>
+                <template v-else>
+                    <!-- if status is in progress, cannot leave -->
+                    <template v-if="PQstatus == 'In Progress'">
+                        <button
+                            v-on:click="
+                                setComplete();
+                                confirmation();
+                            "
+                            class="complete"
+                        >
+                            Complete PQ
+                        </button>
+                    </template>
+                </template>
+            </template>
 
+            <template v-else-if="this.participantCheck">
+                <!--For Participant View-->
+                <template v-if="this.personalStatus == 'Not Confirmed'">
+                    <button
+                        v-on:click="
+                            setConfirm();
+                            confirmation();
+                        "
+                        class="confirm"
+                    >
+                        Confirm Status
+                    </button>
+                </template>
+                <template v-if="PQstatus == 'Not Started'">
+                    <!-- can only leave if PQ is not started yet -->
+                    <button
+                        v-on:click="
+                            setLeave2();
+                            confirmation();
+                        "
+                        class="leave2"
+                    >
+                        Leave PQ
+                    </button>
+                </template>
+            </template>
+            <template v-else>
+                <!--For Non - Participant View-->
+                <template v-if="PQstatus == 'Not Started'">
+                    <!-- can only join a PQ which is not started-->
+                    <div class="buttons">
+                        <button
+                            v-on:click="
+                                setJoin();
+                                confirmation();
+                            "
+                            class="join"
+                        >
+                            Join
+                        </button>
+                    </div>
+                </template>
+            </template>
+        </div>
         <div>
             <ClientOnly>
-                <Modal v-model="showThirdModal" title="Confirm Kick">
-                    <form novalidate>
-                        <div class="form-group">
-                            <label for="formField1">Confirm Kick User? </label>
-                        </div>
-                        <div class="row modal-footer">
-                            <div class="col-sm-12">
-                                <div class="float-right">
-                                    <button
-                                        class="btn btn-primary"
-                                        type="button"
-                                        @click="kick()"
-                                    >
-                                        Kick
-                                    </button>
-                                    <button
-                                        class="btn btn-secondary ml-2"
-                                        type="button"
-                                        @click="cancel()"
-                                    >
-                                        Cancel
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </Modal>
                 <Modal v-model="showSecondModal" title="Report User">
                     <form novalidate>
                         <div class="form-group">
@@ -75,6 +120,81 @@
                         </div>
                     </form>
                 </Modal>
+                <Modal v-model="showThirdModal" title="Confirmation">
+                    <form novalidate>
+                        <template v-if="this.thirdCheck == 'Join'">
+                            <div class="form-group">
+                                <label for="formField1"
+                                    >You are joining this PQ
+                                </label>
+                            </div>
+                        </template>
+                        <template v-else-if="this.thirdCheck == 'Confirm'">
+                            <div class="form-group">
+                                <label for="formField1"
+                                    >You are confirming your status
+                                </label>
+                            </div>
+                        </template>
+                        <template v-else-if="this.thirdCheck == 'Complete'">
+                            <div class="form-group">
+                                <label for="formField1"
+                                    >You are completing the PartyQuest
+                                </label>
+                            </div>
+                        </template>
+                        <template v-else-if="this.thirdCheck == 'Leave1'">
+                            <div class="form-group">
+                                <label for="formField1"
+                                    >You are leaving the PartyQuest. The
+                                    PartyQuest will be deleted.
+                                </label>
+                            </div>
+                        </template>
+                        <template v-else-if="this.thirdCheck == 'Leave2'">
+                            <div class="form-group">
+                                <label for="formField1"
+                                    >You are leaving the PartyQuest
+                                </label>
+                            </div>
+                        </template>
+                        <template v-else-if="this.thirdCheck == 'Start'">
+                            <div class="form-group">
+                                <label for="formField1"
+                                    >You are starting the PartyQuest. No further
+                                    changes can be made.
+                                </label>
+                            </div>
+                        </template>
+                        <template v-else-if="this.thirdCheck == 'Kick'">
+                            <div class="form-group">
+                                <label for="formField1"
+                                    >You are kicking this user out.
+                                </label>
+                            </div>
+                        </template>
+                        <div class="row modal-footer">
+                            <div class="col-sm-12">
+                                <div class="float-right">
+                                    <button
+                                        class="btn btn-primary"
+                                        type="button"
+                                        @click="submit2()"
+                                    >
+                                        Confirm
+                                    </button>
+                                    <button
+                                        class="btn btn-secondary ml-2"
+                                        type="button"
+                                        @click="cancel2()"
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </Modal>
             </ClientOnly>
         </div>
     </div>
@@ -96,7 +216,6 @@ export default {
         uuid = this.$route.params.id;
         return {
             id: this.$route.params.id,
-            reported: '',
             grpId: '',
             userName: '',
             participantCheck: false,
@@ -115,7 +234,7 @@ export default {
             let total = parseInt(this.numOfPeople);
             console.log(currNum);
             console.log(total);
-            if (currNum == total) {
+            if (currNum != total) {
                 console.log('Max participants reached');
                 alert('Max Participants reached');
                 //max capacity reached, check whether all have confirmed
@@ -436,10 +555,11 @@ export default {
             }
         },
 
-        async kick() {
+        async handleKick(x) {
+            //then remove user from list of participants and participant status
             let check = false;
             this.participants.forEach(participant => {
-                if (participant == this.reported) {
+                if (participant == x) {
                     check = true;
                 }
             });
@@ -449,7 +569,7 @@ export default {
                 let e = [];
 
                 for (let y = 0; y < this.participants.length; y++) {
-                    if (this.participants[y] == this.reported) {
+                    if (this.participants[y] == x) {
                         console.log('user to remove');
                     } else {
                         //create new array with all other participants and status
@@ -481,19 +601,14 @@ export default {
                 alert('User is no longer in PQ');
             }
         },
-        async handleKick(currName) {
-            //then remove user from list of participants and participant status
-            this.showThirdModal = true;
-            this.reported = currName;
-        },
-        async submit(user) {
+
+        async submit() {
             var reason = document.getElementById('formField1').value;
             try {
                 const db = getFirestore(firebaseApp);
-                console.log('in function log' + user);
                 const docRef = await addDoc(collection(db, 'Report'), {
                     Reporter: this.userName,
-                    ReportedUser: this.reported,
+                    ReportedUser: 'test',
                     Reason: reason,
                 });
                 console.log(docRef);
@@ -559,16 +674,18 @@ export default {
 
         cancel() {
             this.showSecondModal = false;
-            this.showThirdModal = false;
         },
-        reportUser(currName) {
+        reportUser() {
             this.showSecondModal = true;
-            this.reported = currName;
         },
 
         cancel2() {
             this.showThirdModal = false;
             this.thirdCheck = null;
+        },
+
+        confirmation() {
+            this.showThirdModal = true;
         },
 
         async test() {
@@ -607,151 +724,6 @@ export default {
                     this.personalStatus = this.participantStatus[userIndex];
                 }
             });
-            let filterQuery2 = query(
-                collection(db, 'Users'),
-                where('username', '==', this.userName)
-            );
-            console.log('filterquery2');
-            console.log(filterQuery2);
-            let querySnapshot2 = await getDocs(filterQuery2);
-            querySnapshot2.forEach(docs => {
-                //get documents
-                let pqDoc2 = docs.data();
-                this.savedPQ = pqDoc2.savedPartyQuests;
-                if (this.savedPQ.length > 0) {
-                    //array not empty
-                    this.savedPQ.forEach(pq => {
-                        if (pq == uuid) {
-                            //pq is already saved
-                            this.saveCheck = true;
-                        }
-                    });
-                }
-            });
-            await this.participantDisplay();
-        },
-
-        async participantDisplay() {
-            const page = this;
-            let index1 = 1;
-            console.log('Num of Participants', this.participants);
-            for (let x = 0; x < this.participants.length; x++) {
-                console.log(x);
-                console.log(this.participants[x]);
-                console.log(this.participantStatus[x]);
-                let currName = this.participants[x];
-                let ppl = document.getElementById('Participants');
-                // let a =
-                //     'Participants: ' +
-                //     this.participants.length +
-                //     '/' +
-                //     this.numOfPeople;
-                document.getElementById('Participants').innerHTML =
-                    'Participants';
-                console.log(ppl.innerHTML);
-
-                var table = document.getElementById('table-participants');
-                var row = table.insertRow(index1);
-
-                var name = this.participants[x];
-                var status = this.participantStatus[x];
-
-                var cell1 = row.insertCell(0);
-                var cell2 = row.insertCell(1);
-                var cell3 = row.insertCell(2);
-
-                cell1.innerHTML = name;
-                cell2.innerHTML = status;
-                //first check if its current user
-                if (this.userName == name) {
-                    console.log('Current User Functions');
-                    console.log('No functions');
-                    index1++;
-                } else {
-                    if (this.participantCheck) {
-                        console.log('this is :' + currName);
-                        console.log(currName == 'Kang');
-                        //Check for Owner or Participant
-                        if (this.grpId == this.userName) {
-                            //if owner report view kick
-                            console.log('Owner Table Functions');
-
-                            var viewButton = document.createElement('button');
-                            viewButton.className = 'bwt';
-                            viewButton.id = String(name);
-                            viewButton.innerHTML = 'View';
-                            viewButton.onclick = function() {
-                                window.location.replace(
-                                    '/profile/user/' + currName
-                                );
-                            };
-
-                            var reportButton = document.createElement('button');
-                            reportButton.className = 'bwt';
-                            reportButton.id = String(this.participants[x]);
-                            reportButton.innerHTML = 'Report';
-                            reportButton.onclick = function() {
-                                page.reportUser(currName);
-                            };
-
-                            var kickButton = document.createElement('button');
-                            kickButton.className = 'bwt';
-                            kickButton.id = String(name);
-                            kickButton.innerHTML = 'Kick';
-                            kickButton.onclick = function() {
-                                page.handleKick(currName);
-                            };
-                            //this.participants[x]
-                            //);
-
-                            cell3.appendChild(viewButton);
-                            cell3.appendChild(reportButton);
-                            cell3.appendChild(kickButton);
-                            index1++;
-                        } else {
-                            //if participant report view
-                            console.log('Participant Table Functions');
-                            var viewButton2 = document.createElement('button');
-                            viewButton2.className = 'bwt';
-                            viewButton2.id = String(name);
-                            viewButton2.innerHTML = 'View';
-                            viewButton2.onclick = function() {
-                                window.location.replace(
-                                    '/profile/user/' + currName
-                                );
-                            };
-
-                            var reportButton2 = document.createElement(
-                                'button'
-                            );
-                            reportButton2.className = 'bwt';
-                            reportButton2.id = String(name);
-                            reportButton2.innerHTML = 'Report';
-                            reportButton2.onclick = function() {
-                                page.reportUser(currName);
-                            };
-                            cell3.appendChild(viewButton2);
-                            cell3.appendChild(reportButton2);
-                            index1++;
-                        }
-                    } else {
-                        //check for non-participant view
-                        console.log('Non-Participant Table Functions');
-                        var viewButton3 = document.createElement('button');
-                        viewButton3.className = 'bwt';
-                        //viewButton3.id = String(name);
-                        viewButton3.innerHTML = 'View';
-                        viewButton3.onclick = function() {
-                            window.location.replace(
-                                '/profile/user/' + currName
-                            );
-                        };
-
-                        cell3.appendChild(viewButton3);
-                        index1++;
-                    }
-                }
-            }
         },
     },
     mounted() {
@@ -770,48 +742,55 @@ export default {
 };
 </script>
 
-<style>
-h1,
-h2 {
-    text-align: center;
+<style scoped>
+.buttons {
+    display: flex;
+    justify-content: center;
+    /* padding-inline-start: 50%;
+    padding-inline-end: 40%; */
 }
 
-#table-participants {
-    border-collapse: collapse;
-    width: 10%;
-    margin-left: auto;
-    margin-right: auto;
-    /* margin-block-start: 20px; */
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.15);
-}
-
-tr:nth-child(even) {
-    background-color: #e3edee;
-    width: 10px;
-}
-
-th,
-td {
-    border: 1px solid #dddddd;
-    text-align: center;
-    padding: 8px;
-    word-wrap: break-word;
-    max-width: 200px;
-}
-
-.bwt {
-    /* color: black; */
+.join {
+    background-color: #6495ed;
+    border: none;
+    color: white;
+    padding: 15px 32px;
     text-align: center;
     display: inline-block;
     text-decoration: none;
     font-size: 16px;
     border-radius: 8px 8px;
-    /* color: rgb(243, 236, 236); */
-    /* background-color: rgb(255, 94, 0); */
+    margin: 10px;
 }
 
-.view-manage-buttons {
-    display: flex;
-    justify-content: space-around;
+.leave,
+.leave2 {
+    background-color: red;
+    border: none;
+    color: white;
+    padding: 15px 22px;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 8px 8px;
+    margin: 10px;
+    width: 12vw;
+}
+
+.complete,
+.start,
+.confirm {
+    background-color: green;
+    border: none;
+    color: white;
+    padding: 15px 22px;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 8px 8px;
+    margin: 10px;
+    width: 12vw;
 }
 </style>

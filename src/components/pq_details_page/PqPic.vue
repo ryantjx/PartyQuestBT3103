@@ -1,27 +1,11 @@
 <template>
-    <div class="header">
-        <div class="float-left-child">
-            <div class="combine">
-                <div v-if="images.length > 0">
-                    <div v-for="image in images" :key="image.src">
-                        <img :src="image.src" />
-                    </div>
-                </div>
-                <div class="title" id="title">
-                    <h1></h1>
-                </div>
-            </div>
-        </div>
-        <div class="float-left-child2">
-            <template v-if="PQstatus == 'Not Started'">
-                <h3 class="completion1" id="status"></h3>
-            </template>
-            <template v-else-if="PQstatus == 'In Progress'">
-                <h3 class="completion2" id="status"></h3>
-            </template>
-            <template v-else>
-                <h3 class="completion3" id="status"></h3>
-            </template>
+    <div v-if="images.length > 0" class="pq-image">
+        <div v-for="image in images" :key="image.src">
+            <img
+                :src="image.src"
+                style="max-width: 400px;
+    margin: 10px;"
+            />
         </div>
     </div>
 </template>
@@ -36,9 +20,10 @@ import { getDownloadURL } from 'firebase/storage';
 var uuid;
 var picUrl;
 var listOfImages = [];
+
 export default {
     name: 'PqHeader',
-
+    components: {},
     data() {
         uuid = this.$route.params.id;
         return {
@@ -117,5 +102,12 @@ export default {
     },
 };
 </script>
-
-<style scoped></style>
+<style>
+.pq-image {
+    display: flex;
+    justify-content: center;
+    /* background-color: white; */
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(8px);
+}
+</style>
