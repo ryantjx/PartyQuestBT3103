@@ -15,7 +15,6 @@
             <div v-else>
                 <PartyQuestList :partyQuestData="items" v-if="items" />
             </div>
-            <!-- need to test if there are no partyquest data for the user what will happen -->
         </div>
     </div>
 </template>
