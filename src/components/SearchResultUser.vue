@@ -48,6 +48,7 @@ import {
     query,
     where,
 } from 'firebase/firestore';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 // get entire database
 const db = getFirestore(firebaseApp);
@@ -57,9 +58,21 @@ export default {
     data() {
         return {
             message: '',
+            myUsername: '',
         };
     },
     mounted() {
+        const auth = getAuth();
+        onAuthStateChanged(auth, user => {
+            if (user != null) {
+                console.log(
+                    'user name is passed and obtained:',
+                    user.displayName
+                );
+                this.myUsername = user.displayName;
+            }
+        });
+
         async function display() {
             // create query based on the given field
             let filterQuery = query(
@@ -157,9 +170,19 @@ export default {
                 cell0.innerHTML = idx;
                 cell1.innerHTML = userName;
                 cell2.className = 'view-button';
-
+                console.log('ans is : ');
+                console.log('username' + ' ' + userName);
+                console.log('this.user' + ' ' + this.myUsername);
+                console.log(userName == this.myUsername);
                 // create button for action column
                 var viewButton = document.createElement('button');
+                var viewMebutton = document.createElement('button');
+                viewMebutton.className = 'bwt';
+                viewMebutton.id = String(docs.id);
+                viewMebutton.innerHTML = 'View';
+                viewMebutton.onclick = function() {
+                    window.location.replace('/profile');
+                };
                 viewButton.className = 'bwt';
                 viewButton.id = String(docs.id);
                 viewButton.innerHTML = 'View';
@@ -168,15 +191,14 @@ export default {
                         'this is the docs id for search results user',
                         docs.id
                     );
-                    if (docs.id == userName) {
-                        window.location.replace('/profile');
-                    } else {
-                        window.location.replace('/profile/user/' + docs.id);
-                    }
+                    window.location.replace('/profile/user/' + docs.id);
                 };
                 // add button to action column cell
-                cell2.appendChild(viewButton);
-
+                if (userName == this.myUsername) {
+                    cell2.appendChild(viewMebutton);
+                } else {
+                    cell2.appendChild(viewButton);
+                }
                 // increase counter (s/no.)
                 idx += 1;
                 console.log(pqDoc);
