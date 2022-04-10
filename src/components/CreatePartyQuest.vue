@@ -195,11 +195,34 @@
                 </div>
             </div>
         </div>
+        <div>
+            <ClientOnly>
+                <Modal v-model="showSecondModal" title="Failed to Create PQ">
+                    <form novalidate>
+                        <div class="form-group">
+                            <label for="formField1"
+                                >Missing fields found.<br />
+                                Please fill up the missing fields!</label
+                            >
+                        </div>
+                        <div class="row modal-footer">
+                            <div class="col-sm-12">
+                                <div class="float-right">
+                                    <button
+                                        class="btn btn-primary"
+                                        type="button"
+                                        @click="cancel()"
+                                    >
+                                        Go back
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </Modal>
+            </ClientOnly>
+        </div>
     </div>
-
-    <!-------------------- IMAGE Display Div--------------------------->
-    <!--image element to be added where you want picture to be displayed
-        <img id="profilePic" />-->
 </template>
 
 <script>
@@ -233,6 +256,7 @@ export default {
             booleanCheck: null,
             fileName: null,
             file: null,
+            showSecondModal: false,
         };
     },
     computed: {
@@ -242,6 +266,9 @@ export default {
         }),
     },
     methods: {
+        cancel() {
+            this.showSecondModal = false;
+        },
         goHome() {
             window.location.replace('/home');
         },
@@ -372,7 +399,7 @@ export default {
                 this.$router.push('/home').catch(() => {});
             } else {
                 console.error('Error adding PQ: ');
-                alert('Please fill in Valid Details');
+                this.showSecondModal = true;
             }
         },
     },
