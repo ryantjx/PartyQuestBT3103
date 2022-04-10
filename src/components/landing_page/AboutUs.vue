@@ -7,7 +7,7 @@
                         <div class="img-head">
                             <img
                                 id="friends-laughing"
-                                src="../assets/collage1.jpg"
+                                src="../../assets/collage1.jpg"
                                 alt="friends-laughing"
                             />
                         </div>

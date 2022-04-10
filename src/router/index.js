@@ -1,28 +1,26 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Login from '../components/Login.vue';
-// import LandingPage from '../views/LandingPage.vue';
-// import Dashboard from '../components/Dashboard.vue';
+import Login from '../components/landing_page/Login.vue';
 import Register from '../views/Register.vue';
 import Home from '../views/Home.vue';
 import CreatePQ from '../views/CreatePQ.vue';
 import ProfilePage from '../views/ProfilePage';
 import MyPQPage from '../views/MyPQPage';
-import ChatsPage from '../views/ChatsPage';
 import SavedPQPage from '../views/SavedPQPage';
 import CreatedPQPage from '../views/CreatedPQPage';
-import PqDetails from '../views/PqDetailsPage';
 import JoinedPQPage from '../views/JoinedPQPage';
 import SearchResultsPage from '../views/SearchResultsPage';
 import SearchResultPQ from '../components/SearchResultPQ';
 import SearchResultUser from '../components/SearchResultUser';
 import EditProfilePage from '../views/EditProfilePage';
 import OtherUserProfile from '../views/OtherUserProfilePage';
-import ResetPW from '../components/ResetPassword';
-import AboutUs from '../components/AboutUs';
-import ContactUs from '../components/ContactUs';
+// import ResetPW from '../components/ResetPassword';
+import AboutUs from '../components/landing_page/AboutUs';
+import ContactUs from '../components/landing_page/ContactUs';
 import LandingPage from '../views/LandingPage';
-import PqDetailsPage2 from '../views/PqDetailsPage2';
+import PqDetailsPage from '../views/PqDetailsPage';
+import NotFoundPage from '../views/NotFound';
+import ResetPasswordPage from '../components/landing_page/ResetPassword2';
 
 Vue.use(VueRouter);
 
@@ -32,11 +30,6 @@ const routes = [
         name: 'LandingPage',
         component: LandingPage,
     },
-    // {
-    //     path: '/landingpage',
-    //     name: 'Landing',
-    //     component: LandingPage,
-    // },
     {
         path: '/login',
         name: 'Login',
@@ -47,11 +40,6 @@ const routes = [
         name: 'Register',
         component: Register,
     },
-    // {
-    //     path: '/dashboard',
-    //     name: 'Dashboard',
-    //     component: Dashboard,
-    // },
     {
         path: '/home',
         name: 'Home',
@@ -81,11 +69,6 @@ const routes = [
         path: '/pq',
         name: 'PartyQuest',
         component: MyPQPage,
-    },
-    {
-        path: '/chats',
-        name: 'ChatsPage',
-        component: ChatsPage,
     },
     {
         path: '/mypq',
@@ -123,25 +106,14 @@ const routes = [
         component: SearchResultUser,
     },
     {
-        path: '/pq/listing',
-        name: 'Pq Details',
-        component: PqDetails,
-    },
-    {
         path: '/pq/:id',
         name: 'PQDetails',
-        component: PqDetailsPage2,
-        // props: true,
-    },
-    {
-        path: '/testing/:id',
-        name: 'pqdetailspg',
-        component: PqDetailsPage2,
+        component: PqDetailsPage,
     },
     {
         path: '/resetpassword',
         name: 'ResetPW',
-        component: ResetPW,
+        component: ResetPasswordPage,
     },
     {
         path: '/aboutus',
@@ -152,6 +124,11 @@ const routes = [
         path: '/contactus',
         name: 'ContactUs',
         component: ContactUs,
+    },
+    {
+        path: '/:catchAll(.*)',
+        name: 'NotFound',
+        component: NotFoundPage,
     },
 ];
 

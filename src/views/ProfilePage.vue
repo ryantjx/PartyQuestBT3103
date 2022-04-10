@@ -54,10 +54,10 @@
                         <div class="loader"></div>
                     </div>
                     <div v-else-if="isEmptyList()">
-                        <h1>
-                            Your PartyQuest History is empty.<br />
+                        <h2>
+                            You have not completed any PartyQuests.<br />
                             Start one now!
-                        </h1>
+                        </h2>
                     </div>
                     <div v-else>
                         <PartyQuestList :partyQuestData="items" v-if="items" />

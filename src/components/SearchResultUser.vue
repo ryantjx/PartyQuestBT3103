@@ -168,7 +168,6 @@ export default {
                         'this is the docs id for search results user',
                         docs.id
                     );
-                    // alert('pause the loading');
                     window.location.replace('/profile/user/' + docs.id);
                 };
                 // add button to action column cell

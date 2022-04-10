@@ -117,7 +117,6 @@ export default {
             console.log(total);
             if (currNum == total) {
                 console.log('Max participants reached');
-                alert('Max Participants reached');
                 //max capacity reached, check whether all have confirmed
                 let check = true;
                 let index = 1;
@@ -145,8 +144,6 @@ export default {
                                 status: 'In Progress',
                             });
                             console.log(docRef);
-                            console.log('Trying to update doc');
-                            alert('Party Quest has been started');
                             this.pushPage(uuid);
                         } catch (error) {
                             console.error('Error Updating doc');
@@ -190,8 +187,6 @@ export default {
                             status: 'Completed',
                         });
                         console.log(docRef);
-                        console.log('Trying to update doc');
-                        alert('Status Updated');
                         this.pushPage(uuid);
                     } catch (error) {
                         console.error('Error Updating doc');
@@ -253,8 +248,6 @@ export default {
                                 participantStatus: e,
                             });
                             console.log(docRef);
-                            console.log('Trying to update doc');
-                            alert('Status Updated');
                             this.pushPage(uuid);
                         } catch (error) {
                             console.error('Error Updating doc');
@@ -264,9 +257,7 @@ export default {
                             const docRef3 = await deleteDoc(
                                 doc(db, 'PartyQuests', uuid)
                             );
-                            alert('PQ deleted');
                             console.log(docRef3);
-                            console.log('Trying to update doc');
                             this.pushPage2();
                         } catch (error) {
                             console.error('Error Updating doc');
@@ -308,8 +299,6 @@ export default {
                         participantStatus: newStatus,
                     });
                     console.log(docRef);
-                    console.log('Trying to update doc');
-                    alert('Status Updated');
                     this.pushPage(uuid);
                 } catch (error) {
                     console.error('Error Updating doc');
@@ -360,8 +349,6 @@ export default {
                             participantStatus: e,
                         });
                         console.log(docRef);
-                        console.log('Trying to update doc');
-                        alert('Status Updated');
                         this.pushPage(uuid);
                     } catch (error) {
                         console.error('Error Updating doc');
@@ -421,8 +408,6 @@ export default {
                                 participantStatus: b,
                             });
                             console.log(docRef);
-                            console.log('Trying to update doc');
-                            alert('Joined Party Quest');
                             this.pushPage(uuid);
                         } catch (error) {
                             console.error('Error Updating doc');
@@ -470,8 +455,6 @@ export default {
                         participantStatus: e,
                     });
                     console.log(docRef);
-                    console.log('Trying to update doc');
-                    alert('Participant Kicked');
                     this.pushPage(uuid);
                 } catch (error) {
                     console.error('Error Updating doc');

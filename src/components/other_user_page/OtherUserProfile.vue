@@ -32,9 +32,9 @@
                         <div class="loader"></div>
                     </div>
                     <div v-else-if="isEmptyList()">
-                        <h1>
-                            User has not completed any PartyQuests
-                        </h1>
+                        <h2>
+                            No Completed PartyQuests found.
+                        </h2>
                     </div>
                     <div v-else>
                         <PartyQuestList :partyQuestData="items" v-if="items" />
@@ -118,7 +118,7 @@ export default {
             queryUserJoinedSnapshot.forEach(docs => {
                 var pq = docs.data();
                 var pqMap = {};
-
+                pqMap['id'] = docs.id;
                 pqMap['brand'] = pq['brand'];
                 pqMap['totalAmount'] = pq['totalAmount'];
                 pqMap['itemLink'] = pq['itemLink'];
