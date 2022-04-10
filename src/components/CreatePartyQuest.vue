@@ -293,7 +293,7 @@ export default {
             console.log(this.username);
             var picture = document.getElementById('picture').value;
             var lowerBrand = brand.toLowerCase();
-            var lowerUser = this.username.toLowerCase();
+            var lowerGroupCreatorId = this.username.toLowerCase();
 
             if (
                 title &&
@@ -323,7 +323,7 @@ export default {
                     participants: [this.username],
                     participantStatus: ['Not Confirmed'],
                     lowerBrand: lowerBrand,
-                    lowerUser: lowerUser,
+                    lowerGroupCreatorId: lowerGroupCreatorId,
                     savedPqs: [],
                 });
                 console.log('Generating random String');
