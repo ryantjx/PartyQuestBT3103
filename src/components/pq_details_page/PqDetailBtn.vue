@@ -555,7 +555,7 @@ export default {
                 console.log('After removing', d);
                 console.log('After removing status', e);
                 this.participants = d;
-                this.participants = e;
+                this.participantStatus = e;
 
                 var pqRef = doc(db, 'PartyQuests', uuid);
 
