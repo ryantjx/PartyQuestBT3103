@@ -24,6 +24,18 @@
                             Singapore!
                         </p>
                         <p>
+                            We decided to create PartyQuest because we had
+                            multiple instances where we chose not to buy an item
+                            because the shipping was too expensive, or we were
+                            unable to obtain the minimmum spending for
+                            discounts.
+                        </p>
+                        <p>
+                            Therefore, we would like to give people the power to
+                            connect with people who want to make a group
+                            purchase and save money!
+                        </p>
+                        <p>
                             PartyQuest is a work in progress, and we cannot wait
                             to show you our final product!
                         </p>
