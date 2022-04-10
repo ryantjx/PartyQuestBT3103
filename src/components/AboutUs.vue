@@ -35,8 +35,8 @@
                                     <font-awesome-icon
                                         icon="fa fa-users mb-3"
                                     />
-                                    <h4 class="mb=0">TOTAL NUMBER OF USERS</h4>
-                                    <p class="mb-0">600+</p>
+                                    <h4 class="mb=0">Start a PartyQuest!</h4>
+                                    <!-- <p class="mb-0">600+</p> -->
                                 </div>
                             </div>
                             <div class="col-12 col-md-4 mb-2 mb-md-0">
@@ -45,9 +45,9 @@
                                         icon="fa-solid fa-truck-fast mb-3"
                                     />
                                     <h4 class="mb=0">
-                                        CURRENT AVAILABLE QUESTS
+                                        Order your Item and Receive your Item!
                                     </h4>
-                                    <p class="mb-0">1000+</p>
+                                    <!-- <p class="mb-0">1000+</p> -->
                                 </div>
                             </div>
                             <div class="col-12 col-md-4 mb-2 mb-md-0">
@@ -55,8 +55,10 @@
                                     <font-awesome-icon
                                         icon="fa-solid fa-handshake mb-3"
                                     />
-                                    <h4 class="mb=0">TOTAL COMPLETED QUESTS</h4>
-                                    <p class="mb-0">200+</p>
+                                    <h4 class="mb=0">
+                                        Complete your PartyQuest
+                                    </h4>
+                                    <!-- <p class="mb-0">200+</p> -->
                                 </div>
                             </div>
                         </div>
