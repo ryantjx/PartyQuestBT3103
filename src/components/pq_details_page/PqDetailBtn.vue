@@ -125,7 +125,7 @@
                         <template v-if="this.thirdCheck == 'Join'">
                             <div class="form-group">
                                 <label for="formField1"
-                                    >You are joining this PQ
+                                    >Confirm Join Pq?
                                 </label>
                             </div>
                         </template>
