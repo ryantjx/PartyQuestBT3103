@@ -12,7 +12,7 @@ import { getFirestore } from 'firebase/firestore';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { getStorage, ref } from 'firebase/storage';
 import { getDownloadURL } from 'firebase/storage';
-import PqParticipants from '../pq_listing_page/PqParticipants.vue';
+import PqParticipants from './PqParticipants.vue';
 
 var uuid;
 var picUrl;

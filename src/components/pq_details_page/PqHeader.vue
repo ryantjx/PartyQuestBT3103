@@ -163,7 +163,6 @@ export default {
                         savedPartyQuests: listOfSavedPq,
                     });
                     console.log(docRef);
-                    alert('PQ saved');
                     this.saveCheck = true;
                     this.pushPage(uuid);
                 } catch (error) {
@@ -201,8 +200,6 @@ export default {
                         savedPartyQuests: listOfSavedPq,
                     });
                     console.log(docRef);
-                    console.log('Trying to update doc');
-                    alert('Status Updated');
                     this.pushPage(uuid);
                 } catch (error) {
                     console.error('Error Updating doc');

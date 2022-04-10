@@ -328,8 +328,6 @@ export default {
                 });
                 console.log('Generating random String');
                 this.$emit('Created');
-                alert('Saving new PQ : ' + title);
-
                 const storage = getStorage();
                 //to get file type of image
                 let fileType2 = this.fileType.split('/')[1];

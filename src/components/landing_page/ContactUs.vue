@@ -7,15 +7,14 @@
                 </h1>
                 <h5>Ask us anything!</h5>
             </div>
-            <div v-if="submitted">
-                <h2>Thank you for your response!</h2>
-                <h3>
-                    We'll contact you as shortly as possible through your email!
-                    =)
-                </h3>
+            <div v-if="submitted" class="contact-response">
+                <h2>
+                    Thank you for your response, you will hear from us soon!
+                </h2>
             </div>
             <div class="fill-in-details-form" v-else>
                 <form class="details-form">
+                    <br />
                     <div class="details-row">
                         <label>Name</label>
                         <br />
@@ -45,11 +44,11 @@
                             class="contact-form-field"
                         ></textarea>
                     </div>
-                    <br />
                     <div class="bottom-btns">
                         <button type="submit" @click="submit()">Submit</button>
                         <button type="reset" @click="reset()">Reset</button>
                     </div>
+                    <br />
                 </form>
             </div>
         </div>
@@ -58,7 +57,7 @@
 
 <script>
 import { addDoc, getFirestore, collection } from 'firebase/firestore';
-import firebaseApp from '../firebase';
+import firebaseApp from '../../firebase';
 
 const db = getFirestore(firebaseApp);
 
@@ -110,8 +109,10 @@ export default {
     --colorTwo: #6495ed;
 }
 
+.contact-response,
 .fill-in-details-form {
     align-items: center;
+    width: 350px;
 }
 
 .details-form {
@@ -123,8 +124,6 @@ export default {
 }
 
 .contact-header {
-    margin-inline-start: 48px;
-    margin-inline-end: 48px;
 }
 
 .contact-us-view {
@@ -139,7 +138,7 @@ export default {
     border-radius: 2px;
     background: #ffffff;
     color: #2e323c;
-    width: 350px;
+    width: 100%;
 }
 
 .contact-us-container {
@@ -153,6 +152,7 @@ export default {
     min-height: 480px;
     display: flex;
     align-items: center;
+    justify-content: space-evenly;
 }
 
 .center-vertical {
@@ -188,11 +188,6 @@ input {
     width: 300px;
 }
 
-/* form {
-    width: 100%;
-    padding: calc(5% + 30px) 0px;
-} */
-
 textarea {
     width: 350px;
     height: 200px;
@@ -202,24 +197,6 @@ button {
     border: 0px;
     letter-spacing: 0;
 }
-/* button:hover,
-button:active {
-    transform: scale(1.2);
-    letter-spacing: 5px;
-}
-
-button:after,
-button:before {
-    backface-visibility: hidden;
-    border: 1px solid #fff;
-    bottom: 0px;
-    content: '';
-    display: block;
-    margin: 0 auto;
-    position: relative;
-    transition: all 280ms ease-in-out;
-    width: 0;
-} */
 
 button:hover:after {
     backface-visibility: hidden;

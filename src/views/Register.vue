@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import SignUpForm from '../components/SignUpForm.vue';
+import SignUpForm from '../components/landing_page/SignUpForm.vue';
 
 export default {
     name: 'Registration',

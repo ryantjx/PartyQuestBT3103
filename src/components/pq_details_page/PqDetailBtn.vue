@@ -235,8 +235,6 @@ export default {
             console.log(currNum);
             console.log(total);
             if (currNum == total) {
-                console.log('Max participants reached');
-                alert('Max Participants reached');
                 //max capacity reached, check whether all have confirmed
                 let check = true;
                 let index = 1;
@@ -264,8 +262,6 @@ export default {
                                 status: 'In Progress',
                             });
                             console.log(docRef);
-                            console.log('Trying to update doc');
-                            alert('Party Quest has been started');
                             this.pushPage(uuid);
                         } catch (error) {
                             console.error('Error Updating doc');
@@ -292,7 +288,6 @@ export default {
                 if (status == 'Not Confirmed') {
                     if (index == 1) {
                         //owner, who will only confirm when completing
-                        //TO ADD: owner status change
                         index++;
                     } else {
                         check = false;
@@ -310,7 +305,6 @@ export default {
                         });
                         console.log(docRef);
                         console.log('Trying to update doc');
-                        alert('Status Updated');
                         this.pushPage(uuid);
                     } catch (error) {
                         console.error('Error Updating doc');
@@ -372,8 +366,6 @@ export default {
                                 participantStatus: e,
                             });
                             console.log(docRef);
-                            console.log('Trying to update doc');
-                            alert('Status Updated');
                             this.pushPage(uuid);
                         } catch (error) {
                             console.error('Error Updating doc');
@@ -383,9 +375,7 @@ export default {
                             const docRef3 = await deleteDoc(
                                 doc(db, 'PartyQuests', uuid)
                             );
-                            alert('PQ deleted');
                             console.log(docRef3);
-                            console.log('Trying to update doc');
                             this.pushPage2();
                         } catch (error) {
                             console.error('Error Updating doc');
@@ -405,7 +395,6 @@ export default {
             this.participants.forEach(participant => {
                 if (participant == this.userName) {
                     //at current user
-                    console.log('At Index of current user');
                     currIndex = index;
                     index++;
                 } else {
@@ -418,17 +407,13 @@ export default {
             if (this.participantStatus[currIndex] == 'Not Confirmed') {
                 var pqRef = doc(db, 'PartyQuests', uuid);
                 let newStatus = this.participantStatus;
-                console.log(newStatus[currIndex]);
                 newStatus[currIndex] = 'Confirmed';
-                console.log(newStatus[currIndex]);
                 this.participantStatus = newStatus;
                 try {
                     const docRef = await updateDoc(pqRef, {
                         participantStatus: newStatus,
                     });
                     console.log(docRef);
-                    console.log('Trying to update doc');
-                    alert('Status Updated');
                     this.pushPage(uuid);
                 } catch (error) {
                     console.error('Error Updating doc');
@@ -471,16 +456,12 @@ export default {
                             e.push(this.participantStatus[x]);
                         }
                     }
-                    console.log('After removing', d);
-                    console.log('After removing status', e);
                     try {
                         const docRef = await updateDoc(pqRef, {
                             participants: d,
                             participantStatus: e,
                         });
                         console.log(docRef);
-                        console.log('Trying to update doc');
-                        alert('Status Updated');
                         this.pushPage(uuid);
                     } catch (error) {
                         console.error('Error Updating doc');
@@ -526,13 +507,9 @@ export default {
                     } else {
                         //PQ is not full
                         let a = this.participants;
-                        console.log('Initial A is', a);
                         let b = this.participantStatus;
-                        console.log('Initial B is', b);
                         a.push(this.userName);
                         b.push('Not Confirmed');
-                        console.log('Curr A is', a);
-                        console.log('Curr B is', b);
                         var pqRef = doc(db, 'PartyQuests', uuid);
                         try {
                             const docRef = await updateDoc(pqRef, {
@@ -540,8 +517,6 @@ export default {
                                 participantStatus: b,
                             });
                             console.log(docRef);
-                            console.log('Trying to update doc');
-                            alert('Joined Party Quest');
                             this.pushPage(uuid);
                         } catch (error) {
                             console.error('Error Updating doc');
@@ -590,8 +565,6 @@ export default {
                         participantStatus: e,
                     });
                     console.log(docRef);
-                    console.log('Trying to update doc');
-                    alert('Participant Kicked');
                     this.pushPage(uuid);
                 } catch (error) {
                     console.error('Error Updating doc');
@@ -614,7 +587,7 @@ export default {
                 console.log(docRef);
                 window.location.reload();
             } catch (err) {
-                alert(err);
+                console.log(err);
             }
             this.showSecondModal = false;
         },
@@ -746,8 +719,6 @@ export default {
 .buttons {
     display: flex;
     justify-content: center;
-    /* padding-inline-start: 50%;
-    padding-inline-end: 40%; */
 }
 
 .join {

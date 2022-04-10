@@ -26,7 +26,11 @@
 
             <div v-else class="logged-out-view">
                 <router-link to="/" class="logged-out-nav">
-                    <h2 class="logged-out-header">PartyQuest</h2>
+                    <img
+                        src="../assets/PartyQuest_Logo_small.png"
+                        class="logo-item"
+                        width="100px"
+                    />
                 </router-link>
                 <div class="sticky-routes">
                     <router-link to="aboutus" class="logged-out-nav"

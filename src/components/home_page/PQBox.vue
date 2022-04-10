@@ -74,7 +74,6 @@ export default {
     methods: {
         directToPQ(id) {
             console.log('this is the docs id for search results user', id);
-            // alert('pause the loading');
             window.location.replace('/pq/' + id);
         },
         async display() {
