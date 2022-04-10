@@ -14,13 +14,12 @@ import SearchResultPQ from '../components/SearchResultPQ';
 import SearchResultUser from '../components/SearchResultUser';
 import EditProfilePage from '../views/EditProfilePage';
 import OtherUserProfile from '../views/OtherUserProfilePage';
-// import ResetPW from '../components/ResetPassword';
 import AboutUs from '../components/landing_page/AboutUs';
 import ContactUs from '../components/landing_page/ContactUs';
 import LandingPage from '../views/LandingPage';
 import PqDetailsPage from '../views/PqDetailsPage';
 import NotFoundPage from '../views/NotFound';
-import ResetPasswordPage from '../components/landing_page/ResetPassword2';
+import ResetPasswordPage from '../components/landing_page/ResetPassword';
 
 Vue.use(VueRouter);
 
