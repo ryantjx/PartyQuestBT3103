@@ -83,7 +83,19 @@
                                         />
                                     </div>
                                 </div>
-
+                                <!-- <div
+                                class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                            >
+                                <div class="form-group">
+                                    <label for="eMail">Email</label>
+                                    <input
+                                        type="email"
+                                        class="form-control"
+                                        id="eMail"
+                                        placeholder="Enter email ID"
+                                    />
+                                </div>
+                            </div> -->
                                 <div
                                     class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
                                 >
@@ -97,6 +109,47 @@
                                         />
                                     </div>
                                 </div>
+                                <!-- <div
+                                    class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                                >
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input
+                                            type="email"
+                                            class="form-control"
+                                            id="email"
+                                            placeholder="Enter Email Address"
+                                        />
+                                    </div>
+                                </div> -->
+                                <!-- <div
+                                    class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                                >
+                                    <div class="form-group">
+                                        <label for="bankAccNum"
+                                            >Bank Account Number</label
+                                        >
+                                        <input
+                                            type="name"
+                                            class="form-control"
+                                            id="bankAccNum"
+                                            placeholder="Enter Bank Account Number"
+                                        />
+                                    </div>
+                                </div> -->
+                                <!-- <div
+                                class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"
+                            >
+                                <div class="form-group">
+                                    <label for="website">Website URL</label>
+                                    <input
+                                        type="url"
+                                        class="form-control"
+                                        id="website"
+                                        placeholder="Website url"
+                                    />
+                                </div>
+                            </div> -->
                             </div>
                             <div class="row gutters">
                                 <div
@@ -253,24 +306,62 @@ export default {
             // console.log(addressInfo);
             var mapUserInfo = {};
 
+            console.log(userInfo);
+
             //User Info
-            mapUserInfo['firstName'] = userInfo['firstName'];
-            mapUserInfo['lastName'] = userInfo['lastName'];
-            mapUserInfo['phoneNum'] = userInfo['phoneNum'];
+            mapUserInfo['firstName'] = userInfo['firstName'] ?? '';
+            mapUserInfo['lastName'] = userInfo['lastName'] ?? '';
+            mapUserInfo['phoneNum'] = userInfo['phoneNum'] ?? '';
             //Address Info
-            mapUserInfo['unitNum'] = addressInfo['unitNumber'];
-            mapUserInfo['streetNum'] = addressInfo['streetNum'];
-            mapUserInfo['streetName'] = addressInfo['streetName'];
-            mapUserInfo['postalCode'] = addressInfo['postalCode'];
+            mapUserInfo['unitNum'] = addressInfo['unitNumber'] ?? '';
+            mapUserInfo['streetNum'] = addressInfo['streetNum'] ?? '';
+            mapUserInfo['streetName'] = addressInfo['streetName'] ?? '';
+            mapUserInfo['postalCode'] = addressInfo['postalCode'] ?? '';
 
             this.userData = mapUserInfo;
             // console.log(this.userData);
         },
         async saveInformation() {
+            var userRef = doc(db, 'Users', this.user.displayName);
+            var userQuery = await getDoc(userRef);
+
+            var addressRef = doc(
+                db,
+                'Users',
+                this.user.displayName,
+                'Address',
+                'Location'
+            );
+            var addressQuery = await getDoc(addressRef);
+
+            var userInfo = userQuery.data();
+            var addressInfo = addressQuery.data();
+
+            console.log('this is the user info', userInfo);
+
+            var tempUserInfo = {};
+
+            var tempAddressInfo = {};
+
+            tempUserInfo['email'] = userInfo['email'];
+            tempUserInfo['firstName'] = userInfo['firstName'];
+            tempUserInfo['lastName'] = userInfo['lastName'];
+            tempUserInfo['lowerUsername'] = userInfo['lowerUsername'];
+            tempUserInfo['password'] = userInfo['password'];
+            tempUserInfo['phoneNum'] = userInfo['phoneNum'];
+            tempUserInfo['savedPartyQuests'] = userInfo['savedPartyQuests'];
+            tempUserInfo['username'] = userInfo['username'];
+
+            tempAddressInfo['streetName'] = addressInfo['streetName'];
+            tempAddressInfo['streetNum'] = addressInfo['streetNum'];
+            tempAddressInfo['postalCode'] = addressInfo['postalCode'];
+            tempAddressInfo['unitNumber'] = addressInfo['unitNumber'];
+
             var firstName = document.getElementById('firstName').value;
             var lastName = document.getElementById('lastName').value;
             var phoneNum = document.getElementById('phoneNum').value;
             // var newEmail = document.getElementById('email').value;
+            // var bankAccNum = document.getElementById('bankAccNum').value;
 
             // // Address
             var streetName = document.getElementById('streetName').value;
@@ -278,32 +369,27 @@ export default {
             var unitNumber = document.getElementById('unitNumber').value;
             var postalCode = document.getElementById('postalCode').value;
 
-            var currentUser = auth.currentUser;
-
-            console.log('currentUser :', currentUser);
-
-            var userRef = doc(db, 'Users', currentUser.displayName);
-
-            var addressRef = doc(
-                db,
-                'Users',
-                currentUser.displayName,
-                'Address',
-                'Location'
-            );
+            console.log(tempUserInfo);
+            console.log(tempAddressInfo);
 
             try {
                 const docRef = await setDoc(userRef, {
-                    firstName: firstName ?? '',
-                    lastName: lastName,
-                    phoneNum: phoneNum,
+                    email: tempUserInfo['email'],
+                    firstName: firstName ?? tempUserInfo['firstName'],
+                    lastName: lastName ?? tempUserInfo['lastName'],
+                    phoneNum: phoneNum ?? tempUserInfo['phoneNum'],
+                    lowerUsername: tempUserInfo['lowerUsername'],
+                    password: tempUserInfo['password'],
+                    savedPartyQuests: tempUserInfo['savedPartyQuests'],
+                    username: tempUserInfo['username'],
                     // email: newEmail,
+                    // bankAccNum: bankAccNum,
                 });
                 await setDoc(addressRef, {
-                    streetName: streetName,
-                    streetNum: streetNum,
-                    unitNumber: unitNumber,
-                    postalCode: postalCode,
+                    streetName: streetName ?? tempAddressInfo['streetName'],
+                    streetNum: streetNum ?? tempAddressInfo['streetNum'],
+                    unitNumber: unitNumber ?? tempAddressInfo['unitNumber'],
+                    postalCode: postalCode ?? tempAddressInfo['postalCode'],
                 });
                 console.log(docRef);
                 document.getElementById('editprofileform').reset();
