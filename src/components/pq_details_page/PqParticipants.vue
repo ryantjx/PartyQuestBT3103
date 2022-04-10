@@ -474,7 +474,13 @@ export default {
             try {
                 const db = getFirestore(firebaseApp);
                 console.log('in function log' + user);
-                const docRef = await addDoc(collection(db, 'Report'), {
+                const colRef = collection(
+                    db,
+                    'Users',
+                    this.reported,
+                    'Reports'
+                );
+                const docRef = await addDoc(colRef, {
                     Reporter: this.userName,
                     ReportedUser: this.reported,
                     Reason: reason,
@@ -486,7 +492,6 @@ export default {
             }
             this.showSecondModal = false;
         },
-
         setStart() {
             console.log('Set Start');
             this.thirdCheck = 'Start';

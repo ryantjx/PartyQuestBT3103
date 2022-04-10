@@ -19,56 +19,26 @@
                         <div class="break-small mb-2"></div>
                         <br />
                         <p class="text-para">
-                            PartyQuest is a web application that connects
-                            like-minded shoppers. Ever found yourself needing
-                            more people to complete an online purchase or
-                            subscription?
+                            We are a group of highly motivated Year 2 Business
+                            Analytics students at the National University of
+                            Singapore!
                         </p>
                         <p>
-                            With just a simple click, you can now create your
-                            very own PartyQuest that allows others to join in
-                            with you for your online purchase.
+                            We decided to create PartyQuest because we had
+                            multiple instances where we chose not to buy an item
+                            because the shipping was too expensive, or we were
+                            unable to obtain the minimmum spending for
+                            discounts.
                         </p>
-                        <div id="app" class="row">
-                            <div class="col-12 col-md-4 mb-2 mb-md-0">
-                                <div class="box">
-                                    <font-awesome-icon
-                                        icon="fa fa-users mb-3"
-                                    />
-                                    <h4 class="mb=0">TOTAL NUMBER OF USERS</h4>
-                                    <p class="mb-0">600+</p>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 mb-2 mb-md-0">
-                                <div class="box">
-                                    <font-awesome-icon
-                                        icon="fa-solid fa-truck-fast mb-3"
-                                    />
-                                    <h4 class="mb=0">
-                                        CURRENT AVAILABLE QUESTS
-                                    </h4>
-                                    <p class="mb-0">1000+</p>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 mb-2 mb-md-0">
-                                <div class="box">
-                                    <font-awesome-icon
-                                        icon="fa-solid fa-handshake mb-3"
-                                    />
-                                    <h4 class="mb=0">TOTAL COMPLETED QUESTS</h4>
-                                    <p class="mb-0">200+</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-12">
-                            <h5>FEATURING YOUR FAVORITE BRANDS</h5>
-                            <p>
-                                Spotify - Netflix - Disney+,
-                            </p>
-                            <p>
-                                LoveBonito - MyProtein
-                            </p>
-                        </div>
+                        <p>
+                            Therefore, we would like to give people the power to
+                            connect with people who want to make a group
+                            purchase and save money!
+                        </p>
+                        <p>
+                            PartyQuest is a work in progress, and we cannot wait
+                            to show you our final product!
+                        </p>
                     </div>
                 </div>
             </div>
