@@ -34,7 +34,7 @@
                             <p>Brand: {{ value.brand }}</p>
                             <p>Description: {{ value.description }}</p>
                         </div>
-
+                        <br />
                         <!-- <router-link
                 :to="{ name: 'EditProduct', params: { id: product.id } }"
             >
