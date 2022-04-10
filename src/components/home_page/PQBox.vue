@@ -114,8 +114,9 @@ export default {
 }
 
 .img-card-view {
-    border-color: black;
-    border-width: 4px;
+}
+
+.pq-card-view {
 }
 
 .join-btn {
