@@ -168,7 +168,11 @@ export default {
                         'this is the docs id for search results user',
                         docs.id
                     );
-                    window.location.replace('/profile/user/' + docs.id);
+                    if (docs.id == userName) {
+                        window.location.replace('/profile');
+                    } else {
+                        window.location.replace('/profile/user/' + docs.id);
+                    }
                 };
                 // add button to action column cell
                 cell2.appendChild(viewButton);

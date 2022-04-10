@@ -90,6 +90,7 @@
                                                     </p>
                                                     <p
                                                         class="text-truncate mb-4 mb-md-0"
+                                                        style="max-width:60%"
                                                     >
                                                         Description:
                                                         {{ value.description }}

@@ -8,7 +8,7 @@
                 class="btn-go-back"
                 v-on:click="goBack()"
             >
-                <i class="fa fa-arrow-left"> Back</i>
+                <i class="fa fa-arrow-left"> Back to Explore</i>
             </button>
             <div class="float-left-child2">
                 <div>
@@ -214,7 +214,7 @@ export default {
         },
         goBack() {
             // Returns back to the previous page
-            this.$router.push('/searchresults');
+            window.location.replace('/home');
             // Force the page to reload
             // window.onpopstate = function() {
             //     location.reload();
