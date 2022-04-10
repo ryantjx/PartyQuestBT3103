@@ -138,7 +138,7 @@
                                                 class="d-flex flex-row align-items-center mb-1"
                                             >
                                                 <p>
-                                                    Number of Partipants:
+                                                    Number of Participants:
                                                     {{
                                                         value.participants
                                                             .length
@@ -169,6 +169,16 @@
                                                     "
                                                 >
                                                     <h6 class="text-warning">
+                                                        {{ value.status }}
+                                                    </h6>
+                                                </div>
+                                                <div
+                                                    v-else-if="
+                                                        value.status ==
+                                                            'Completed'
+                                                    "
+                                                >
+                                                    <h6 class="completed-pq">
                                                         {{ value.status }}
                                                     </h6>
                                                 </div>
@@ -272,4 +282,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.completed-pq {
+    color: green;
+}
+</style>
