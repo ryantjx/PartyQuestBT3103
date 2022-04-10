@@ -58,7 +58,9 @@
                                 PartyQuest Details
                             </h6>
                         </div>
-                        <div class="details-line-1">
+                        <div
+                            class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12"
+                        >
                             <div>
                                 <label class="fieldName">End Date:</label>
                                 <br />
@@ -67,11 +69,14 @@
                                     <br
                                 /></label>
                             </div>
+                            <br />
+
                             <div>
                                 <label class="fieldName">Requirements:</label>
                                 <br />
                                 <label class="field" id="misc"><h5></h5></label>
                             </div>
+                            <br />
                         </div>
                         <div
                             class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12"
@@ -85,16 +90,14 @@
                                 /></label>
                             </div>
                             <br />
-                            <div>
-                                <div class="form-group">
-                                    <label class="fieldName"
-                                        >Product Website:</label
-                                    >
-                                    <br />
-                                    <label class="field" id="url"
-                                        ><h5></h5
-                                    ></label>
-                                </div>
+                            <div class="form-group">
+                                <label class="fieldName"
+                                    >Product Website:</label
+                                >
+                                <br />
+                                <label class="field" id="url"
+                                    ><h5 class="website"></h5
+                                ></label>
                             </div>
                         </div>
                     </div>
@@ -195,6 +198,18 @@ export default {
 </script>
 
 <style scoped>
+.website {
+    max-width: 20px;
+    word-wrap: break-word;
+}
+
+.form-group {
+}
+
+.field {
+    max-width: 100%;
+}
+
 .info-line {
     display: flex;
     justify-content: space-between;
@@ -217,13 +232,7 @@ export default {
     margin-block-end: 20px;
     display: flex;
     justify-content: space-between;
-    width: 50%;
-}
-
-.details-line-2 {
-    margin-block-start: 16px;
-    margin-inline-start: 16px;
-    width: 40%;
+    width: 100%;
 }
 
 .card {
