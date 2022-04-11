@@ -2,8 +2,10 @@
 # PartyQuest
 This repository documents our BT3103 Project, PartyQuest, a web-based application that aims to connect people to make secure purchases together with strangers.
 
-## Note 
-PartyQuest is still in the initial design phase, and we have not **officially deployed** our application.
+## Website Link:
+Our application is currently deployed on Firebase!
+
+You can access the website here: https://partyquest-14855.firebaseapp.com/
 
 ## Initial Phase
 Run npm install and npm install firebase to get dependencies
